@@ -1,121 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loops — PyStart</title>
-  <link rel="stylesheet" href="css/global.css">
-  <script src="js/global.js" defer></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Loops — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
 </head>
 
 <body class="lesson-page">
 
-<header class="site-header">
-  <a href="index.html" class="logo">PyStart</a>
-
-  <nav class="top-nav">
+<header>
+  <a href="index.html" class="logo">Py<span>Start</span></a>
+  <nav>
     <a href="index.html">Home</a>
     <a href="lessons-variables.html" class="active">Lessons</a>
     <a href="errors.html">Errors</a>
-    <a href="#">Projects</a>
+    <a href="projects.html">Projects</a>
   </nav>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
+  <span class="theme-icon" aria-hidden="true">☾</span>
+  <span class="theme-label">Dark</span>
+</button>
 </header>
 
-<main class="lesson-layout">
+<div class="layout">
+  <aside>
+    <div class="section-label">BASICS</div>
+    <ul>
+      <li><a href="lessons-variables.html">1. Variables</a></li>
+      <li><a href="lessons-data-types.html">2. Data Types</a></li>
+      <li><a href="lessons-loops.html" class="active">3. Loops</a></li>
+      <li><a href="lessons-conditionals.html">4. Conditionals</a></li>
+      <li><a href="#">5. Functions</a></li>
+    </ul>
 
-  <aside class="lesson-sidebar">
-    <div class="sidebar-section">
-      <h3>Basics</h3>
-      <a href="lessons-variables.html">1. Variables</a>
-      <a href="lessons-data-types.html">2. Data Types</a>
-      <a href="lessons-loops.html" class="active">3. Loops</a>
-      <a href="lessons-conditionals.html">4. Conditionals</a>
-      <a href="#">5. Functions</a>
-    </div>
+    <div class="section-label">INTERMEDIATE</div>
+    <ul>
+      <li><a href="lessons-oop.html">OOP Basics</a></li>
+      <li><a href="lessons-exceptions.html">Exception Handling</a></li>
+    </ul>
 
-    <div class="sidebar-section">
-      <h3>Intermediate</h3>
-      <a href="lessons-oop.html">OOP Basics</a>
-      <a href="lessons-exceptions.html">Exception Handling</a>
-    </div>
-
-    <div class="sidebar-section">
-      <h3>Advanced</h3>
-      <a href="lessons-apis.html">APIs &amp; Requests</a>
-    </div>
+    <div class="section-label">ADVANCED</div>
+    <ul>
+      <li><a href="lessons-apis.html">APIs &amp; Requests</a></li>
+    </ul>
   </aside>
 
-  <article class="lesson-content">
-    <div class="lesson-heading">
-      <span class="lesson-kicker">Python Basics</span>
-      <h1>Loops</h1>
-      <p>Repeat a task multiple times with Python loops.</p>
-    </div>
+  <article>
+    <div class="crumb">Basics / <span>Loops</span></div>
+    <h1>Loops</h1>
+    <p class="subtitle">Ek kaam baar-baar karwana ho to loop use karo.</p>
 
-    <section class="lesson-section">
-      <h2>For Loop</h2>
-      <p>A <code>for</code> loop is used when you want to repeat code for each item in a sequence.</p>
+    <h2>For Loop</h2>
+    <p>A <code>for</code> loop repeats code for each item in a sequence.</p>
 
-      <div class="codeblock">
-<pre><code>for i in range(5):
-    print(i)</code></pre>
-      </div>
+    <div class="codeblock">for i in range(5):
+    print(i)</div>
 
-      <p>This prints numbers from <code>0</code> to <code>4</code>.</p>
-    </section>
+    <h2>While Loop</h2>
+    <p>A <code>while</code> loop keeps running while its condition is <code>True</code>.</p>
 
-    <section class="lesson-section">
-      <h2>While Loop</h2>
-      <p>A <code>while</code> loop keeps running as long as its condition is <code>True</code>.</p>
-
-      <div class="codeblock">
-<pre><code>count = 0
+    <div class="codeblock">count = 0
 
 while count &lt; 5:
     print(count)
-    count = count + 1</code></pre>
-      </div>
-    </section>
+    count = count + 1</div>
 
     <div class="note warn">
       <strong>Warning:</strong> Make sure the condition eventually becomes <code>False</code>, otherwise you can create an infinite loop.
     </div>
 
-    <section class="lesson-section">
-      <h2>Loop Through a List</h2>
-      <p>You can use a <code>for</code> loop to process every item in a list.</p>
+    <h2>Loop Through a List</h2>
+    <p>You can use a <code>for</code> loop to process every item in a list.</p>
 
-      <div class="codeblock">
-<pre><code>skills = ["Python", "SQL", "Excel"]
+    <div class="codeblock">skills = ["Python", "SQL", "Excel"]
 
 for skill in skills:
-    print(skill)</code></pre>
+    print(skill)</div>
+
+    <h2>Try it yourself</h2>
+    <p>Change the code below and press Run to see what happens:</p>
+
+    <div class="editor">
+      <div class="editor-bar">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
       </div>
-    </section>
 
-    <section class="lesson-section editor-section">
-      <h2>Try It Yourself</h2>
-      <p>Run the code below and experiment with your own loops.</p>
-
-      <textarea id="code" spellcheck="false">for i in range(5):
+      <textarea id="code">for i in range(5):
     print("Number:", i)
 
 skills = ["Python", "SQL", "Excel"]
 for skill in skills:
     print("Learning:", skill)</textarea>
 
-      <button id="run-btn" class="run-btn magnetic" onclick="runCode()">Run Code</button>
+      <div class="run-row">
+        <span style="color: var(--muted); font-size: 0.78rem;">Runs directly in your browser</span>
+        <button id="run-btn" onclick="runCode()">▶ Run</button>
+      </div>
 
-      <pre id="output" class="output">Output will appear here...</pre>
-    </section>
+      <div id="output">Output will appear here...</div>
+    </div>
 
-    <div class="lesson-navigation">
-      <a href="lessons-data-types.html" class="lesson-nav-btn">← Previous: Data Types</a>
-      <a href="lessons-conditionals.html" class="lesson-nav-btn">Next: Conditionals →</a>
+    <div class="nav-buttons">
+      <a href="lessons-data-types.html" class="btn-prev">← Previous: Data Types</a>
+      <a href="lessons-conditionals.html" class="btn-next">Next: Conditionals →</a>
     </div>
   </article>
+</div>
 
-</main>
-
+<script src="js/global.js" defer></script>
 </body>
 </html>
