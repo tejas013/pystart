@@ -2212,26 +2212,47 @@ html[data-theme="dark"] .theme-toggle {
    Dark Theme
    ========================================================= */
 html[data-theme="dark"] {
-  --bg: #0a0c12;
-  --surface: #11141d;
-  --surface-2: #171b26;
-  --text: #f3f5fa;
-  --muted: #a6adbf;
+  --bg: #030405;
+  --surface: #090b0f;
+  --surface-2: #10131a;
+  --text: #f5f7fb;
+  --muted: #a8afbf;
   --amber: #f2a23a;
-  --violet: #9a83ff;
-  --mint: #4cc58f;
-  --border: #292f3d;
-  --shadow: 0 18px 50px rgba(0, 0, 0, .32);
+  --violet: #a28cff;
+  --mint: #4ccf98;
+  --border: #202531;
+  --shadow: 0 20px 60px rgba(0, 0, 0, .55);
+}
+
+html,
+body,
+.site-header,
+.lesson-sidebar,
+.lesson-content,
+.card,
+.feature-card,
+.error-card,
+.search-box,
+input#search,
+.lesson-nav-btn,
+.note,
+.theme-toggle {
+  transition:
+    background-color .45s ease,
+    background .45s ease,
+    color .35s ease,
+    border-color .45s ease,
+    box-shadow .45s ease;
 }
 
 html[data-theme="dark"] body {
-  background: var(--bg);
+  background: #030405;
   color: var(--text);
 }
 
 html[data-theme="dark"] .site-header {
-  background: rgba(10, 12, 18, .82);
-  border-bottom-color: var(--border);
+  background: rgba(3, 4, 5, .92);
+  border-bottom-color: #202531;
 }
 
 html[data-theme="dark"] .logo,
@@ -2249,7 +2270,7 @@ html[data-theme="dark"] .top-nav a {
 
 html[data-theme="dark"] .top-nav a:hover,
 html[data-theme="dark"] .top-nav a.active {
-  color: var(--text);
+  color: #fff;
 }
 
 html[data-theme="dark"] .lesson-sidebar,
@@ -2257,8 +2278,9 @@ html[data-theme="dark"] .card,
 html[data-theme="dark"] .feature-card,
 html[data-theme="dark"] .error-card,
 html[data-theme="dark"] .lesson-content {
-  background: var(--surface);
-  border-color: var(--border);
+  background: #090b0f;
+  border-color: #202531;
+  box-shadow: var(--shadow);
 }
 
 html[data-theme="dark"] .lesson-sidebar a {
@@ -2267,8 +2289,8 @@ html[data-theme="dark"] .lesson-sidebar a {
 
 html[data-theme="dark"] .lesson-sidebar a:hover,
 html[data-theme="dark"] .lesson-sidebar a.active {
-  background: var(--surface-2);
-  color: var(--text);
+  background: #10131a;
+  color: #fff;
 }
 
 html[data-theme="dark"] p,
@@ -2278,19 +2300,19 @@ html[data-theme="dark"] .lesson-content > p {
 }
 
 html[data-theme="dark"] .theme-toggle {
-  background: var(--surface-2);
-  border-color: var(--border);
-  color: var(--text);
+  background: #10131a;
+  border-color: #2b3240;
+  color: #fff;
 }
 
 html[data-theme="dark"] .note {
-  background: #171a23;
-  border-color: #343b4b;
+  background: #0e1117;
+  border-color: #252c38;
 }
 
 html[data-theme="dark"] .lesson-page .note.warn {
-  background: #241719;
-  border-color: #673238;
+  background: #211315;
+  border-color: #5d2c31;
   color: #f0b2b2;
 }
 
@@ -2300,46 +2322,55 @@ html[data-theme="dark"] .lesson-page .note.warn strong {
 
 html[data-theme="dark"] .codeblock,
 html[data-theme="dark"] .output {
-  border-color: var(--border);
+  border-color: #202531;
 }
 
 html[data-theme="dark"] textarea#code {
-  background: #080a0f;
-  color: #e8ecf5;
-  border-color: var(--border);
+  background: #050608;
+  color: #eef2f8;
+  border-color: #252c38;
 }
 
 html[data-theme="dark"] .lesson-nav-btn {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--border);
+  background: #090b0f;
+  color: #fff;
+  border-color: #202531;
 }
 
 html[data-theme="dark"] table {
-  color: var(--text);
+  color: #f5f7fb;
 }
 
 html[data-theme="dark"] th,
 html[data-theme="dark"] td {
-  border-color: var(--border);
+  border-color: #202531;
 }
 
 html[data-theme="dark"] th {
-  background: var(--surface-2);
+  background: #10131a;
 }
 
 html[data-theme="dark"] .search-box,
 html[data-theme="dark"] input#search {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--border);
+  background: #090b0f;
+  color: #fff;
+  border-color: #202531;
 }
 
 html[data-theme="dark"] .error-card p {
   color: var(--muted);
 }
 
-/* Dark hero: keep the central 3D core visibly brighter. */
+/* =========================================================
+   3D Hero Theme Lighting
+   ========================================================= */
 html[data-theme="dark"] #canvas-wrap {
-  background: radial-gradient(circle at 50% 45%, #252b3a 0%, #11151f 38%, #080a0f 78%);
+  background:
+    radial-gradient(circle at 50% 46%, rgba(105, 112, 135, .28) 0%, rgba(30, 34, 45, .20) 20%, rgba(3, 4, 5, .96) 68%),
+    #030405;
+}
+
+html[data-theme="light"] #canvas-wrap {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, .98) 0%, rgba(247, 248, 252, .94) 38%, rgba(242, 244, 249, .98) 100%);
 }
