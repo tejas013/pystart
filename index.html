@@ -4,131 +4,916 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hero Preview — Light</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
   :root {
-    --bg: #f6f7fb; --surface: #ffffff; --text: #14171f;
-    --muted: #6b7186; --amber: #e08a1e; --violet: #7c5cff; --border: #e3e6f0;
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --text: #14171f;
+    --muted: #6b7186;
+    --amber: #e08a1e;
+    --violet: #7c5cff;
+    --border: #e3e6f0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; overflow-x: hidden; }
-  #canvas-wrap { position: fixed; inset: 0; z-index: 0; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-  header { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; }
-  .logo { font-weight: 800; font-size: 1.25rem; }
-  .logo span { color: var(--violet); }
-  nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.95rem; }
-  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 70px 0 120px; min-height: 80vh; }
-  @media (max-width: 800px) { .hero { grid-template-columns: 1fr; padding: 30px 0 60px; } }
-  h1 { font-size: 2.7rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.16; max-width: 480px; color: #14171f; }
-  .hero p.sub { margin-top: 18px; color: var(--muted); font-size: 1.05rem; max-width: 440px; }
-  .cta-row { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn { padding: 13px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none; display: inline-block; border: 1px solid transparent; }
-  .btn-primary { background: #14171f; color: #fff; }
-  .btn-ghost { border-color: var(--border); color: #14171f; background: rgba(255,255,255,0.5); backdrop-filter: blur(6px); }
-  .editor {
-    background: rgba(255,255,255,0.65);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.6);
-    border-radius: 14px;
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* =========================
+     THREE.JS BACKGROUND
+     ========================= */
+
+  #canvas-wrap {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
     overflow: hidden;
+  }
+
+  #canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* =========================
+     MAIN CONTAINER
+     ========================= */
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* =========================
+     HEADER
+     ========================= */
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    min-height: 76px;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    white-space: nowrap;
+  }
+
+  .logo span {
+    color: var(--violet);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 28px;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover {
+    color: var(--text);
+  }
+
+  /* =========================
+     HERO
+     ========================= */
+
+  .hero {
+    width: 100%;
+    display: grid;
+
+    /*
+      minmax(0, 1fr) prevents the editor/code
+      from forcing the grid wider than the screen.
+    */
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+
+    gap: 64px;
+    align-items: center;
+
+    padding: 70px 0 120px;
+
+    min-height: calc(100vh - 76px);
+  }
+
+  .hero > div {
+    min-width: 0;
+  }
+
+  /* =========================
+     HERO TEXT
+     ========================= */
+
+  h1 {
+    font-size: 2.7rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.16;
+    max-width: 480px;
+    color: #14171f;
+  }
+
+  .hero p.sub {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 440px;
+  }
+
+  /* =========================
+     BUTTONS
+     ========================= */
+
+  .cta-row {
+    margin-top: 32px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid transparent;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: #14171f;
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 8px 24px rgba(20, 23, 31, 0.18);
+  }
+
+  .btn-ghost {
+    border-color: var(--border);
+    color: #14171f;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+  }
+
+  /* =========================
+     CODE EDITOR
+     ========================= */
+
+  .editor {
+    width: 100%;
+    max-width: 100%;
+
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 14px;
+
+    overflow: hidden;
+
     box-shadow: 0 30px 80px rgba(90, 70, 150, 0.18);
   }
-  .editor-bar { display: flex; gap: 6px; padding: 12px 16px; background: rgba(240,241,248,0.7); border-bottom: 1px solid var(--border); }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot.r { background: #ff6b6b; } .dot.y { background: #ffb84d; } .dot.g { background: #35c98c; }
-  .code-line { padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #1f7a52; white-space: pre; }
-  .run-row { padding: 12px 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .run-row button { background: var(--violet); color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
-  .tag { position: fixed; bottom: 16px; left: 16px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); background: rgba(255,255,255,0.7); padding: 6px 10px; border-radius: 6px; }
+
+  .editor-bar {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+
+    background: rgba(240, 241, 248, 0.7);
+
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 10px;
+    border-radius: 50%;
+  }
+
+  .dot.r {
+    background: #ff6b6b;
+  }
+
+  .dot.y {
+    background: #ffb84d;
+  }
+
+  .dot.g {
+    background: #35c98c;
+  }
+
+  .code-line {
+    padding: 16px;
+
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+
+    color: #1f7a52;
+
+    /*
+      IMPORTANT:
+      Allows code to wrap instead of pushing
+      the editor outside the screen.
+    */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    min-height: 105px;
+  }
+
+  .run-row {
+    padding: 12px 16px;
+
+    border-top: 1px solid var(--border);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+  }
+
+  .run-row span {
+    min-width: 0;
+  }
+
+  .run-row button {
+    flex-shrink: 0;
+
+    background: var(--violet);
+    color: #fff;
+
+    border: none;
+
+    padding: 8px 18px;
+
+    border-radius: 6px;
+
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+
+    cursor: pointer;
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .run-row button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(124, 92, 255, 0.25);
+  }
+
+  /* =========================
+     PREVIEW TAG
+     ========================= */
+
+  .tag {
+    position: fixed;
+
+    bottom: 16px;
+    left: 16px;
+
+    z-index: 2;
+
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+
+    color: var(--muted);
+
+    background: rgba(255, 255, 255, 0.7);
+
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    backdrop-filter: blur(8px);
+  }
+
+  /* =========================
+     TABLET / SMALL LAPTOP
+     ========================= */
+
+  @media (max-width: 1000px) {
+
+    .wrap {
+      padding: 0 26px;
+    }
+
+    .hero {
+      gap: 40px;
+    }
+
+    h1 {
+      font-size: 2.45rem;
+    }
+
+    .hero p.sub {
+      font-size: 1rem;
+    }
+
+    .code-line {
+      font-size: 0.82rem;
+    }
+  }
+
+  /* =========================
+     MOBILE / TABLET
+     ========================= */
+
+  @media (max-width: 900px) {
+
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+
+      padding: 40px 0 80px;
+
+      min-height: auto;
+    }
+
+    h1 {
+      max-width: 600px;
+    }
+
+    .hero p.sub {
+      max-width: 600px;
+    }
+
+    .editor {
+      width: 100%;
+    }
+  }
+
+  /* =========================
+     MOBILE
+     ========================= */
+
+  @media (max-width: 600px) {
+
+    .wrap {
+      padding: 0 18px;
+    }
+
+    header {
+      padding: 18px 0;
+      min-height: 65px;
+    }
+
+    nav {
+      display: none;
+    }
+
+    h1 {
+      font-size: 2rem;
+      line-height: 1.18;
+    }
+
+    .hero {
+      gap: 32px;
+      padding: 30px 0 70px;
+    }
+
+    .hero p.sub {
+      font-size: 0.95rem;
+      margin-top: 16px;
+    }
+
+    .cta-row {
+      margin-top: 26px;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .code-line {
+      font-size: 0.74rem;
+      padding: 14px;
+    }
+
+    .editor-bar {
+      padding: 10px 14px;
+    }
+
+    .run-row {
+      padding: 10px 14px;
+    }
+
+    .run-row span {
+      font-size: 0.7rem !important;
+    }
+
+    .run-row button {
+      padding: 7px 13px;
+      font-size: 0.8rem;
+    }
+
+    .tag {
+      bottom: 10px;
+      left: 10px;
+      font-size: 0.65rem;
+    }
+  }
+
+  /* =========================
+     VERY SMALL PHONES
+     ========================= */
+
+  @media (max-width: 380px) {
+
+    h1 {
+      font-size: 1.75rem;
+    }
+
+    .hero {
+      padding-top: 25px;
+    }
+
+    .code-line {
+      font-size: 0.68rem;
+    }
+
+    .run-row span {
+      display: none;
+    }
+
+    .run-row {
+      justify-content: flex-end;
+    }
+  }
 </style>
 </head>
+
 <body>
 
+<!-- =========================
+     THREE.JS BACKGROUND
+     ========================= -->
+
 <div id="canvas-wrap"></div>
-<div class="tag">Preview: Light theme + 3D shape</div>
+
+<div class="tag">
+  Preview: Light theme + 3D shape
+</div>
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
 
 <div class="wrap">
-  <header>
-    <div class="logo">Py<span>Start</span></div>
-    <nav><a href="#">Lessons</a><a href="#">Errors</a><a href="#">Projects</a></nav>
-  </header>
 
-  <section class="hero">
-    <div>
-      <h1>Python seekho jaise koi doubt hi nahi bacha.</h1>
-      <p class="sub">Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.</p>
-      <div class="cta-row">
-        <a href="#" class="btn btn-primary">Shuru karo — Free</a>
-        <a href="#" class="btn btn-ghost">Error Dictionary dekho</a>
-      </div>
+  <header>
+
+    <div class="logo">
+      Py<span>Start</span>
     </div>
 
+    <nav>
+      <a href="#">Lessons</a>
+      <a href="#">Errors</a>
+      <a href="#">Projects</a>
+    </nav>
+
+  </header>
+
+
+  <section class="hero">
+
+    <!-- HERO TEXT -->
+
+    <div>
+
+      <h1>
+        Python seekho jaise koi doubt hi nahi bacha.
+      </h1>
+
+      <p class="sub">
+        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
+      </p>
+
+      <div class="cta-row">
+
+        <a href="#" class="btn btn-primary">
+          Shuru karo — Free
+        </a>
+
+        <a href="#" class="btn btn-ghost">
+          Error Dictionary dekho
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CODE EDITOR -->
+
     <div class="editor">
-      <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+
+      <div class="editor-bar">
+        <span class="dot r"></span>
+        <span class="dot y"></span>
+        <span class="dot g"></span>
+      </div>
+
       <div class="code-line">print("Chalo shuru karte hain!")
 for i in range(3):
     print("Line", i)</div>
+
       <div class="run-row">
-        <span style="color: var(--muted); font-size: 0.8rem;">Browser mein hi chalega</span>
-        <button>▶ Run</button>
+
+        <span style="color: var(--muted); font-size: 0.8rem;">
+          Browser mein hi chalega
+        </span>
+
+        <button>
+          ▶ Run
+        </button>
+
       </div>
+
     </div>
+
   </section>
+
 </div>
 
+
+<!-- =========================
+     THREE.JS
+     ========================= -->
+
 <script type="importmap">
-{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+  }
+}
 </script>
+
 <script type="module">
+
 import * as THREE from 'three';
 
+
+/* =========================
+   SETUP
+   ========================= */
+
 const wrap = document.getElementById('canvas-wrap');
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+
+const camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  100
+);
+
 camera.position.set(0, 0, 7);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true
+});
+
+renderer.setSize(
+  window.innerWidth,
+  window.innerHeight
+);
+
+renderer.setPixelRatio(
+  Math.min(window.devicePixelRatio, 2)
+);
+
 wrap.appendChild(renderer.domElement);
 
-// lighting — soft studio light + violet/amber rim, like the reference
-scene.add(new THREE.AmbientLight(0xffffff, 1.6));
-const l1 = new THREE.PointLight(0x7c5cff, 55, 22); l1.position.set(4, 3, 4); scene.add(l1);
-const l2 = new THREE.PointLight(0xe08a1e, 40, 22); l2.position.set(-3, -2, 3); scene.add(l2);
-const l3 = new THREE.DirectionalLight(0xffffff, 0.9); l3.position.set(0, 6, 6); scene.add(l3);
 
-const geo = new THREE.TorusKnotGeometry(1.3, 0.42, 220, 32, 2, 3);
+/* =========================
+   LIGHTING
+   ========================= */
+
+scene.add(
+  new THREE.AmbientLight(
+    0xffffff,
+    1.6
+  )
+);
+
+
+const l1 = new THREE.PointLight(
+  0x7c5cff,
+  55,
+  22
+);
+
+l1.position.set(
+  4,
+  3,
+  4
+);
+
+scene.add(l1);
+
+
+const l2 = new THREE.PointLight(
+  0xe08a1e,
+  40,
+  22
+);
+
+l2.position.set(
+  -3,
+  -2,
+  3
+);
+
+scene.add(l2);
+
+
+const l3 = new THREE.DirectionalLight(
+  0xffffff,
+  0.9
+);
+
+l3.position.set(
+  0,
+  6,
+  6
+);
+
+scene.add(l3);
+
+
+/* =========================
+   3D TORUS KNOT
+   ========================= */
+
+const geo = new THREE.TorusKnotGeometry(
+  1.3,
+  0.42,
+  220,
+  32,
+  2,
+  3
+);
+
+
 const mat = new THREE.MeshStandardMaterial({
-  color: 0xffffff, metalness: 0.35, roughness: 0.15,
-  emissive: 0xf3ecff, emissiveIntensity: 0.15
+  color: 0xffffff,
+  metalness: 0.35,
+  roughness: 0.15,
+  emissive: 0xf3ecff,
+  emissiveIntensity: 0.15
 });
-const knot = new THREE.Mesh(geo, mat);
-knot.position.set(2.4, 0, -1);
+
+
+const knot = new THREE.Mesh(
+  geo,
+  mat
+);
+
 scene.add(knot);
 
-function onResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-window.addEventListener('resize', onResize);
 
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let t = 0;
-function animate() {
-  requestAnimationFrame(animate);
-  if (!reduced) {
-    t += 0.004;
-    knot.rotation.x = t * 0.6;
-    knot.rotation.y = t;
-    knot.position.y = Math.sin(t * 1.2) * 0.3;
+/* =========================
+   RESPONSIVE 3D POSITION
+   ========================= */
+
+function updateKnotPosition() {
+
+  const width = window.innerWidth;
+
+
+  /*
+    DESKTOP
+    Large screens:
+    place object to the right.
+  */
+
+  if (width > 1200) {
+
+    knot.position.set(
+      2.4,
+      0,
+      -1
+    );
+
+    knot.scale.setScalar(1);
+
   }
-  renderer.render(scene, camera);
+
+
+  /*
+    LAPTOP
+    Prevent the object from getting
+    too close to the text/editor.
+  */
+
+  else if (width > 900) {
+
+    knot.position.set(
+      2.0,
+      0,
+      -1
+    );
+
+    knot.scale.setScalar(0.85);
+
+  }
+
+
+  /*
+    TABLET / MOBILE
+    Move it down and make it smaller.
+  */
+
+  else if (width > 600) {
+
+    knot.position.set(
+      1.2,
+      -1.8,
+      -1
+    );
+
+    knot.scale.setScalar(0.7);
+
+  }
+
+
+  /*
+    SMALL PHONE
+  */
+
+  else {
+
+    knot.position.set(
+      0,
+      -2.4,
+      -1
+    );
+
+    knot.scale.setScalar(0.55);
+
+  }
+
 }
+
+
+/* Initial position */
+
+updateKnotPosition();
+
+
+/* =========================
+   RESIZE HANDLER
+   ========================= */
+
+function onResize() {
+
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+
+  camera.aspect = width / height;
+
+  camera.updateProjectionMatrix();
+
+
+  renderer.setSize(
+    width,
+    height
+  );
+
+
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 2)
+  );
+
+
+  updateKnotPosition();
+
+}
+
+
+window.addEventListener(
+  'resize',
+  onResize
+);
+
+
+/* =========================
+   ANIMATION
+   ========================= */
+
+const reduced =
+  window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+
+let t = 0;
+
+
+function animate() {
+
+  requestAnimationFrame(
+    animate
+  );
+
+
+  if (!reduced) {
+
+    t += 0.004;
+
+
+    knot.rotation.x =
+      t * 0.6;
+
+
+    knot.rotation.y =
+      t;
+
+
+    knot.position.y +=
+      (
+        Math.sin(t * 1.2) * 0.3
+        - knot.position.y
+      ) * 0.02;
+
+  }
+
+
+  renderer.render(
+    scene,
+    camera
+  );
+
+}
+
+
 animate();
+
 </script>
 
 </body>
