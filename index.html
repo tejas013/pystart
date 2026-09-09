@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Hero Preview — Light</title>
+<title>PyStart — Python jo samajh aaye</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg: #f6f7fb;
-    --surface: #ffffff;
-    --text: #14171f;
-    --muted: #6b7186;
-    --amber: #e08a1e;
-    --violet: #7c5cff;
-    --border: #e3e6f0;
+    --bg: #14121f;
+    --surface: #1c1930;
+    --text: #f2f0f7;
+    --muted: #a19dbd;
+    --amber: #ffb84d;
+    --violet: #a78bfa;
+    --mint: #6ee7b7;
+    --border: #302b4d;
   }
 
   * {
@@ -28,19 +28,29 @@
   }
 
   html {
+    scroll-behavior: smooth;
     width: 100%;
-    min-height: 100%;
   }
 
   body {
-    width: 100%;
-    min-height: 100vh;
-    background: var(--bg);
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      #1e1a35 0%,
+      var(--bg) 55%
+    );
+
     color: var(--text);
     font-family: 'Sora', sans-serif;
     line-height: 1.6;
+
     overflow-x: hidden;
+    position: relative;
+    cursor: default;
+
+    width: 100%;
+    min-height: 100vh;
   }
+
 
   /* =========================
      THREE.JS BACKGROUND
@@ -49,9 +59,12 @@
   #canvas-wrap {
     position: fixed;
     inset: 0;
+
     width: 100vw;
     height: 100vh;
+
     z-index: 0;
+
     pointer-events: none;
     overflow: hidden;
   }
@@ -62,18 +75,57 @@
     height: 100%;
   }
 
+
   /* =========================
-     MAIN CONTAINER
+     CURSOR PARTICLE TRAIL
+     ========================= */
+
+  #trail-canvas {
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 1;
+    pointer-events: none;
+  }
+
+
+  /* =========================
+     GRAIN
+     ========================= */
+
+  .grain {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 3;
+    pointer-events: none;
+
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+  }
+
+
+  /* =========================
+     MAIN WRAPPER
      ========================= */
 
   .wrap {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1040px;
+
     margin: 0 auto;
-    padding: 0 32px;
+    padding: 0 24px;
+
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
+
 
   /* =========================
      HEADER
@@ -83,6 +135,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     padding: 24px 0;
     min-height: 76px;
   }
@@ -90,11 +143,13 @@
   .logo {
     font-weight: 800;
     font-size: 1.25rem;
+    letter-spacing: -0.02em;
+
     white-space: nowrap;
   }
 
   .logo span {
-    color: var(--violet);
+    color: var(--amber);
   }
 
   nav {
@@ -105,8 +160,11 @@
   nav a {
     color: var(--muted);
     text-decoration: none;
+
     margin-left: 28px;
+
     font-size: 0.95rem;
+
     transition: color 0.2s ease;
   }
 
@@ -114,51 +172,95 @@
     color: var(--text);
   }
 
+
   /* =========================
      HERO
      ========================= */
 
   .hero {
     width: 100%;
+
     display: grid;
 
     /*
-      minmax(0, 1fr) prevents the editor/code
-      from forcing the grid wider than the screen.
+      IMPORTANT:
+      minmax(0, ...) prevents the editor/code
+      from making the desktop layout wider.
     */
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns:
+      minmax(0, 1.1fr)
+      minmax(0, 1fr);
 
-    gap: 64px;
+    gap: 48px;
+
     align-items: center;
 
-    padding: 70px 0 120px;
+    padding: 64px 0 110px;
 
-    min-height: calc(100vh - 76px);
+    min-height: 78vh;
   }
 
   .hero > div {
     min-width: 0;
   }
 
+
   /* =========================
-     HERO TEXT
+     HEADING
      ========================= */
 
   h1 {
-    font-size: 2.7rem;
+    font-size: 2.75rem;
+
     font-weight: 800;
+
     letter-spacing: -0.02em;
-    line-height: 1.16;
+
+    line-height: 1.15;
+
     max-width: 480px;
-    color: #14171f;
+
+    background: linear-gradient(
+      100deg,
+      #ffe4b8 0%,
+      #ffb84d 25%,
+      #a78bfa 55%,
+      #6ee7b7 80%,
+      #ffe4b8 100%
+    );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+      gradientShift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradientShift {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+
+    50% {
+      background-position: 100% center;
+    }
   }
 
   .hero p.sub {
     margin-top: 18px;
+
     color: var(--muted);
+
     font-size: 1.05rem;
+
     max-width: 440px;
   }
+
 
   /* =========================
      BUTTONS
@@ -166,78 +268,220 @@
 
   .cta-row {
     margin-top: 32px;
+
     display: flex;
+
     gap: 14px;
+
     flex-wrap: wrap;
   }
 
   .btn {
     padding: 13px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-    display: inline-block;
-    border: 1px solid transparent;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      background 0.2s ease;
-  }
 
-  .btn:hover {
-    transform: translateY(-2px);
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    font-size: 0.95rem;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    border: 1px solid transparent;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
   }
 
   .btn-primary {
-    background: #14171f;
-    color: #fff;
+    background: var(--amber);
+    color: #14121f;
   }
 
   .btn-primary:hover {
-    box-shadow: 0 8px 24px rgba(20, 23, 31, 0.18);
+    box-shadow:
+      0 10px 28px rgba(255, 184, 77, 0.3);
   }
 
   .btn-ghost {
     border-color: var(--border);
-    color: #14171f;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(6px);
+
+    color: var(--text);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
+  .btn-ghost:hover {
+    border-color: var(--violet);
+    color: var(--violet);
+  }
+
+  .magnetic {
+    transition:
+      transform 0.2s
+      cubic-bezier(0.33, 1, 0.68, 1);
+
+    will-change: transform;
+  }
+
+
   /* =========================
-     CODE EDITOR
+     TOAST
+     ========================= */
+
+  .toast-stack {
+    position: fixed;
+
+    bottom: 24px;
+    right: 24px;
+
+    z-index: 50;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .toast {
+    background: rgba(28, 25, 48, 0.9);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid var(--border);
+
+    border-left: 3px solid var(--mint);
+
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    font-size: 0.88rem;
+
+    color: var(--text);
+
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.4);
+
+    transform: translateX(120%);
+    opacity: 0;
+
+    animation:
+      toastIn 0.4s
+      cubic-bezier(0.33, 1, 0.68, 1)
+      forwards,
+      toastOut 0.4s ease-in 2.6s forwards;
+  }
+
+  @keyframes toastIn {
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes toastOut {
+    to {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+  }
+
+
+  /* =========================
+     SKELETON
+     ========================= */
+
+  .skeleton {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 2px 0;
+  }
+
+  .skeleton-line {
+    height: 12px;
+
+    border-radius: 4px;
+
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.05) 0%,
+      rgba(255,255,255,0.15) 50%,
+      rgba(255,255,255,0.05) 100%
+    );
+
+    background-size: 200% 100%;
+
+    animation:
+      shimmer 1.3s
+      ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+
+  /* =========================
+     EDITOR
      ========================= */
 
   .editor {
     width: 100%;
     max-width: 100%;
 
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(18px);
+    background: rgba(28, 25, 48, 0.65);
 
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 14px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    border-radius: 16px;
 
     overflow: hidden;
 
-    box-shadow: 0 30px 80px rgba(90, 70, 150, 0.18);
+    box-shadow:
+      0 30px 90px rgba(0,0,0,0.5);
   }
 
   .editor-bar {
     display: flex;
+
     gap: 6px;
+
     padding: 12px 16px;
 
-    background: rgba(240, 241, 248, 0.7);
+    background: rgba(0,0,0,0.2);
 
-    border-bottom: 1px solid var(--border);
+    border-bottom:
+      1px solid var(--border);
   }
 
   .dot {
     width: 10px;
     height: 10px;
+
     flex: 0 0 10px;
+
     border-radius: 50%;
   }
 
@@ -246,40 +490,65 @@
   }
 
   .dot.y {
-    background: #ffb84d;
+    background: #ffd166;
   }
 
   .dot.g {
-    background: #35c98c;
+    background: #6ee7b7;
   }
 
-  .code-line {
+
+  /* =========================
+     CODE AREA
+     ========================= */
+
+  #code {
+    width: 100%;
+
+    min-height: 130px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    border: none;
+
     padding: 16px;
 
-    font-family: 'JetBrains Mono', monospace;
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
     font-size: 0.9rem;
 
-    color: #1f7a52;
+    resize: vertical;
+
+    outline: none;
 
     /*
-      IMPORTANT:
-      Allows code to wrap instead of pushing
-      the editor outside the screen.
+      Prevents horizontal overflow.
     */
+    overflow-x: auto;
+
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    word-break: break-word;
-
-    min-height: 105px;
   }
+
+
+  /* =========================
+     RUN ROW
+     ========================= */
 
   .run-row {
     padding: 12px 16px;
 
-    border-top: 1px solid var(--border);
+    border-top:
+      1px solid var(--border);
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     gap: 15px;
@@ -289,11 +558,10 @@
     min-width: 0;
   }
 
-  .run-row button {
-    flex-shrink: 0;
+  #run-btn {
+    background: var(--mint);
 
-    background: var(--violet);
-    color: #fff;
+    color: #0e1a15;
 
     border: none;
 
@@ -301,92 +569,233 @@
 
     border-radius: 6px;
 
-    font-family: 'Sora', sans-serif;
     font-weight: 600;
-    font-size: 0.9rem;
+
+    font-family: 'Sora', sans-serif;
 
     cursor: pointer;
 
+    font-size: 0.9rem;
+
     transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+      transform 0.15s ease,
+      opacity 0.15s ease;
   }
 
-  .run-row button:hover {
+  #run-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(124, 92, 255, 0.25);
   }
+
+  #run-btn:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+  }
+
+  #output {
+    margin:
+      0 16px 16px;
+
+    background: #0a0912;
+
+    border:
+      1px solid var(--border);
+
+    border-radius: 8px;
+
+    padding: 14px 16px;
+
+    font-family:
+      'JetBrains Mono',
+      monospace;
+
+    font-size: 0.85rem;
+
+    color: var(--mint);
+
+    min-height: 24px;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+  }
+
 
   /* =========================
-     PREVIEW TAG
+     FEATURES
      ========================= */
 
-  .tag {
-    position: fixed;
+  section.features {
+    padding: 30px 0 90px;
+  }
 
-    bottom: 16px;
-    left: 16px;
+  .features h2 {
+    font-size: 1.6rem;
 
-    z-index: 2;
+    font-weight: 700;
 
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    margin-bottom: 8px;
+  }
+
+  .features p.lead {
+    color: var(--muted);
+
+    margin-bottom: 36px;
+
+    max-width: 520px;
+  }
+
+  .grid {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 1px;
+
+    background: var(--border);
+
+    border:
+      1px solid var(--border);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+  }
+
+  .card {
+    background:
+      rgba(28,25,48,0.7);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    padding: 26px 24px;
+
+    position: relative;
+
+    min-width: 0;
+  }
+
+  .card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+  }
+
+  .card.c1::before {
+    background: var(--amber);
+  }
+
+  .card.c2::before {
+    background: #ff6b6b;
+  }
+
+  .card.c3::before {
+    background: var(--mint);
+  }
+
+  .card h3 {
+    font-size: 1.05rem;
+
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    color: var(--muted);
+
+    font-size: 0.92rem;
+  }
+
+
+  /* =========================
+     FOOTER
+     ========================= */
+
+  footer {
+    border-top:
+      1px solid var(--border);
+
+    padding: 28px 0;
 
     color: var(--muted);
 
-    background: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
 
-    padding: 6px 10px;
+    text-align: center;
 
-    border-radius: 6px;
+    position: relative;
 
-    backdrop-filter: blur(8px);
+    z-index: 2;
   }
 
-  /* =========================
-     TABLET / SMALL LAPTOP
-     ========================= */
 
-  @media (max-width: 1000px) {
+  /* =========================================================
+     LAPTOP
+     ========================================================= */
+
+  @media (max-width: 1100px) {
 
     .wrap {
-      padding: 0 26px;
+      max-width: 100%;
+      padding-left: 28px;
+      padding-right: 28px;
     }
 
     .hero {
-      gap: 40px;
+      grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(0, 0.95fr);
+
+      gap: 36px;
     }
 
     h1 {
-      font-size: 2.45rem;
+      font-size: 2.55rem;
     }
 
     .hero p.sub {
       font-size: 1rem;
     }
 
-    .code-line {
+    #code {
       font-size: 0.82rem;
     }
   }
 
-  /* =========================
-     MOBILE / TABLET
-     ========================= */
+
+  /* =========================================================
+     TABLET
+     ========================================================= */
 
   @media (max-width: 900px) {
 
+    .wrap {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
     .hero {
       grid-template-columns: 1fr;
-      gap: 40px;
 
-      padding: 40px 0 80px;
+      gap: 42px;
+
+      padding:
+        42px 0 75px;
 
       min-height: auto;
     }
 
     h1 {
       max-width: 600px;
+
+      font-size: 2.5rem;
     }
 
     .hero p.sub {
@@ -396,20 +805,28 @@
     .editor {
       width: 100%;
     }
+
+    .grid {
+      grid-template-columns:
+        1fr;
+    }
   }
 
-  /* =========================
+
+  /* =========================================================
      MOBILE
-     ========================= */
+     ========================================================= */
 
   @media (max-width: 600px) {
 
     .wrap {
-      padding: 0 18px;
+      padding-left: 18px;
+      padding-right: 18px;
     }
 
     header {
       padding: 18px 0;
+
       min-height: 65px;
     }
 
@@ -419,62 +836,104 @@
 
     h1 {
       font-size: 2rem;
+
       line-height: 1.18;
     }
 
     .hero {
       gap: 32px;
-      padding: 30px 0 70px;
+
+      padding:
+        30px 0 65px;
     }
 
     .hero p.sub {
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+
       margin-top: 16px;
     }
 
     .cta-row {
       margin-top: 26px;
+
       flex-direction: column;
+
       gap: 10px;
     }
 
     .btn {
       width: 100%;
+
       text-align: center;
     }
 
-    .code-line {
+    #code {
+      min-height: 125px;
+
       font-size: 0.74rem;
+
       padding: 14px;
     }
 
     .editor-bar {
-      padding: 10px 14px;
+      padding:
+        10px 14px;
     }
 
     .run-row {
-      padding: 10px 14px;
+      padding:
+        10px 14px;
     }
 
     .run-row span {
       font-size: 0.7rem !important;
     }
 
-    .run-row button {
-      padding: 7px 13px;
+    #run-btn {
+      padding:
+        7px 13px;
+
       font-size: 0.8rem;
     }
 
-    .tag {
-      bottom: 10px;
-      left: 10px;
-      font-size: 0.65rem;
+    #output {
+      margin:
+        0 14px 14px;
+
+      font-size: 0.74rem;
+
+      padding:
+        12px;
+    }
+
+    .features {
+      padding-top: 10px !important;
+    }
+
+    .features h2 {
+      font-size: 1.4rem;
+    }
+
+    .card {
+      padding:
+        23px 20px;
+    }
+
+    .toast-stack {
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+    }
+
+    .toast {
+      font-size: 0.8rem;
     }
   }
 
-  /* =========================
+
+  /* =========================================================
      VERY SMALL PHONES
-     ========================= */
+     ========================================================= */
 
   @media (max-width: 380px) {
 
@@ -486,7 +945,7 @@
       padding-top: 25px;
     }
 
-    .code-line {
+    #code {
       font-size: 0.68rem;
     }
 
@@ -497,26 +956,60 @@
     .run-row {
       justify-content: flex-end;
     }
+
+    .card p {
+      font-size: 0.86rem;
+    }
   }
+
+
+  /* =========================================================
+     REDUCED MOTION
+     ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     THREE.JS BACKGROUND
-     ========================= -->
-
 <div id="canvas-wrap"></div>
 
-<div class="tag">
-  Preview: Light theme + 3D shape
-</div>
+<canvas id="trail-canvas"></canvas>
 
+<svg
+  class="grain"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <filter
+    id="n"
+  >
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.85"
+      numOctaves="2"
+      stitchTiles="stitch"
+    />
+  </filter>
 
-<!-- =========================
-     MAIN CONTENT
-     ========================= -->
+  <rect
+    width="100%"
+    height="100%"
+    filter="url(#n)"
+  />
+</svg>
+
 
 <div class="wrap">
 
@@ -527,17 +1020,29 @@
     </div>
 
     <nav>
-      <a href="#">Lessons</a>
-      <a href="#">Errors</a>
-      <a href="#">Projects</a>
+
+      <a href="lessons-variables.html">
+        Lessons
+      </a>
+
+      <a href="errors.html">
+        Errors
+      </a>
+
+      <a href="projects.html">
+        Projects
+      </a>
+
     </nav>
 
   </header>
 
 
-  <section class="hero">
+  <!-- =========================
+       HERO
+       ========================= -->
 
-    <!-- HERO TEXT -->
+  <section class="hero">
 
     <div>
 
@@ -551,11 +1056,18 @@
 
       <div class="cta-row">
 
-        <a href="#" class="btn btn-primary">
+        <a
+          href="lessons-variables.html"
+          class="btn btn-primary magnetic"
+          id="magnet-btn"
+        >
           Shuru karo — Free
         </a>
 
-        <a href="#" class="btn btn-ghost">
+        <a
+          href="errors.html"
+          class="btn btn-ghost"
+        >
           Error Dictionary dekho
         </a>
 
@@ -564,29 +1076,104 @@
     </div>
 
 
-    <!-- CODE EDITOR -->
+    <!-- =========================
+         CODE EDITOR
+         ========================= -->
 
     <div class="editor">
 
       <div class="editor-bar">
+
         <span class="dot r"></span>
         <span class="dot y"></span>
         <span class="dot g"></span>
+
       </div>
 
-      <div class="code-line">print("Chalo shuru karte hain!")
+      <textarea id="code">print("Chalo shuru karte hain!")
 for i in range(3):
-    print("Line", i)</div>
+    print("Line", i)</textarea>
 
       <div class="run-row">
 
-        <span style="color: var(--muted); font-size: 0.8rem;">
+        <span
+          style="
+            color: var(--muted);
+            font-size: 0.8rem;
+          "
+        >
           Browser mein hi chalega
         </span>
 
-        <button>
+        <button
+          id="run-btn"
+          onclick="runCode()"
+        >
           ▶ Run
         </button>
+
+      </div>
+
+      <div id="output">
+        Output yahan dikhega...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FEATURES
+       ========================= -->
+
+  <section class="features">
+
+    <h2>
+      Sab kuch ek jagah
+    </h2>
+
+    <p class="lead">
+      Beginner se lekar apni website/app banane tak — sab structured order mein.
+    </p>
+
+    <div class="grid">
+
+      <div class="card c1">
+
+        <h3>
+          Foundations
+        </h3>
+
+        <p>
+          Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.
+        </p>
+
+      </div>
+
+
+      <div class="card c2">
+
+        <h3>
+          Error Dictionary
+        </h3>
+
+        <p>
+          Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.
+        </p>
+
+      </div>
+
+
+      <div class="card c3">
+
+        <h3>
+          Real Projects
+        </h3>
+
+        <p>
+          Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.
+        </p>
 
       </div>
 
@@ -594,327 +1181,1025 @@ for i in range(3):
 
   </section>
 
+
+  <footer>
+    Built by a student, for students. PyStart.
+  </footer>
+
 </div>
+
+
+<div
+  class="toast-stack"
+  id="toast-stack"
+></div>
+
+
+<!-- =========================
+     PYODIDE
+     ========================= -->
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+
+<script>
+
+  let pyodideReady = null;
+
+
+  async function initPyodide() {
+
+    if (!pyodideReady) {
+      pyodideReady = await loadPyodide();
+    }
+
+    return pyodideReady;
+  }
+
+
+  async function runCode() {
+
+    const btn =
+      document.getElementById('run-btn');
+
+    const out =
+      document.getElementById('output');
+
+    const code =
+      document.getElementById('code').value;
+
+
+    btn.disabled = true;
+
+    btn.textContent =
+      '⏳ Loading...';
+
+
+    out.innerHTML =
+      '<div class="skeleton">' +
+        '<div class="skeleton-line" style="width:70%"></div>' +
+        '<div class="skeleton-line" style="width:45%"></div>' +
+      '</div>';
+
+
+    try {
+
+      const pyodide =
+        await initPyodide();
+
+
+      btn.textContent =
+        '▶ Run';
+
+
+      pyodide.runPython(
+        `import sys, io\nsys.stdout = io.StringIO()`
+      );
+
+
+      pyodide.runPython(code);
+
+
+      const result =
+        pyodide.runPython(
+          "sys.stdout.getvalue()"
+        );
+
+
+      out.textContent =
+        result ||
+        '(koi output nahi — print() use karo)';
+
+
+      showToast(
+        'Code chal gaya ✅'
+      );
+
+    } catch (err) {
+
+      out.textContent =
+        'Error:\n' +
+        err.message;
+
+
+      showToast(
+        'Code mein error hai ⚠️'
+      );
+    }
+
+
+    btn.disabled = false;
+
+    btn.textContent =
+      '▶ Run';
+  }
+
+
+  /* =========================
+     TOAST
+     ========================= */
+
+  function showToast(message) {
+
+    const stack =
+      document.getElementById(
+        'toast-stack'
+      );
+
+    const el =
+      document.createElement('div');
+
+
+    el.className =
+      'toast';
+
+    el.textContent =
+      message;
+
+
+    stack.appendChild(el);
+
+
+    setTimeout(
+      () => el.remove(),
+      3200
+    );
+  }
+
+
+  /* =========================
+     MAGNETIC BUTTON
+     ========================= */
+
+  const magnet =
+    document.getElementById(
+      'magnet-btn'
+    );
+
+
+  if (magnet) {
+
+    magnet.addEventListener(
+      'mousemove',
+      (e) => {
+
+        /*
+          Disable magnetic effect
+          on small/touch devices.
+        */
+
+        if (
+          window.innerWidth <= 900
+        ) {
+          return;
+        }
+
+
+        const rect =
+          magnet.getBoundingClientRect();
+
+
+        const relX =
+          e.clientX -
+          rect.left -
+          rect.width / 2;
+
+
+        const relY =
+          e.clientY -
+          rect.top -
+          rect.height / 2;
+
+
+        magnet.style.transform =
+          `translate(
+            ${relX * 0.25}px,
+            ${relY * 0.4}px
+          )`;
+      }
+    );
+
+
+    magnet.addEventListener(
+      'mouseleave',
+      () => {
+
+        magnet.style.transform =
+          'translate(0, 0)';
+      }
+    );
+  }
+
+</script>
+
+
+<!-- =========================
+     CURSOR PARTICLE TRAIL
+     ========================= -->
+
+<script>
+
+(function () {
+
+  const canvas =
+    document.getElementById(
+      'trail-canvas'
+    );
+
+  const ctx =
+    canvas.getContext('2d');
+
+
+  function resize() {
+
+    canvas.width =
+      window.innerWidth;
+
+    canvas.height =
+      window.innerHeight;
+  }
+
+
+  resize();
+
+
+  window.addEventListener(
+    'resize',
+    resize
+  );
+
+
+  const reduced =
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+
+  const colors = [
+    '#ffb84d',
+    '#a78bfa',
+    '#6ee7b7',
+    '#ff8fb1'
+  ];
+
+
+  let particles = [];
+
+
+  let mouseX =
+    window.innerWidth / 2;
+
+  let mouseY =
+    window.innerHeight / 2;
+
+
+  let lastX =
+    mouseX;
+
+  let lastY =
+    mouseY;
+
+
+  window.addEventListener(
+    'mousemove',
+    (e) => {
+
+      mouseX =
+        e.clientX;
+
+      mouseY =
+        e.clientY;
+
+
+      const dist =
+        Math.hypot(
+          mouseX - lastX,
+          mouseY - lastY
+        );
+
+
+      const count =
+        Math.min(
+          Math.floor(dist / 4),
+          6
+        );
+
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+
+        const p =
+          i / count;
+
+
+        particles.push({
+
+          x:
+            lastX +
+            (mouseX - lastX) * p +
+            (Math.random() - 0.5) * 6,
+
+          y:
+            lastY +
+            (mouseY - lastY) * p +
+            (Math.random() - 0.5) * 6,
+
+          vx:
+            (Math.random() - 0.5) * 0.6,
+
+          vy:
+            (Math.random() - 0.5) * 0.6 - 0.3,
+
+          life: 1,
+
+          size:
+            1.5 +
+            Math.random() * 2.5,
+
+          color:
+            colors[
+              Math.floor(
+                Math.random() *
+                colors.length
+              )
+            ]
+        });
+      }
+
+
+      lastX =
+        mouseX;
+
+      lastY =
+        mouseY;
+
+
+      if (
+        particles.length > 220
+      ) {
+
+        particles.splice(
+          0,
+          particles.length - 220
+        );
+      }
+
+    }
+  );
+
+
+  function tick() {
+
+    requestAnimationFrame(
+      tick
+    );
+
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+
+    if (reduced) {
+      return;
+    }
+
+
+    particles.forEach(
+      p => {
+
+        p.x += p.vx;
+
+        p.y += p.vy;
+
+        p.life -= 0.018;
+      }
+    );
+
+
+    particles =
+      particles.filter(
+        p => p.life > 0
+      );
+
+
+    particles.forEach(
+      p => {
+
+        ctx.globalAlpha =
+          Math.max(p.life, 0) *
+          0.85;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+          p.x,
+          p.y,
+          p.size * p.life,
+          0,
+          Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+          p.color;
+
+
+        ctx.shadowBlur =
+          12;
+
+
+        ctx.shadowColor =
+          p.color;
+
+
+        ctx.fill();
+      }
+    );
+
+
+    ctx.globalAlpha = 1;
+
+    ctx.shadowBlur = 0;
+  }
+
+
+  tick();
+
+})();
+
+</script>
 
 
 <!-- =========================
      THREE.JS
      ========================= -->
 
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+(function () {
+
+  if (
+    typeof THREE === 'undefined'
+  ) {
+    return;
   }
-}
-</script>
-
-<script type="module">
-
-import * as THREE from 'three';
 
 
-/* =========================
-   SETUP
-   ========================= */
-
-const wrap = document.getElementById('canvas-wrap');
-
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(
-  45,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  100
-);
-
-camera.position.set(0, 0, 7);
-
-
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  alpha: true
-});
-
-renderer.setSize(
-  window.innerWidth,
-  window.innerHeight
-);
-
-renderer.setPixelRatio(
-  Math.min(window.devicePixelRatio, 2)
-);
-
-wrap.appendChild(renderer.domElement);
-
-
-/* =========================
-   LIGHTING
-   ========================= */
-
-scene.add(
-  new THREE.AmbientLight(
-    0xffffff,
-    1.6
-  )
-);
-
-
-const l1 = new THREE.PointLight(
-  0x7c5cff,
-  55,
-  22
-);
-
-l1.position.set(
-  4,
-  3,
-  4
-);
-
-scene.add(l1);
-
-
-const l2 = new THREE.PointLight(
-  0xe08a1e,
-  40,
-  22
-);
-
-l2.position.set(
-  -3,
-  -2,
-  3
-);
-
-scene.add(l2);
-
-
-const l3 = new THREE.DirectionalLight(
-  0xffffff,
-  0.9
-);
-
-l3.position.set(
-  0,
-  6,
-  6
-);
-
-scene.add(l3);
-
-
-/* =========================
-   3D TORUS KNOT
-   ========================= */
-
-const geo = new THREE.TorusKnotGeometry(
-  1.3,
-  0.42,
-  220,
-  32,
-  2,
-  3
-);
-
-
-const mat = new THREE.MeshStandardMaterial({
-  color: 0xffffff,
-  metalness: 0.35,
-  roughness: 0.15,
-  emissive: 0xf3ecff,
-  emissiveIntensity: 0.15
-});
-
-
-const knot = new THREE.Mesh(
-  geo,
-  mat
-);
-
-scene.add(knot);
-
-
-/* =========================
-   RESPONSIVE 3D POSITION
-   ========================= */
-
-function updateKnotPosition() {
-
-  const width = window.innerWidth;
-
-
-  /*
-    DESKTOP
-    Large screens:
-    place object to the right.
-  */
-
-  if (width > 1200) {
-
-    knot.position.set(
-      2.4,
-      0,
-      -1
+  const wrap =
+    document.getElementById(
+      'canvas-wrap'
     );
 
-    knot.scale.setScalar(1);
 
-  }
+  const scene =
+    new THREE.Scene();
 
 
-  /*
-    LAPTOP
-    Prevent the object from getting
-    too close to the text/editor.
-  */
-
-  else if (width > 900) {
-
-    knot.position.set(
-      2.0,
-      0,
-      -1
+  const camera =
+    new THREE.PerspectiveCamera(
+      45,
+      window.innerWidth /
+        window.innerHeight,
+      0.1,
+      100
     );
 
-    knot.scale.setScalar(0.85);
 
-  }
-
-
-  /*
-    TABLET / MOBILE
-    Move it down and make it smaller.
-  */
-
-  else if (width > 600) {
-
-    knot.position.set(
-      1.2,
-      -1.8,
-      -1
-    );
-
-    knot.scale.setScalar(0.7);
-
-  }
+  camera.position.set(
+    0,
+    0,
+    7
+  );
 
 
-  /*
-    SMALL PHONE
-  */
+  const renderer =
+    new THREE.WebGLRenderer({
 
-  else {
+      antialias: true,
 
-    knot.position.set(
-      0,
-      -2.4,
-      -1
-    );
+      alpha: true
 
-    knot.scale.setScalar(0.55);
-
-  }
-
-}
-
-
-/* Initial position */
-
-updateKnotPosition();
-
-
-/* =========================
-   RESIZE HANDLER
-   ========================= */
-
-function onResize() {
-
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-
-
-  camera.aspect = width / height;
-
-  camera.updateProjectionMatrix();
+    });
 
 
   renderer.setSize(
-    width,
-    height
+    window.innerWidth,
+    window.innerHeight
   );
 
 
   renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio, 2)
+    Math.min(
+      window.devicePixelRatio,
+      2
+    )
   );
 
 
-  updateKnotPosition();
-
-}
-
-
-window.addEventListener(
-  'resize',
-  onResize
-);
-
-
-/* =========================
-   ANIMATION
-   ========================= */
-
-const reduced =
-  window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
-
-
-let t = 0;
-
-
-function animate() {
-
-  requestAnimationFrame(
-    animate
+  wrap.appendChild(
+    renderer.domElement
   );
 
 
-  if (!reduced) {
+  /* =========================
+     LIGHTING
+     ========================= */
 
-    t += 0.004;
+  scene.add(
+    new THREE.AmbientLight(
+      0x6a5fae,
+      1.0
+    )
+  );
 
 
-    knot.rotation.x =
-      t * 0.6;
+  const rim1 =
+    new THREE.PointLight(
+      0xa78bfa,
+      90,
+      26
+    );
+
+  rim1.position.set(
+    4,
+    3,
+    4
+  );
+
+  scene.add(rim1);
 
 
-    knot.rotation.y =
-      t;
+  const rim2 =
+    new THREE.PointLight(
+      0xffb84d,
+      70,
+      26
+    );
+
+  rim2.position.set(
+    -3,
+    -2,
+    3
+  );
+
+  scene.add(rim2);
 
 
-    knot.position.y +=
-      (
-        Math.sin(t * 1.2) * 0.3
-        - knot.position.y
-      ) * 0.02;
+  const rim3 =
+    new THREE.PointLight(
+      0x6ee7b7,
+      50,
+      22
+    );
+
+  rim3.position.set(
+    0,
+    -3,
+    2
+  );
+
+  scene.add(rim3);
+
+
+  const key =
+    new THREE.DirectionalLight(
+      0xffffff,
+      0.6
+    );
+
+  key.position.set(
+    2,
+    4,
+    5
+  );
+
+  scene.add(key);
+
+
+  /* =========================
+     3D GROUP
+     ========================= */
+
+  const group =
+    new THREE.Group();
+
+
+  scene.add(group);
+
+
+  /*
+    THIS IS THE IMPORTANT PART.
+
+    Original first version:
+      knot.position.set(2.4, 0, -1)
+
+    So desktop is kept close to that.
+  */
+
+  function update3DPosition() {
+
+    const width =
+      window.innerWidth;
+
+
+    /* =====================
+       LARGE DESKTOP
+       ===================== */
+
+    if (width > 1200) {
+
+      group.position.set(
+        2.4,
+        0,
+        -1
+      );
+
+      group.scale.setScalar(
+        1
+      );
+
+    }
+
+
+    /* =====================
+       LAPTOP
+       ===================== */
+
+    else if (width > 900) {
+
+      group.position.set(
+        2.05,
+        0,
+        -1
+      );
+
+      group.scale.setScalar(
+        0.85
+      );
+
+    }
+
+
+    /* =====================
+       TABLET
+       ===================== */
+
+    else if (width > 600) {
+
+      group.position.set(
+        1.0,
+        -1.5,
+        -1
+      );
+
+      group.scale.setScalar(
+        0.7
+      );
+
+    }
+
+
+    /* =====================
+       PHONE
+       ===================== */
+
+    else {
+
+      group.position.set(
+        0,
+        -2.2,
+        -1
+      );
+
+      group.scale.setScalar(
+        0.55
+      );
+
+    }
 
   }
 
 
-  renderer.render(
-    scene,
-    camera
+  /* =========================
+     MATERIAL
+     ========================= */
+
+  const knotMat =
+    new THREE.MeshStandardMaterial({
+
+      color: 0x2d2550,
+
+      metalness: 0.55,
+
+      roughness: 0.18,
+
+      emissive: 0xa78bfa,
+
+      emissiveIntensity: 0.45
+
+    });
+
+
+  /* =========================
+     TORUS KNOT
+
+     Same basic size/shape as
+     your first version.
+     ========================= */
+
+  const knot =
+    new THREE.Mesh(
+
+      new THREE.TorusKnotGeometry(
+        1.3,
+        0.42,
+        220,
+        32,
+        2,
+        3
+      ),
+
+      knotMat
+
+    );
+
+
+  group.add(knot);
+
+
+  update3DPosition();
+
+
+  /* =========================
+     RESIZE
+     ========================= */
+
+  function onResize() {
+
+    const width =
+      window.innerWidth;
+
+    const height =
+      window.innerHeight;
+
+
+    camera.aspect =
+      width / height;
+
+
+    camera.updateProjectionMatrix();
+
+
+    renderer.setSize(
+      width,
+      height
+    );
+
+
+    renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio,
+        2
+      )
+    );
+
+
+    update3DPosition();
+  }
+
+
+  window.addEventListener(
+    'resize',
+    onResize
   );
 
-}
+
+  /* =========================
+     REDUCED MOTION
+     ========================= */
+
+  const reduced =
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
 
 
-animate();
+  /* =========================
+     CURSOR PARALLAX
+     ========================= */
+
+  let targetX = 0;
+  let targetY = 0;
+
+  let curX = 0;
+  let curY = 0;
+
+
+  window.addEventListener(
+    'mousemove',
+    (e) => {
+
+      /*
+        Don't calculate unnecessary
+        cursor parallax on small screens.
+      */
+
+      if (
+        window.innerWidth <= 900
+      ) {
+
+        targetX = 0;
+        targetY = 0;
+
+        return;
+      }
+
+
+      targetX =
+        (e.clientX /
+          window.innerWidth) *
+          2 -
+        1;
+
+
+      targetY =
+        (e.clientY /
+          window.innerHeight) *
+          2 -
+        1;
+
+    }
+  );
+
+
+  /* =========================
+     ANIMATION
+     ========================= */
+
+  let t = 0;
+
+
+  function animate() {
+
+    requestAnimationFrame(
+      animate
+    );
+
+
+    if (!reduced) {
+
+      t += 0.005;
+
+
+      /*
+        Continuous rotation
+      */
+
+      knot.rotation.x =
+        t * 0.6;
+
+
+      knot.rotation.y =
+        t * 1.0;
+
+
+      /*
+        Color cycle
+      */
+
+      const hue =
+        (t * 0.025) % 1;
+
+
+      knotMat.color.setHSL(
+        hue,
+        0.55,
+        0.35
+      );
+
+
+      knotMat.emissive.setHSL(
+        hue,
+        0.8,
+        0.55
+      );
+
+
+      /*
+        Smooth floating movement.
+
+        Keep the base position set by
+        update3DPosition().
+      */
+
+      const baseY =
+        window.innerWidth > 1200
+          ? 0
+          : window.innerWidth > 900
+            ? 0
+            : window.innerWidth > 600
+              ? -1.5
+              : -2.2;
+
+
+      group.position.y =
+        baseY +
+        Math.sin(t * 1.1) *
+        (
+          window.innerWidth <= 600
+            ? 0.15
+            : 0.35
+        );
+
+
+      group.rotation.z =
+        Math.sin(t * 0.5) *
+        0.08;
+
+
+      /*
+        Moving lights
+      */
+
+      rim1.position.set(
+
+        Math.cos(t * 0.6) * 5,
+
+        3 +
+        Math.sin(t * 0.4) * 1.5,
+
+        Math.sin(t * 0.6) * 5
+
+      );
+
+
+      rim2.position.set(
+
+        Math.cos(t * 0.4 + 2) * 4,
+
+        -2 +
+        Math.cos(t * 0.5) * 1.5,
+
+        Math.sin(t * 0.4 + 2) * 4
+
+      );
+
+
+      /*
+        Cursor parallax
+      */
+
+      curX +=
+        (targetX - curX) *
+        0.04;
+
+
+      curY +=
+        (targetY - curY) *
+        0.04;
+
+
+      camera.position.x =
+        curX * 0.9;
+
+
+      camera.position.y =
+        -curY * 0.6;
+
+
+      camera.lookAt(
+        1.0,
+        0.1,
+        -0.5
+      );
+
+    }
+
+
+    renderer.render(
+      scene,
+      camera
+    );
+
+  }
+
+
+  animate();
+
+})();
 
 </script>
+
 
 </body>
 </html>
