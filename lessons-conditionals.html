@@ -7,42 +7,37 @@
   <link rel="stylesheet" href="css/global.css">
   <script src="js/global.js" defer></script>
 </head>
-
 <body class="lesson-page">
 
 <header class="site-header">
   <a href="index.html" class="logo">PyStart</a>
-
   <nav class="top-nav">
     <a href="index.html">Home</a>
     <a href="lessons-variables.html" class="active">Lessons</a>
     <a href="errors.html">Errors</a>
     <a href="#">Projects</a>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
-      <span class="theme-icon" aria-hidden="true">☾</span>
+    <button class="theme-toggle" id="theme-toggle" type="button">
+      <span class="theme-icon">☾</span>
       <span class="theme-label">Dark</span>
     </button>
   </nav>
 </header>
 
 <main class="lesson-layout">
-
   <aside class="lesson-sidebar">
     <div class="sidebar-section">
       <h3>Basics</h3>
       <a href="lessons-variables.html">1. Variables</a>
       <a href="lessons-data-types.html">2. Data Types</a>
       <a href="lessons-loops.html">3. Loops</a>
-      <a href="lessons-conditionals.html">4. Conditionals</a>
+      <a href="lessons-conditionals.html" class="active">4. Conditionals</a>
       <a href="lessons-functions.html">5. Functions</a>
     </div>
-
     <div class="sidebar-section">
       <h3>Intermediate</h3>
       <a href="lessons-oop.html">OOP Basics</a>
       <a href="lessons-exceptions.html">Exception Handling</a>
     </div>
-
     <div class="sidebar-section">
       <h3>Advanced</h3>
       <a href="lessons-apis.html">APIs &amp; Requests</a>
@@ -60,14 +55,12 @@
       <p>Every program needs to make decisions. Python uses <code>if</code>, <code>elif</code>, and <code>else</code> to control what happens when a condition is true or false.</p>
 
       <h2>Basic if-else</h2>
-      <div class="codeblock">
-<pre><code>age = 20
+      <div class="codeblock"><pre><code>age = 20
 
 if age &gt;= 18:
     print("You can vote")
 else:
-    print("You cannot vote yet")</code></pre>
-      </div>
+    print("You cannot vote yet")</code></pre></div>
 
       <p>Indentation, or spaces at the beginning of a line, is very important in Python. Code inside an <code>if</code> block must be indented.</p>
     </section>
@@ -76,8 +69,7 @@ else:
       <h2>Multiple Conditions — elif</h2>
       <p>Use <code>elif</code> when you need to check more than two possible conditions.</p>
 
-      <div class="codeblock">
-<pre><code>marks = 72
+      <div class="codeblock"><pre><code>marks = 72
 
 if marks &gt;= 90:
     print("Grade A")
@@ -86,8 +78,7 @@ elif marks &gt;= 75:
 elif marks &gt;= 60:
     print("Grade C")
 else:
-    print("Fail")</code></pre>
-      </div>
+    print("Fail")</code></pre></div>
 
       <p>Python checks conditions from top to bottom. As soon as it finds a condition that is <code>True</code>, that block runs and the remaining conditions are skipped.</p>
     </section>
@@ -127,7 +118,6 @@ else:
     print("Fail")</textarea>
 
       <button id="run-btn" class="run-btn magnetic" onclick="runCode()">Run Code</button>
-
       <pre id="output" class="output">Output will appear here...</pre>
     </section>
 
@@ -136,8 +126,6 @@ else:
       <a href="lessons-functions.html" class="lesson-nav-btn">Next: Functions →</a>
     </div>
   </article>
-
 </main>
-
 </body>
 </html>
