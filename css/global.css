@@ -1762,3 +1762,15 @@
     padding: 9px 10px;
   }
 }
+
+
+/* Reusable lesson warning note */
+.lesson-page .note.warn {
+  border-color: #f0b4b4;
+  background: #fff5f5;
+  color: #7f3030;
+}
+
+.lesson-page .note.warn strong {
+  color: #b23a3a;
+}
