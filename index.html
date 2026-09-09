@@ -3,179 +3,56 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PyStart — Python jo samajh aaye</title>
+<title>Hero Preview — Light</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #14121f;
-    --surface: #1c1930;
-    --text: #f2f0f7;
-    --muted: #a19dbd;
-    --amber: #ffb84d;
-    --violet: #a78bfa;
-    --mint: #6ee7b7;
-    --border: #302b4d;
+    --bg: #f6f7fb; --surface: #ffffff; --text: #14171f;
+    --muted: #6b7186; --amber: #e08a1e; --violet: #7c5cff; --border: #e3e6f0;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: radial-gradient(ellipse at 30% 20%, #1e1a35 0%, var(--bg) 55%);
-    color: var(--text);
-    font-family: 'Sora', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-    position: relative;
-    cursor: default;
-  }
-
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; overflow-x: hidden; }
   #canvas-wrap { position: fixed; inset: 0; z-index: 0; }
-
-  /* cursor particle trail canvas — the "pixels move near cursor" feel */
-  #trail-canvas {
-    position: fixed; inset: 0; z-index: 1; pointer-events: none;
-  }
-
-  .grain {
-    position: fixed; inset: 0; z-index: 3; pointer-events: none;
-    opacity: 0.05; mix-blend-mode: overlay;
-  }
-
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
-
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
   header { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; }
-  .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
-  .logo span { color: var(--amber); }
-  nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.95rem; transition: color 0.2s; }
-  nav a:hover { color: var(--text); }
-
-  .hero {
-    display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center;
-    padding: 64px 0 110px; min-height: 78vh;
-  }
-  @media (max-width: 800px) { .hero { grid-template-columns: 1fr; padding: 28px 0 56px; min-height: auto; } }
-
-  h1 {
-    font-size: 2.75rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; max-width: 480px;
-    background: linear-gradient(100deg, #ffe4b8 0%, #ffb84d 25%, #a78bfa 55%, #6ee7b7 80%, #ffe4b8 100%);
-    background-size: 300% auto;
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: gradientShift 8s ease-in-out infinite;
-  }
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% center; }
-    50% { background-position: 100% center; }
-  }
+  .logo { font-weight: 800; font-size: 1.25rem; }
+  .logo span { color: var(--violet); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 28px; font-size: 0.95rem; }
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; padding: 70px 0 120px; min-height: 80vh; }
+  @media (max-width: 800px) { .hero { grid-template-columns: 1fr; padding: 30px 0 60px; } }
+  h1 { font-size: 2.7rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.16; max-width: 480px; color: #14171f; }
   .hero p.sub { margin-top: 18px; color: var(--muted); font-size: 1.05rem; max-width: 440px; }
-
   .cta-row { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn {
-    padding: 13px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
-    text-decoration: none; display: inline-block; border: 1px solid transparent;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .btn-primary { background: var(--amber); color: #14121f; }
-  .btn-primary:hover { box-shadow: 0 10px 28px rgba(255,184,77,0.3); }
-  .btn-ghost { border-color: var(--border); color: var(--text); background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); }
-  .btn-ghost:hover { border-color: var(--violet); color: var(--violet); }
-  .magnetic { transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1); will-change: transform; }
-
-  /* toast notification */
-  .toast-stack { position: fixed; bottom: 24px; right: 24px; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
-  .toast {
-    background: rgba(28,25,48,0.9); backdrop-filter: blur(12px);
-    border: 1px solid var(--border); border-left: 3px solid var(--mint);
-    padding: 12px 18px; border-radius: 10px; font-size: 0.88rem; color: var(--text);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-    transform: translateX(120%); opacity: 0;
-    animation: toastIn 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards, toastOut 0.4s ease-in 2.6s forwards;
-  }
-  @keyframes toastIn { to { transform: translateX(0); opacity: 1; } }
-  @keyframes toastOut { to { transform: translateX(120%); opacity: 0; } }
-
-  /* skeleton shimmer loader */
-  .skeleton { display: flex; flex-direction: column; gap: 8px; padding: 2px 0; }
-  .skeleton-line {
-    height: 12px; border-radius: 4px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.3s ease-in-out infinite;
-  }
-  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
+  .btn { padding: 13px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none; display: inline-block; border: 1px solid transparent; }
+  .btn-primary { background: #14171f; color: #fff; }
+  .btn-ghost { border-color: var(--border); color: #14171f; background: rgba(255,255,255,0.5); backdrop-filter: blur(6px); }
   .editor {
-    background: rgba(28, 25, 48, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+    box-shadow: 0 30px 80px rgba(90, 70, 150, 0.18);
   }
-  .editor-bar { display: flex; gap: 6px; padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); }
+  .editor-bar { display: flex; gap: 6px; padding: 12px 16px; background: rgba(240,241,248,0.7); border-bottom: 1px solid var(--border); }
   .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot.r { background: #ff6b6b; } .dot.y { background: #ffd166; } .dot.g { background: #6ee7b7; }
-
-  #code {
-    width: 100%; min-height: 130px; background: transparent; color: var(--text); border: none;
-    padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; resize: vertical; outline: none;
-  }
+  .dot.r { background: #ff6b6b; } .dot.y { background: #ffb84d; } .dot.g { background: #35c98c; }
+  .code-line { padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #1f7a52; white-space: pre; }
   .run-row { padding: 12px 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  #run-btn {
-    background: var(--mint); color: #0e1a15; border: none; padding: 8px 18px; border-radius: 6px;
-    font-weight: 600; font-family: 'Sora', sans-serif; cursor: pointer; font-size: 0.9rem; transition: transform 0.15s ease;
-  }
-  #run-btn:hover { transform: translateY(-1px); }
-  #run-btn:disabled { opacity: 0.6; cursor: wait; }
-  #output {
-    margin: 0 16px 16px; background: #0a0912; border: 1px solid var(--border); border-radius: 8px;
-    padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--mint);
-    min-height: 24px; white-space: pre-wrap;
-  }
-
-  section.features { padding: 30px 0 90px; }
-  .features h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-  .features p.lead { color: var(--muted); margin-bottom: 36px; max-width: 520px; }
-
-  .grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
-  }
-  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
-
-  .card { background: rgba(28,25,48,0.7); backdrop-filter: blur(10px); padding: 26px 24px; position: relative; }
-  .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .card.c1::before { background: var(--amber); }
-  .card.c2::before { background: #ff6b6b; }
-  .card.c3::before { background: var(--mint); }
-  .card h3 { font-size: 1.05rem; margin-bottom: 8px; }
-  .card p { color: var(--muted); font-size: 0.92rem; }
-
-  footer {
-    border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted);
-    font-size: 0.85rem; text-align: center; position: relative; z-index: 2;
-  }
+  .run-row button { background: var(--violet); color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+  .tag { position: fixed; bottom: 16px; left: 16px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); background: rgba(255,255,255,0.7); padding: 6px 10px; border-radius: 6px; }
 </style>
 </head>
 <body>
 
 <div id="canvas-wrap"></div>
-<canvas id="trail-canvas"></canvas>
-<svg class="grain" xmlns="http://www.w3.org/2000/svg">
-  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
-  <rect width="100%" height="100%" filter="url(#n)"/>
-</svg>
+<div class="tag">Preview: Light theme + 3D shape</div>
 
 <div class="wrap">
   <header>
     <div class="logo">Py<span>Start</span></div>
-    <nav>
-      <a href="lessons-variables.html">Lessons</a>
-      <a href="errors.html">Errors</a>
-      <a href="projects.html">Projects</a>
-    </nav>
+    <nav><a href="#">Lessons</a><a href="#">Errors</a><a href="#">Projects</a></nav>
   </header>
 
   <section class="hero">
@@ -183,243 +60,75 @@
       <h1>Python seekho jaise koi doubt hi nahi bacha.</h1>
       <p class="sub">Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.</p>
       <div class="cta-row">
-        <a href="lessons-variables.html" class="btn btn-primary magnetic" id="magnet-btn">Shuru karo — Free</a>
-        <a href="errors.html" class="btn btn-ghost">Error Dictionary dekho</a>
+        <a href="#" class="btn btn-primary">Shuru karo — Free</a>
+        <a href="#" class="btn btn-ghost">Error Dictionary dekho</a>
       </div>
     </div>
 
     <div class="editor">
       <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
-      <textarea id="code">print("Chalo shuru karte hain!")
+      <div class="code-line">print("Chalo shuru karte hain!")
 for i in range(3):
-    print("Line", i)</textarea>
+    print("Line", i)</div>
       <div class="run-row">
         <span style="color: var(--muted); font-size: 0.8rem;">Browser mein hi chalega</span>
-        <button id="run-btn" onclick="runCode()">▶ Run</button>
-      </div>
-      <div id="output">Output yahan dikhega...</div>
-    </div>
-  </section>
-
-  <section class="features">
-    <h2>Sab kuch ek jagah</h2>
-    <p class="lead">Beginner se lekar apni website/app banane tak — sab structured order mein.</p>
-    <div class="grid">
-      <div class="card c1">
-        <h3>Foundations</h3>
-        <p>Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.</p>
-      </div>
-      <div class="card c2">
-        <h3>Error Dictionary</h3>
-        <p>Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.</p>
-      </div>
-      <div class="card c3">
-        <h3>Real Projects</h3>
-        <p>Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.</p>
+        <button>▶ Run</button>
       </div>
     </div>
   </section>
-
-  <footer>Built by a student, for students. PyStart.</footer>
 </div>
 
-<div class="toast-stack" id="toast-stack"></div>
-
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
-<script>
-  let pyodideReady = null;
-  async function initPyodide() { if (!pyodideReady) pyodideReady = await loadPyodide(); return pyodideReady; }
-  async function runCode() {
-    const btn = document.getElementById('run-btn');
-    const out = document.getElementById('output');
-    const code = document.getElementById('code').value;
-    btn.disabled = true; btn.textContent = '⏳ Loading...';
-    out.innerHTML = '<div class="skeleton"><div class="skeleton-line" style="width:70%"></div><div class="skeleton-line" style="width:45%"></div></div>';
-    try {
-      const pyodide = await initPyodide();
-      btn.textContent = '▶ Run';
-      pyodide.runPython(`import sys, io\nsys.stdout = io.StringIO()`);
-      pyodide.runPython(code);
-      const result = pyodide.runPython("sys.stdout.getvalue()");
-      out.textContent = result || '(koi output nahi — print() use karo)';
-      showToast('Code chal gaya ✅');
-    } catch (err) {
-      out.textContent = 'Error:\n' + err.message;
-      showToast('Code mein error hai ⚠️');
-    }
-    btn.disabled = false; btn.textContent = '▶ Run';
-  }
-
-  // toast notifications — success/error micro-feedback
-  function showToast(message) {
-    const stack = document.getElementById('toast-stack');
-    const el = document.createElement('div');
-    el.className = 'toast';
-    el.textContent = message;
-    stack.appendChild(el);
-    setTimeout(() => el.remove(), 3200);
-  }
-
-  // magnetic button — pulls slightly toward the cursor within range
-  const magnet = document.getElementById('magnet-btn');
-  if (magnet) {
-    magnet.addEventListener('mousemove', (e) => {
-      const rect = magnet.getBoundingClientRect();
-      const relX = e.clientX - rect.left - rect.width / 2;
-      const relY = e.clientY - rect.top - rect.height / 2;
-      magnet.style.transform = `translate(${relX * 0.25}px, ${relY * 0.4}px)`;
-    });
-    magnet.addEventListener('mouseleave', () => {
-      magnet.style.transform = 'translate(0, 0)';
-    });
-  }
-
-  // crazy-rich cursor particle trail — colorful comet-tail sparks following the cursor
-  (function () {
-    const canvas = document.getElementById('trail-canvas');
-    const ctx = canvas.getContext('2d');
-    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const colors = ['#ffb84d', '#a78bfa', '#6ee7b7', '#ff8fb1'];
-    let particles = [];
-    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    let lastX = mouseX, lastY = mouseY;
-    let hue = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      const dist = Math.hypot(mouseX - lastX, mouseY - lastY);
-      const count = Math.min(Math.floor(dist / 4), 6);
-      for (let i = 0; i < count; i++) {
-        const p = i / count;
-        particles.push({
-          x: lastX + (mouseX - lastX) * p + (Math.random() - 0.5) * 6,
-          y: lastY + (mouseY - lastY) * p + (Math.random() - 0.5) * 6,
-          vx: (Math.random() - 0.5) * 0.6,
-          vy: (Math.random() - 0.5) * 0.6 - 0.3,
-          life: 1,
-          size: 1.5 + Math.random() * 2.5,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-      lastX = mouseX; lastY = mouseY;
-      if (particles.length > 220) particles.splice(0, particles.length - 220);
-    });
-
-    function tick() {
-      requestAnimationFrame(tick);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (reduced) return;
-
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy; p.life -= 0.018;
-      });
-      particles = particles.filter(p => p.life > 0);
-
-      particles.forEach(p => {
-        ctx.globalAlpha = Math.max(p.life, 0) * 0.85;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = p.color;
-        ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
-    }
-    tick();
-  })();
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
 </script>
+<script type="module">
+import * as THREE from 'three';
 
-<!-- classic (non-module) three.js build — more reliable across sandboxed/embedded viewers than ES modules -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function () {
-  if (typeof THREE === 'undefined') return;
+const wrap = document.getElementById('canvas-wrap');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 0, 7);
 
-  const wrap = document.getElementById('canvas-wrap');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 0, 7);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+wrap.appendChild(renderer.domElement);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+// lighting — soft studio light + violet/amber rim, like the reference
+scene.add(new THREE.AmbientLight(0xffffff, 1.6));
+const l1 = new THREE.PointLight(0x7c5cff, 55, 22); l1.position.set(4, 3, 4); scene.add(l1);
+const l2 = new THREE.PointLight(0xe08a1e, 40, 22); l2.position.set(-3, -2, 3); scene.add(l2);
+const l3 = new THREE.DirectionalLight(0xffffff, 0.9); l3.position.set(0, 6, 6); scene.add(l3);
+
+const geo = new THREE.TorusKnotGeometry(1.3, 0.42, 220, 32, 2, 3);
+const mat = new THREE.MeshStandardMaterial({
+  color: 0xffffff, metalness: 0.35, roughness: 0.15,
+  emissive: 0xf3ecff, emissiveIntensity: 0.15
+});
+const knot = new THREE.Mesh(geo, mat);
+knot.position.set(2.4, 0, -1);
+scene.add(knot);
+
+function onResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  wrap.appendChild(renderer.domElement);
+}
+window.addEventListener('resize', onResize);
 
-  scene.add(new THREE.AmbientLight(0x6a5fae, 1.0));
-  const rim1 = new THREE.PointLight(0xa78bfa, 90, 26); rim1.position.set(4, 3, 4); scene.add(rim1);
-  const rim2 = new THREE.PointLight(0xffb84d, 70, 26); rim2.position.set(-3, -2, 3); scene.add(rim2);
-  const rim3 = new THREE.PointLight(0x6ee7b7, 50, 22); rim3.position.set(0, -3, 2); scene.add(rim3);
-  const key = new THREE.DirectionalLight(0xffffff, 0.6); key.position.set(2, 4, 5); scene.add(key);
-
-  const group = new THREE.Group();
-  group.position.set(2.1, 0.2, -0.5);
-  scene.add(group);
-
-  // single glassy shape — glows clearly against the dark bg, color shifts as it spins
-  const knotMat = new THREE.MeshStandardMaterial({
-    color: 0x2d2550, metalness: 0.55, roughness: 0.18,
-    emissive: 0xa78bfa, emissiveIntensity: 0.45
-  });
-  const knot = new THREE.Mesh(
-    new THREE.TorusKnotGeometry(1.35, 0.44, 220, 32, 2, 3),
-    knotMat
-  );
-  group.add(knot);
-
-  function onResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let t = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  if (!reduced) {
+    t += 0.004;
+    knot.rotation.x = t * 0.6;
+    knot.rotation.y = t;
+    knot.position.y = Math.sin(t * 1.2) * 0.3;
   }
-  window.addEventListener('resize', onResize);
-
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // cursor-driven parallax target (normalized -1..1), smoothed
-  let targetX = 0, targetY = 0, curX = 0, curY = 0;
-  window.addEventListener('mousemove', (e) => {
-    targetX = (e.clientX / window.innerWidth) * 2 - 1;
-    targetY = (e.clientY / window.innerHeight) * 2 - 1;
-  });
-
-  let t = 0;
-  function animate() {
-    requestAnimationFrame(animate);
-    if (!reduced) {
-      t += 0.005;
-
-      // continuous self-rotation — always spinning smoothly, independent of cursor
-      knot.rotation.x = t * 0.6;
-      knot.rotation.y = t * 1.0;
-
-      // color slowly cycles through the hue wheel as it rotates
-      const hue = (t * 0.025) % 1;
-      knotMat.color.setHSL(hue, 0.55, 0.35);
-      knotMat.emissive.setHSL(hue, 0.8, 0.55);
-
-      group.position.y = 0.2 + Math.sin(t * 1.1) * 0.35;
-      group.rotation.z = Math.sin(t * 0.5) * 0.08;
-
-      rim1.position.set(Math.cos(t * 0.6) * 5, 3 + Math.sin(t * 0.4) * 1.5, Math.sin(t * 0.6) * 5);
-      rim2.position.set(Math.cos(t * 0.4 + 2) * 4, -2 + Math.cos(t * 0.5) * 1.5, Math.sin(t * 0.4 + 2) * 4);
-
-      // smoothed cursor parallax on top of the autonomous loop
-      curX += (targetX - curX) * 0.04;
-      curY += (targetY - curY) * 0.04;
-      camera.position.x = curX * 0.9;
-      camera.position.y = -curY * 0.6;
-      camera.lookAt(1.0, 0.1, -0.5);
-    }
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
+  renderer.render(scene, camera);
+}
+animate();
 </script>
 
 </body>
