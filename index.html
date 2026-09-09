@@ -4,287 +4,303 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PyStart — Python jo samajh aaye</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171f;
+    --surface: #1c2130;
+    --surface-2: #232a3d;
+    --text: #edeff5;
+    --muted: #8a90a6;
+    --amber: #ffb84d;
+    --mint: #6ee7b7;
+    --border: #2c3348;
+  }
 
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    line-height: 1.6;
+  }
 
-  <link rel="stylesheet" href="css/global.css">
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--amber); }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 28px;
+    font-size: 0.95rem;
+  }
+  nav a:hover { color: var(--text); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 64px 0 80px;
+  }
+
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; padding: 32px 0 48px; }
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    max-width: 480px;
+  }
+
+  h1 .amber { color: var(--amber); }
+
+  .hero p.sub {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 440px;
+  }
+
+  .cta-row { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn {
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--amber); color: #14171f; }
+  .btn-ghost { border-color: var(--border); color: var(--text); background: transparent; }
+
+  /* live code demo panel */
+  .editor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .editor-bar {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff6b6b; }
+  .dot.y { background: #ffd166; }
+  .dot.g { background: #6ee7b7; }
+
+  #code {
+    width: 100%;
+    min-height: 130px;
+    background: transparent;
+    color: var(--text);
+    border: none;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+    outline: none;
+  }
+
+  .run-row {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #run-btn {
+    background: var(--mint);
+    color: #0e1a15;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  #run-btn:disabled { opacity: 0.6; cursor: wait; }
+
+  #output {
+    margin: 0 16px 16px;
+    background: #0e111a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--mint);
+    min-height: 24px;
+    white-space: pre-wrap;
+  }
+
+  section.features { padding: 40px 0 80px; }
+
+  .features h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .features p.lead { color: var(--muted); margin-bottom: 32px; max-width: 520px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+  .card .tag {
+    color: var(--amber);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+  }
+  .card h3 { margin-top: 10px; font-size: 1.05rem; }
+  .card p { color: var(--muted); margin-top: 8px; font-size: 0.92rem; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+</style>
 </head>
-
-
 <body>
 
-
-<!-- =========================================================
-     3D BACKGROUND
-     ========================================================= -->
-
-<div id="canvas-wrap"></div>
-
-
-<!-- =========================================================
-     CURSOR PARTICLE TRAIL
-     ========================================================= -->
-
-<canvas id="trail-canvas"></canvas>
-
-
-<!-- =========================================================
-     GRAIN
-     ========================================================= -->
-
-<svg
-  class="grain"
-  xmlns="http://www.w3.org/2000/svg"
->
-
-  <filter id="n">
-
-    <feTurbulence
-      type="fractalNoise"
-      baseFrequency="0.85"
-      numOctaves="2"
-      stitchTiles="stitch"
-    />
-
-  </filter>
-
-  <rect
-    width="100%"
-    height="100%"
-    filter="url(#n)"
-  />
-
-</svg>
-
-
-<!-- =========================================================
-     MAIN CONTENT
-     ========================================================= -->
-
 <div class="wrap">
-
-
-  <!-- HEADER -->
-
   <header>
-
-    <a href="index.html" class="logo">
-      Py<span>Start</span>
-    </a>
-
+    <div class="logo">Py<span>Start</span></div>
     <nav>
-
-      <a href="index.html" class="active">
-        Home
-      </a>
-
-      <a href="lessons-variables.html">
-        Lessons
-      </a>
-
-      <a href="errors.html">
-        Errors
-      </a>
-
-      <a href="projects.html">
-        Projects
-      </a>
-
+      <a href="lessons-variables.html">Lessons</a>
+      <a href="errors.html">Errors</a>
+      <a href="projects.html">Projects</a>
     </nav>
-
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
-  <span class="theme-icon" aria-hidden="true">☾</span>
-  <span class="theme-label">Dark</span>
-</button>
-</header>
-
-
-  <!-- =======================================================
-       HERO
-       ======================================================= -->
+  </header>
 
   <section class="hero">
-
-
-    <!-- HERO TEXT -->
-
     <div>
-
-      <h1>
-        Python seekho jaise koi doubt hi nahi.
-      </h1>
-
-      <p class="sub">
-        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
-      </p>
-
+      <h1>Python seekho <span class="amber">jaise koi doubt hi nahi.</span></h1>
+      <p class="sub">Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.</p>
       <div class="cta-row">
-
-        <a
-          href="lessons-variables.html"
-          class="btn btn-primary magnetic"
-          id="magnet-btn"
-        >
-          Shuru karo — Free
-        </a>
-
-        <a
-          href="errors.html"
-          class="btn btn-ghost"
-        >
-          Error Dictionary dekho
-        </a>
-
+        <a href="#" class="btn btn-primary">Shuru karo — Free</a>
+        <a href="errors.html" class="btn btn-ghost">Error Dictionary dekho</a>
       </div>
-
     </div>
 
-
-    <!-- =====================================================
-         PYTHON EDITOR
-         ===================================================== -->
-
     <div class="editor">
-
       <div class="editor-bar">
-
-        <span class="dot r"></span>
-
-        <span class="dot y"></span>
-
-        <span class="dot g"></span>
-
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
       </div>
-
-
       <textarea id="code">print("Chalo shuru karte hain!")
 for i in range(3):
     print("Line", i)</textarea>
-
-
       <div class="run-row">
-
-        <span
-          style="
-            color:var(--muted);
-            font-size:0.8rem;
-          "
-        >
-          Browser mein hi chalega
-        </span>
-
-        <button
-          id="run-btn"
-          onclick="runCode()"
-        >
-          ▶ Run
-        </button>
-
+        <span style="color: var(--muted); font-size: 0.8rem;">Ye code seedha tumhare browser mein chalega</span>
+        <button id="run-btn" onclick="runCode()">▶ Run</button>
       </div>
-
-
-      <div id="output">
-        Output yahan dikhega...
-      </div>
-
+      <div id="output">Output yahan dikhega...</div>
     </div>
-
   </section>
-
-
-  <!-- =======================================================
-       FEATURES
-       ======================================================= -->
 
   <section class="features">
-
-    <h2>
-      Sab kuch ek jagah
-    </h2>
-
-    <p class="lead">
-      Beginner se lekar apni website/app banane tak — sab structured order mein.
-    </p>
-
-
+    <h2>Sab kuch ek jagah</h2>
+    <p class="lead">Beginner se lekar apni website/app banane tak — sab structured order mein.</p>
     <div class="grid">
-
-
-      <a class="card c1 card-link" href="lessons-variables.html">
-
-        <h3>
-          Foundations
-        </h3>
-
-        <p>
-          Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.
-        </p>
-
-      </a>
-
-
-      <a class="card c2 card-link" href="errors.html">
-
-        <h3>
-          Error Dictionary
-        </h3>
-
-        <p>
-          Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.
-        </p>
-
-      </a>
-
-
-      <a class="card c3 card-link" href="projects.html">
-
-        <h3>
-          Real Projects
-        </h3>
-
-        <p>
-          Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.
-        </p>
-
-      </a>
-
-
+      <div class="card">
+        <div class="tag">01 · BASICS</div>
+        <h3>Foundations</h3>
+        <p>Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.</p>
+      </div>
+      <div class="card">
+        <div class="tag">02 · ERRORS</div>
+        <h3>Error Dictionary</h3>
+        <p>Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.</p>
+      </div>
+      <div class="card">
+        <div class="tag">03 · BUILD</div>
+        <h3>Real Projects</h3>
+        <p>Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.</p>
+      </div>
     </div>
-
   </section>
 
-
-  <footer>
-    Built by a student, for students. PyStart.
-  </footer>
-
+  <footer>Built by a student, for students. PyStart.</footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<script>
+  let pyodideReady = null;
 
-<!-- =========================================================
-     TOAST
-     ========================================================= -->
+  async function initPyodide() {
+    if (!pyodideReady) {
+      pyodideReady = await loadPyodide();
+    }
+    return pyodideReady;
+  }
 
-<div
-  class="toast-stack"
-  id="toast-stack"
-></div>
+  async function runCode() {
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('output');
+    const code = document.getElementById('code').value;
 
+    btn.disabled = true;
+    btn.textContent = '⏳ Loading...';
+    out.textContent = 'Python load ho raha hai (pehli baar thoda time lagega)...';
 
-<!-- =========================================================
-     PYODIDE
-     ========================================================= -->
-<!-- =========================================================
-     CURSOR PARTICLE TRAIL
-     ========================================================= -->
-<!-- =========================================================
-     THREE.JS
-     ========================================================= -->
-  <script src="js/global.js" defer></script>
+    try {
+      const pyodide = await initPyodide();
+      btn.textContent = '▶ Run';
+
+      // capture print() output
+      pyodide.runPython(`
+import sys, io
+sys.stdout = io.StringIO()
+      `);
+      pyodide.runPython(code);
+      const result = pyodide.runPython("sys.stdout.getvalue()");
+      out.textContent = result || '(koi output nahi — print() use karo)';
+    } catch (err) {
+      out.textContent = 'Error:\n' + err.message;
+    }
+    btn.disabled = false;
+    btn.textContent = '▶ Run';
+  }
+</script>
 
 </body>
 </html>
