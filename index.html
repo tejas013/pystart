@@ -1,9 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PyStart — Python jo samajh aaye</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,11 +18,9 @@
   --surface: #ffffff;
   --text: #14171f;
   --muted: #6b7186;
-
   --amber: #e08a1e;
   --violet: #7c5cff;
   --mint: #35a879;
-
   --border: #e3e6f0;
 }
 
@@ -34,6 +32,7 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
 }
 
 body {
@@ -53,16 +52,20 @@ body {
 
   overflow-x: hidden;
 
+  position: relative;
+
+  width: 100%;
   min-height: 100vh;
 }
 
 
 /* =========================================================
-   3D BACKGROUND
+   THREE.JS BACKGROUND
    ========================================================= */
 
 #canvas-wrap {
   position: fixed;
+
   inset: 0;
 
   width: 100vw;
@@ -77,17 +80,19 @@ body {
 
 #canvas-wrap canvas {
   display: block;
+
   width: 100%;
   height: 100%;
 }
 
 
 /* =========================================================
-   CURSOR PARTICLES
+   CURSOR PARTICLE TRAIL
    ========================================================= */
 
 #trail-canvas {
   position: fixed;
+
   inset: 0;
 
   width: 100vw;
@@ -105,6 +110,7 @@ body {
 
 .grain {
   position: fixed;
+
   inset: 0;
 
   width: 100%;
@@ -121,11 +127,12 @@ body {
 
 
 /* =========================================================
-   WRAPPER
+   MAIN WRAPPER
    ========================================================= */
 
 .wrap {
   width: 100%;
+
   max-width: 1040px;
 
   margin: 0 auto;
@@ -161,6 +168,8 @@ header {
 
   letter-spacing: -0.02em;
 
+  white-space: nowrap;
+
   color: #14171f;
 }
 
@@ -170,6 +179,7 @@ header {
 
 nav {
   display: flex;
+
   align-items: center;
 }
 
@@ -182,7 +192,8 @@ nav a {
 
   font-size: 0.95rem;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease;
 }
 
 nav a:hover {
@@ -278,11 +289,13 @@ h1 {
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .btn-primary {
   background: #14171f;
+
   color: #ffffff;
 }
 
@@ -301,17 +314,25 @@ h1 {
     rgba(255,255,255,0.72);
 
   backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-ghost:hover {
   border-color: #c9c1ff;
+
   color: var(--violet);
+
+  background:
+    rgba(255,255,255,0.95);
 }
 
 .magnetic {
   transition:
     transform 0.2s
     cubic-bezier(0.33,1,0.68,1);
+
+  will-change: transform;
 }
 
 
@@ -322,12 +343,16 @@ h1 {
 .editor {
   width: 100%;
 
+  max-width: 100%;
+
   background:
     rgba(255,255,255,0.72);
 
-  backdrop-filter: blur(22px);
+  backdrop-filter:
+    blur(22px);
 
-  -webkit-backdrop-filter: blur(22px);
+  -webkit-backdrop-filter:
+    blur(22px);
 
   border:
     1px solid rgba(255,255,255,0.9);
@@ -357,7 +382,10 @@ h1 {
 
 .dot {
   width: 10px;
+
   height: 10px;
+
+  flex: 0 0 10px;
 
   border-radius: 50%;
 }
@@ -414,38 +442,43 @@ h1 {
   justify-content:
     space-between;
 
-  align-items:
-    center;
+  align-items: center;
 
   gap: 15px;
+}
+
+.run-row span {
+  min-width: 0;
+
+  color: var(--muted);
 }
 
 #run-btn {
   background:
     var(--violet);
 
-  color: white;
+  color: #ffffff;
 
   border: none;
 
   padding:
     8px 18px;
 
-  border-radius:
-    6px;
+  border-radius: 6px;
 
-  font-weight:
-    600;
-
-  cursor:
-    pointer;
+  font-weight: 600;
 
   font-family:
     'Sora',
     sans-serif;
 
+  cursor: pointer;
+
+  font-size: 0.9rem;
+
   transition:
     transform 0.15s ease,
+    opacity 0.15s ease,
     box-shadow 0.15s ease;
 }
 
@@ -460,6 +493,7 @@ h1 {
 
 #run-btn:disabled {
   opacity: 0.6;
+
   cursor: wait;
 }
 
@@ -554,7 +588,7 @@ section.features {
     14px;
 
   overflow:
-    hidden;
+    visible;
 }
 
 
@@ -562,19 +596,9 @@ section.features {
    FLOATING CARDS
    ========================================================= */
 
-.card-link {
-  text-decoration: none;
-
-  color: inherit;
-
-  display: block;
-
-  min-width: 0;
-}
-
 .card {
   background:
-    rgba(255,255,255,0.82);
+    rgba(255,255,255,0.84);
 
   backdrop-filter:
     blur(12px);
@@ -594,109 +618,165 @@ section.features {
   cursor:
     pointer;
 
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-
-/*
-  Each card has a slightly different
-  floating rhythm.
-*/
-
-.card.c1 {
-  animation:
-    floatCard1 4.8s ease-in-out infinite;
-}
-
-.card.c2 {
-  animation:
-    floatCard2 5.4s ease-in-out infinite;
-}
-
-.card.c3 {
-  animation:
-    floatCard3 5.1s ease-in-out infinite;
-}
-
-
-@keyframes floatCard1 {
-
-  0%,100% {
-    transform:
-      translateY(0);
-  }
-
-  50% {
-    transform:
-      translateY(-7px);
-  }
-
-}
-
-
-@keyframes floatCard2 {
-
-  0%,100% {
-    transform:
-      translateY(-2px);
-  }
-
-  50% {
-    transform:
-      translateY(7px);
-  }
-
-}
-
-
-@keyframes floatCard3 {
-
-  0%,100% {
-    transform:
-      translateY(3px);
-  }
-
-  50% {
-    transform:
-      translateY(-6px);
-  }
-
-}
-
-
-.card-link:hover .card {
   transform:
-    translateY(-10px)
-    scale(1.015);
-
-  background:
-    rgba(255,255,255,0.98);
+    translateY(0)
+    scale(1);
 
   box-shadow:
-    0 18px 40px
-    rgba(50,55,80,0.12);
+    0 0 0
+    rgba(30,35,50,0);
 
-  z-index:
-    5;
+  transition:
+    transform 0.55s
+      cubic-bezier(0.16,1,0.3,1),
+
+    box-shadow 0.55s
+      cubic-bezier(0.16,1,0.3,1),
+
+    background 0.35s ease,
+
+    border-color 0.35s ease;
+
+  will-change:
+    transform;
 }
 
 
-/* Top colored line */
+/* Hover */
 
-.card::before {
-  content: "";
+.card:hover {
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 18px 38px
+    rgba(40,45,70,0.11);
+}
+
+
+/* Clicked / Floating state */
+
+.card.is-floating {
+  transform:
+    translateY(-20px)
+    scale(1.025);
+
+  background:
+    rgba(255,255,255,0.97);
+
+  box-shadow:
+    0 28px 55px
+    rgba(40,45,70,0.17),
+
+    0 0 0 1px
+    rgba(124,92,255,0.12);
+}
+
+
+/* Keep hover from fighting floating state */
+
+.card.is-floating:hover {
+  transform:
+    translateY(-24px)
+    scale(1.03);
+}
+
+
+/* Small floating indicator */
+
+.card::after {
+  content:
+    "Click to float";
 
   position:
     absolute;
 
-  top: 0;
-  left: 0;
-  right: 0;
+  right:
+    18px;
 
-  height: 3px;
+  bottom:
+    12px;
+
+  font-size:
+    0.62rem;
+
+  font-family:
+    'JetBrains Mono',
+    monospace;
+
+  color:
+    #9ca1b3;
+
+  opacity:
+    0;
+
+  transform:
+    translateY(4px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card:hover::after {
+  opacity:
+    0.8;
+
+  transform:
+    translateY(0);
+}
+
+
+/* After clicking */
+
+.card.is-floating::after {
+  content:
+    "Floating";
+
+  color:
+    var(--violet);
+
+  opacity:
+    0.75;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================================
+   CARD TOP ACCENTS
+   ========================================================= */
+
+.card::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    0;
+
+  right:
+    0;
+
+  height:
+    3px;
+
+  border-radius:
+    14px 14px 0 0;
+
+  transition:
+    height 0.35s ease;
+}
+
+.card:hover::before {
+  height:
+    4px;
 }
 
 .card.c1::before {
@@ -715,6 +795,10 @@ section.features {
 }
 
 
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
 .card h3 {
   font-size:
     1.05rem;
@@ -729,175 +813,9 @@ section.features {
 
   font-size:
     0.92rem;
-}
 
-
-/* =========================================================
-   INTERNAL SECTIONS
-   ========================================================= */
-
-.content-section {
-  scroll-margin-top: 90px;
-
-  padding:
-    80px 0 90px;
-}
-
-.section-box {
-  background:
-    rgba(255,255,255,0.82);
-
-  backdrop-filter:
-    blur(18px);
-
-  -webkit-backdrop-filter:
-    blur(18px);
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    18px;
-
-  padding:
-    42px;
-
-  box-shadow:
-    0 20px 60px
-    rgba(40,45,70,0.08);
-}
-
-.section-label {
-  font-family:
-    'JetBrains Mono',
-    monospace;
-
-  font-size:
-    0.75rem;
-
-  color:
-    var(--violet);
-
-  margin-bottom:
+  padding-bottom:
     10px;
-
-  text-transform:
-    uppercase;
-
-  letter-spacing:
-    0.08em;
-}
-
-.content-section h2 {
-  font-size:
-    2rem;
-
-  margin-bottom:
-    12px;
-}
-
-.content-section .section-intro {
-  color:
-    var(--muted);
-
-  max-width:
-    650px;
-
-  margin-bottom:
-    30px;
-}
-
-
-/* =========================================================
-   SECTION ITEMS
-   ========================================================= */
-
-.lesson-list {
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
-  gap:
-    12px;
-}
-
-.lesson-item {
-  padding:
-    18px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    10px;
-
-  background:
-    rgba(247,248,251,0.8);
-}
-
-.lesson-item strong {
-  display:
-    block;
-
-  margin-bottom:
-    4px;
-}
-
-.lesson-item span {
-  color:
-    var(--muted);
-
-  font-size:
-    0.88rem;
-}
-
-
-/* =========================================================
-   ERROR SECTION
-   ========================================================= */
-
-.error-item {
-  border-left:
-    3px solid #ff6b6b;
-}
-
-
-/* =========================================================
-   PROJECT SECTION
-   ========================================================= */
-
-.project-item {
-  border-left:
-    3px solid var(--mint);
-}
-
-
-/* =========================================================
-   BACK BUTTON
-   ========================================================= */
-
-.back-top {
-  display:
-    inline-block;
-
-  margin-top:
-    28px;
-
-  color:
-    var(--muted);
-
-  text-decoration:
-    none;
-
-  font-size:
-    0.85rem;
-}
-
-.back-top:hover {
-  color:
-    var(--text);
 }
 
 
@@ -920,6 +838,12 @@ footer {
 
   text-align:
     center;
+
+  position:
+    relative;
+
+  z-index:
+    2;
 }
 
 
@@ -957,11 +881,14 @@ footer {
   backdrop-filter:
     blur(14px);
 
+  -webkit-backdrop-filter:
+    blur(14px);
+
   border:
     1px solid var(--border);
 
   border-left:
-    3px solid var(--mint);
+    3px solid var(--violet);
 
   padding:
     12px 18px;
@@ -971,6 +898,9 @@ footer {
 
   font-size:
     0.88rem;
+
+  color:
+    var(--text);
 
   box-shadow:
     0 12px 32px
@@ -983,8 +913,13 @@ footer {
     0;
 
   animation:
-    toastIn 0.4s forwards,
-    toastOut 0.4s 2.6s forwards;
+    toastIn 0.4s
+    cubic-bezier(0.33,1,0.68,1)
+    forwards,
+
+    toastOut 0.4s
+    ease-in 2.6s
+    forwards;
 }
 
 @keyframes toastIn {
@@ -1013,12 +948,71 @@ footer {
 
 
 /* =========================================================
-   RESPONSIVE
+   SKELETON
+   ========================================================= */
+
+.skeleton {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    8px;
+
+  padding:
+    2px 0;
+}
+
+.skeleton-line {
+  height:
+    12px;
+
+  border-radius:
+    4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(20,23,31,0.05) 0%,
+      rgba(20,23,31,0.12) 50%,
+      rgba(20,23,31,0.05) 100%
+    );
+
+  background-size:
+    200% 100%;
+
+  animation:
+    shimmer 1.3s
+    ease-in-out infinite;
+}
+
+@keyframes shimmer {
+
+  0% {
+    background-position:
+      200% 0;
+  }
+
+  100% {
+    background-position:
+      -200% 0;
+  }
+
+}
+
+
+/* =========================================================
+   LAPTOP
    ========================================================= */
 
 @media (max-width:1100px) {
 
   .wrap {
+    max-width:
+      100%;
+
     padding-left:
       28px;
 
@@ -1040,6 +1034,11 @@ footer {
       2.55rem;
   }
 
+  .hero p.sub {
+    font-size:
+      1rem;
+  }
+
   #code {
     font-size:
       0.82rem;
@@ -1048,7 +1047,19 @@ footer {
 }
 
 
+/* =========================================================
+   TABLET
+   ========================================================= */
+
 @media (max-width:900px) {
+
+  .wrap {
+    padding-left:
+      24px;
+
+    padding-right:
+      24px;
+  }
 
   .hero {
     grid-template-columns:
@@ -1072,18 +1083,33 @@ footer {
       2.5rem;
   }
 
+  .hero p.sub {
+    max-width:
+      600px;
+  }
+
+  .editor {
+    width:
+      100%;
+  }
+
   .grid {
     grid-template-columns:
       1fr;
   }
 
-  .lesson-list {
-    grid-template-columns:
-      1fr;
+  .card.is-floating {
+    transform:
+      translateY(-14px)
+      scale(1.015);
   }
 
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width:600px) {
 
@@ -1098,6 +1124,9 @@ footer {
   header {
     padding:
       18px 0;
+
+    min-height:
+      65px;
   }
 
   nav {
@@ -1124,6 +1153,9 @@ footer {
   .hero p.sub {
     font-size:
       0.94rem;
+
+    margin-top:
+      16px;
   }
 
   .cta-row {
@@ -1132,6 +1164,9 @@ footer {
 
     flex-direction:
       column;
+
+    gap:
+      10px;
   }
 
   .btn {
@@ -1148,6 +1183,19 @@ footer {
 
     font-size:
       0.74rem;
+
+    padding:
+      14px;
+  }
+
+  .editor-bar {
+    padding:
+      10px 14px;
+  }
+
+  .run-row {
+    padding:
+      10px 14px;
   }
 
   .run-row span {
@@ -1164,39 +1212,75 @@ footer {
   }
 
   #output {
+    margin:
+      0 14px 14px;
+
     font-size:
       0.74rem;
-  }
 
-  .section-box {
     padding:
-      28px 20px;
+      12px;
   }
 
-  .content-section h2 {
+  .features {
+    padding-top:
+      10px !important;
+  }
+
+  .features h2 {
     font-size:
-      1.6rem;
+      1.4rem;
+  }
+
+  .card {
+    padding:
+      23px 20px;
+  }
+
+  .card::after {
+    display:
+      none;
+  }
+
+  .card.is-floating {
+    transform:
+      translateY(-12px)
+      scale(1.01);
   }
 
   .toast-stack {
-    left:
-      12px;
-
     right:
       12px;
 
     bottom:
       12px;
+
+    left:
+      12px;
+  }
+
+  .toast {
+    font-size:
+      0.8rem;
   }
 
 }
 
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
 
 @media (max-width:380px) {
 
   h1 {
     font-size:
       1.75rem;
+  }
+
+  .hero {
+    padding-top:
+      25px;
   }
 
   #code {
@@ -1212,6 +1296,11 @@ footer {
   .run-row {
     justify-content:
       flex-end;
+  }
+
+  .card p {
+    font-size:
+      0.86rem;
   }
 
 }
@@ -1236,6 +1325,8 @@ footer {
     scroll-behavior:
       auto !important;
 
+    transition-duration:
+      0.01ms !important;
   }
 
 }
@@ -1248,14 +1339,14 @@ footer {
 
 
 <!-- =========================================================
-     3D
+     3D BACKGROUND
      ========================================================= -->
 
 <div id="canvas-wrap"></div>
 
 
 <!-- =========================================================
-     CURSOR PARTICLES
+     CURSOR PARTICLE TRAIL
      ========================================================= -->
 
 <canvas id="trail-canvas"></canvas>
@@ -1291,156 +1382,158 @@ footer {
 
 
 <!-- =========================================================
-     MAIN CONTENT
+     CONTENT
      ========================================================= -->
 
 <div class="wrap">
 
 
-<!-- =========================================================
-     HEADER
-     ========================================================= -->
+  <!-- HEADER -->
 
-<header>
+  <header>
 
-  <div class="logo">
-    Py<span>Start</span>
-  </div>
-
-  <nav>
-
-    <a href="#lessons-section">
-      Lessons
-    </a>
-
-    <a href="#errors-section">
-      Errors
-    </a>
-
-    <a href="#projects-section">
-      Projects
-    </a>
-
-  </nav>
-
-</header>
-
-
-<!-- =========================================================
-     HERO
-     ========================================================= -->
-
-<section class="hero">
-
-
-  <!-- LEFT -->
-
-  <div>
-
-    <h1>
-      Python seekho jaise koi doubt hi nahi bacha.
-    </h1>
-
-    <p class="sub">
-      Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
-    </p>
-
-    <div class="cta-row">
-
-      <a
-        href="#lessons-section"
-        class="btn btn-primary magnetic"
-        id="magnet-btn"
-      >
-        Shuru karo — Free
-      </a>
-
-      <a
-        href="#errors-section"
-        class="btn btn-ghost"
-      >
-        Error Dictionary dekho
-      </a>
-
+    <div class="logo">
+      Py<span>Start</span>
     </div>
 
-  </div>
+    <nav>
+
+      <a href="lessons-variables.html">
+        Lessons
+      </a>
+
+      <a href="errors.html">
+        Errors
+      </a>
+
+      <a href="projects.html">
+        Projects
+      </a>
+
+    </nav>
+
+  </header>
 
 
-  <!-- RIGHT EDITOR -->
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
 
-  <div class="editor">
+  <section class="hero">
 
-    <div class="editor-bar">
 
-      <span class="dot r"></span>
-      <span class="dot y"></span>
-      <span class="dot g"></span>
+    <!-- HERO TEXT -->
+
+    <div>
+
+      <h1>
+        Python seekho jaise koi doubt hi nahi bacha.
+      </h1>
+
+      <p class="sub">
+        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
+      </p>
+
+      <div class="cta-row">
+
+        <a
+          href="lessons-variables.html"
+          class="btn btn-primary magnetic"
+          id="magnet-btn"
+        >
+          Shuru karo — Free
+        </a>
+
+        <a
+          href="errors.html"
+          class="btn btn-ghost"
+        >
+          Error Dictionary dekho
+        </a>
+
+      </div>
 
     </div>
 
 
-    <textarea id="code">print("Chalo shuru karte hain!")
+    <!-- =====================================================
+         PYTHON EDITOR
+         ===================================================== -->
+
+    <div class="editor">
+
+      <div class="editor-bar">
+
+        <span class="dot r"></span>
+
+        <span class="dot y"></span>
+
+        <span class="dot g"></span>
+
+      </div>
+
+
+      <textarea id="code">print("Chalo shuru karte hain!")
 for i in range(3):
     print("Line", i)</textarea>
 
 
-    <div class="run-row">
+      <div class="run-row">
 
-      <span
-        style="
-          color:var(--muted);
-          font-size:0.8rem;
-        "
-      >
-        Browser mein hi chalega
-      </span>
+        <span
+          style="
+            color:var(--muted);
+            font-size:0.8rem;
+          "
+        >
+          Browser mein hi chalega
+        </span>
 
-      <button
-        id="run-btn"
-        onclick="runCode()"
-      >
-        ▶ Run
-      </button>
+        <button
+          id="run-btn"
+          onclick="runCode()"
+        >
+          ▶ Run
+        </button>
+
+      </div>
+
+
+      <div id="output">
+        Output yahan dikhega...
+      </div>
 
     </div>
 
-
-    <div id="output">
-      Output yahan dikhega...
-    </div>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- =========================================================
-     FEATURES
-     ========================================================= -->
+  <!-- =======================================================
+       FEATURES
+       ======================================================= -->
 
-<section class="features">
+  <section class="features">
 
-  <h2>
-    Sab kuch ek jagah
-  </h2>
+    <h2>
+      Sab kuch ek jagah
+    </h2>
 
-  <p class="lead">
-    Beginner se lekar apni website/app banane tak — sab structured order mein.
-  </p>
-
-
-  <div class="grid">
+    <p class="lead">
+      Beginner se lekar apni website/app banane tak — sab structured order mein.
+    </p>
 
 
-    <!-- FOUNDATION -->
+    <div class="grid">
 
-    <a
-      href="#lessons-section"
-      class="card-link"
-    >
 
-      <div class="card c1">
+      <!-- FOUNDATION -->
+
+      <div
+        class="card c1 floating-card"
+        tabindex="0"
+        role="button"
+        aria-label="Float Foundations card"
+      >
 
         <h3>
           Foundations
@@ -1452,17 +1545,15 @@ for i in range(3):
 
       </div>
 
-    </a>
 
+      <!-- ERROR DICTIONARY -->
 
-    <!-- ERRORS -->
-
-    <a
-      href="#errors-section"
-      class="card-link"
-    >
-
-      <div class="card c2">
+      <div
+        class="card c2 floating-card"
+        tabindex="0"
+        role="button"
+        aria-label="Float Error Dictionary card"
+      >
 
         <h3>
           Error Dictionary
@@ -1474,17 +1565,15 @@ for i in range(3):
 
       </div>
 
-    </a>
 
+      <!-- REAL PROJECTS -->
 
-    <!-- PROJECTS -->
-
-    <a
-      href="#projects-section"
-      class="card-link"
-    >
-
-      <div class="card c3">
+      <div
+        class="card c3 floating-card"
+        tabindex="0"
+        role="button"
+        aria-label="Float Real Projects card"
+      >
 
         <h3>
           Real Projects
@@ -1496,372 +1585,15 @@ for i in range(3):
 
       </div>
 
-    </a>
-
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     LESSONS SECTION
-     ========================================================= -->
-
-<section
-  class="content-section"
-  id="lessons-section"
->
-
-  <div class="section-box">
-
-    <div class="section-label">
-      Lesson Path
-    </div>
-
-    <h2>
-      Python Foundations
-    </h2>
-
-    <p class="section-intro">
-      Python ko step-by-step seekho. Har concept ke baad practical examples aur exercises, taaki fundamentals genuinely strong ho.
-    </p>
-
-
-    <div class="lesson-list">
-
-      <div class="lesson-item">
-
-        <strong>
-          01 — Variables
-        </strong>
-
-        <span>
-          Variables, values aur data store karna.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item">
-
-        <strong>
-          02 — Data Types
-        </strong>
-
-        <span>
-          Strings, integers, floats, booleans aur type conversion.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item">
-
-        <strong>
-          03 — Conditions
-        </strong>
-
-        <span>
-          if, elif aur else ko practical examples ke saath.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item">
-
-        <strong>
-          04 — Loops
-        </strong>
-
-        <span>
-          for aur while loops se repetitive tasks automate karna.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item">
-
-        <strong>
-          05 — Functions
-        </strong>
-
-        <span>
-          Reusable aur clean Python code likhna.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item">
-
-        <strong>
-          06 — Lists & Dictionaries
-        </strong>
-
-        <span>
-          Python ke important data structures ko samajhna.
-        </span>
-
-      </div>
 
     </div>
 
+  </section>
 
-    <a
-      href="#"
-      class="back-top"
-    >
-      ↑ Back to top
-    </a>
 
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     ERRORS SECTION
-     ========================================================= -->
-
-<section
-  class="content-section"
-  id="errors-section"
->
-
-  <div class="section-box">
-
-    <div class="section-label">
-      Error Dictionary
-    </div>
-
-    <h2>
-      Error aaye? Panic nahi.
-    </h2>
-
-    <p class="section-intro">
-      Common Python errors ko samjho: error ka matlab kya hai, kyun aaya aur practical way mein kaise fix karna hai.
-    </p>
-
-
-    <div class="lesson-list">
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          IndentationError
-        </strong>
-
-        <span>
-          Python mein spacing/indentation ka issue identify aur fix karo.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          SyntaxError
-        </strong>
-
-        <span>
-          Code ka grammar galat hone par error ko read karna seekho.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          TypeError
-        </strong>
-
-        <span>
-          Jab incompatible data types ko ek saath use kiya jaata hai.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          NameError
-        </strong>
-
-        <span>
-          Variable ya function ka naam Python ko nahi mil raha.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          IndexError
-        </strong>
-
-        <span>
-          List/string ke invalid index ko access karne ka issue.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item error-item">
-
-        <strong>
-          KeyError
-        </strong>
-
-        <span>
-          Dictionary mein unavailable key access karne ka issue.
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <a
-      href="#"
-      class="back-top"
-    >
-      ↑ Back to top
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     PROJECTS SECTION
-     ========================================================= -->
-
-<section
-  class="content-section"
-  id="projects-section"
->
-
-  <div class="section-box">
-
-    <div class="section-label">
-      Build Mode
-    </div>
-
-    <h2>
-      Learn → Build → Improve
-    </h2>
-
-    <p class="section-intro">
-      Concepts ko real projects mein apply karo. Chhote projects se start karke gradually bigger applications tak jao.
-    </p>
-
-
-    <div class="lesson-list">
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          01 — Calculator
-        </strong>
-
-        <span>
-          Variables, functions aur conditions practice karne ke liye.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          02 — Number Guessing Game
-        </strong>
-
-        <span>
-          Loops, conditions aur user input ka practical use.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          03 — To-Do App
-        </strong>
-
-        <span>
-          Data structures aur application logic ko combine karo.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          04 — Expense Tracker
-        </strong>
-
-        <span>
-          Real-world data handling aur calculations.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          05 — Weather App
-        </strong>
-
-        <span>
-          APIs aur external data ke saath Python ka use.
-        </span>
-
-      </div>
-
-
-      <div class="lesson-item project-item">
-
-        <strong>
-          06 — Personal Automation
-        </strong>
-
-        <span>
-          Python se repetitive tasks automate karna.
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <a
-      href="#"
-      class="back-top"
-    >
-      ↑ Back to top
-    </a>
-
-  </div>
-
-</section>
-
-
-<footer>
-  Built by a student, for students. PyStart.
-</footer>
-
+  <footer>
+    Built by a student, for students. PyStart.
+  </footer>
 
 </div>
 
@@ -1881,6 +1613,7 @@ for i in range(3):
      ========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+
 
 <script>
 
@@ -1918,7 +1651,8 @@ async function runCode() {
     ).value;
 
 
-  btn.disabled = true;
+  btn.disabled =
+    true;
 
   btn.textContent =
     '⏳ Loading...';
@@ -1926,8 +1660,8 @@ async function runCode() {
 
   out.innerHTML =
     '<div class="skeleton">' +
-      '<div class="skeleton-line"></div>' +
-      '<div class="skeleton-line"></div>' +
+      '<div class="skeleton-line" style="width:70%"></div>' +
+      '<div class="skeleton-line" style="width:45%"></div>' +
     '</div>';
 
 
@@ -1935,6 +1669,10 @@ async function runCode() {
 
     const pyodide =
       await initPyodide();
+
+
+    btn.textContent =
+      '▶ Run';
 
 
     pyodide.runPython(
@@ -1987,6 +1725,10 @@ async function runCode() {
 }
 
 
+/* =========================================================
+   TOAST
+   ========================================================= */
+
 function showToast(message) {
 
   const stack =
@@ -2021,10 +1763,80 @@ function showToast(message) {
 
 }
 
+</script>
 
-/* =========================================================
-   MAGNETIC BUTTON
-   ========================================================= */
+
+<!-- =========================================================
+     FLOATING FEATURE CARDS
+     ========================================================= -->
+
+<script>
+
+(function () {
+
+  const cards =
+    document.querySelectorAll(
+      '.floating-card'
+    );
+
+
+  cards.forEach(
+    (card) => {
+
+
+      /* ===============================================
+         MOUSE CLICK
+         =============================================== */
+
+      card.addEventListener(
+        'click',
+        () => {
+
+          card.classList.toggle(
+            'is-floating'
+          );
+
+        }
+      );
+
+
+      /* ===============================================
+         KEYBOARD ACCESSIBILITY
+         =============================================== */
+
+      card.addEventListener(
+        'keydown',
+        (e) => {
+
+          if (
+            e.key === 'Enter' ||
+            e.key === ' '
+          ) {
+
+            e.preventDefault();
+
+            card.classList.toggle(
+              'is-floating'
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+})();
+
+</script>
+
+
+<!-- =========================================================
+     MAGNETIC BUTTON
+     ========================================================= -->
+
+<script>
 
 const magnet =
   document.getElementById(
@@ -2040,20 +1852,22 @@ if (magnet) {
 
       if (
         window.innerWidth <= 900
-      ) return;
+      ) {
+        return;
+      }
 
 
       const rect =
         magnet.getBoundingClientRect();
 
 
-      const x =
+      const relX =
         e.clientX -
         rect.left -
         rect.width / 2;
 
 
-      const y =
+      const relY =
         e.clientY -
         rect.top -
         rect.height / 2;
@@ -2061,8 +1875,8 @@ if (magnet) {
 
       magnet.style.transform =
         `translate(
-          ${x * 0.25}px,
-          ${y * 0.4}px
+          ${relX * 0.25}px,
+          ${relY * 0.4}px
         )`;
 
     }
@@ -2085,7 +1899,7 @@ if (magnet) {
 
 
 <!-- =========================================================
-     CURSOR PARTICLES
+     CURSOR PARTICLE TRAIL
      ========================================================= -->
 
 <script>
@@ -2141,28 +1955,37 @@ if (magnet) {
   let particles = [];
 
 
-  let lastX =
+  let mouseX =
     window.innerWidth / 2;
 
-  let lastY =
+
+  let mouseY =
     window.innerHeight / 2;
+
+
+  let lastX =
+    mouseX;
+
+
+  let lastY =
+    mouseY;
 
 
   window.addEventListener(
     'mousemove',
     (e) => {
 
-      const x =
+      mouseX =
         e.clientX;
 
-      const y =
+      mouseY =
         e.clientY;
 
 
       const dist =
         Math.hypot(
-          x - lastX,
-          y - lastY
+          mouseX - lastX,
+          mouseY - lastY
         );
 
 
@@ -2187,12 +2010,12 @@ if (magnet) {
 
           x:
             lastX +
-            (x - lastX) * p +
+            (mouseX - lastX) * p +
             (Math.random() - 0.5) * 6,
 
           y:
             lastY +
-            (y - lastY) * p +
+            (mouseY - lastY) * p +
             (Math.random() - 0.5) * 6,
 
           vx:
@@ -2222,8 +2045,12 @@ if (magnet) {
       }
 
 
-      lastX = x;
-      lastY = y;
+      lastX =
+        mouseX;
+
+
+      lastY =
+        mouseY;
 
 
       if (
@@ -2256,7 +2083,9 @@ if (magnet) {
     );
 
 
-    if (reduced) return;
+    if (reduced) {
+      return;
+    }
 
 
     particles.forEach(
@@ -2282,7 +2111,10 @@ if (magnet) {
       p => {
 
         ctx.globalAlpha =
-          p.life * 0.55;
+          Math.max(
+            p.life,
+            0
+          ) * 0.55;
 
 
         ctx.beginPath();
@@ -2315,9 +2147,11 @@ if (magnet) {
     );
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha =
+      1;
 
-    ctx.shadowBlur = 0;
+    ctx.shadowBlur =
+      0;
 
   }
 
@@ -2342,7 +2176,9 @@ if (magnet) {
 
   if (
     typeof THREE === 'undefined'
-  ) return;
+  ) {
+    return;
+  }
 
 
   const wrap =
@@ -2423,7 +2259,7 @@ if (magnet) {
   scene.add(
     new THREE.AmbientLight(
       0xffffff,
-      1.45
+      1.5
     )
   );
 
@@ -2431,8 +2267,8 @@ if (magnet) {
   const rim1 =
     new THREE.PointLight(
       0x7c5cff,
-      48,
-      24
+      52,
+      25
     );
 
 
@@ -2451,8 +2287,8 @@ if (magnet) {
   const rim2 =
     new THREE.PointLight(
       0xe08a1e,
-      38,
-      24
+      40,
+      25
     );
 
 
@@ -2468,10 +2304,30 @@ if (magnet) {
   );
 
 
+  const rim3 =
+    new THREE.PointLight(
+      0xffffff,
+      20,
+      18
+    );
+
+
+  rim3.position.set(
+    0,
+    2,
+    4
+  );
+
+
+  scene.add(
+    rim3
+  );
+
+
   const key =
     new THREE.DirectionalLight(
       0xffffff,
-      1.1
+      1.15
     );
 
 
@@ -2508,16 +2364,16 @@ if (magnet) {
     new THREE.MeshStandardMaterial({
 
       color:
-        0x24252b,
+        0x25262c,
 
       metalness:
-        0.72,
+        0.74,
 
       roughness:
-        0.24,
+        0.22,
 
       emissive:
-        0x111217,
+        0x101116,
 
       emissiveIntensity:
         0.16
@@ -2548,41 +2404,38 @@ if (magnet) {
 
 
   /* =========================================================
-     ⭐ DARK SPHERE IN THE MIDDLE ⭐
+     CENTER SPHERE
+     
+     Glossy dark sphere placed inside
+     the Torus Knot.
      ========================================================= */
 
   const sphereMat =
-    new THREE.MeshPhysicalMaterial({
+    new THREE.MeshStandardMaterial({
 
       color:
-        0x111217,
+        0x08090c,
 
       metalness:
-        0.82,
+        0.92,
 
       roughness:
-        0.16,
-
-      clearcoat:
-        1.0,
-
-      clearcoatRoughness:
-        0.12,
+        0.08,
 
       emissive:
-        0x18151f,
+        0x15131b,
 
       emissiveIntensity:
-        0.22
+        0.28
 
     });
 
 
-  const sphere =
+  const centerSphere =
     new THREE.Mesh(
 
       new THREE.SphereGeometry(
-        0.40,
+        0.52,
         64,
         64
       ),
@@ -2592,19 +2445,32 @@ if (magnet) {
     );
 
 
-  /*
-    Exact center of the Torus Knot.
-  */
+  mainGroup.add(
+    centerSphere
+  );
 
-  sphere.position.set(
-    0,
-    0,
-    0
+
+  /* =========================================================
+     INNER SPHERE HIGHLIGHT
+     ========================================================= */
+
+  const sphereGlow =
+    new THREE.PointLight(
+      0x8a75ff,
+      4,
+      2.5
+    );
+
+
+  sphereGlow.position.set(
+    0.3,
+    0.4,
+    0.8
   );
 
 
   mainGroup.add(
-    sphere
+    sphereGlow
   );
 
 
@@ -2622,26 +2488,26 @@ if (magnet) {
 
 
   /* =========================================================
-     FIRST RING
+     FIRST DARK METALLIC RING
      ========================================================= */
 
   const ringMat1 =
     new THREE.MeshStandardMaterial({
 
       color:
-        0x3a3b42,
+        0x3b3c43,
 
       metalness:
-        0.9,
+        0.94,
 
       roughness:
-        0.16,
+        0.13,
 
       emissive:
         0x17181d,
 
       emissiveIntensity:
-        0.22
+        0.24
 
     });
 
@@ -2682,19 +2548,19 @@ if (magnet) {
     new THREE.MeshStandardMaterial({
 
       color:
-        0x5b5c65,
+        0x595a62,
 
       metalness:
-        0.88,
+        0.9,
 
       roughness:
-        0.18,
+        0.15,
 
       emissive:
-        0x17141f,
+        0x19161f,
 
       emissiveIntensity:
-        0.2
+        0.22
 
     });
 
@@ -2739,19 +2605,19 @@ if (magnet) {
     new THREE.MeshStandardMaterial({
 
       color:
-        0x16171c,
+        0x15161a,
 
       metalness:
-        0.9,
+        0.94,
 
       roughness:
-        0.12,
+        0.1,
 
       emissive:
-        0x25232b,
+        0x28252f,
 
       emissiveIntensity:
-        0.55
+        0.6
 
     });
 
@@ -2782,7 +2648,7 @@ if (magnet) {
     new THREE.MeshStandardMaterial({
 
       color:
-        0x30313a,
+        0x303139,
 
       metalness:
         0.92,
@@ -2791,7 +2657,7 @@ if (magnet) {
         0.1,
 
       emissive:
-        0x18151f,
+        0x18161f,
 
       emissiveIntensity:
         0.45
@@ -2818,7 +2684,7 @@ if (magnet) {
 
 
   /* =========================================================
-     TINY LIGHT POINT
+     SMALL HIGHLIGHT DOT
      ========================================================= */
 
   const lightDot =
@@ -2831,8 +2697,7 @@ if (magnet) {
       ),
 
       new THREE.MeshBasicMaterial({
-        color:
-          0xffffff
+        color: 0xffffff
       })
 
     );
@@ -2842,6 +2707,10 @@ if (magnet) {
     lightDot
   );
 
+
+  /* =========================================================
+     ORBIT VARIABLES
+     ========================================================= */
 
   let orbitAngle1 =
     0;
@@ -2928,17 +2797,23 @@ if (magnet) {
 
   function onResize() {
 
-    camera.aspect =
-      window.innerWidth /
+    const width =
+      window.innerWidth;
+
+    const height =
       window.innerHeight;
+
+
+    camera.aspect =
+      width / height;
 
 
     camera.updateProjectionMatrix();
 
 
     renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
+      width,
+      height
     );
 
 
@@ -2962,7 +2837,7 @@ if (magnet) {
 
 
   /* =========================================================
-     PARALLAX
+     CURSOR PARALLAX
      ========================================================= */
 
   let targetX =
@@ -2986,8 +2861,11 @@ if (magnet) {
         window.innerWidth <= 900
       ) {
 
-        targetX = 0;
-        targetY = 0;
+        targetX =
+          0;
+
+        targetY =
+          0;
 
         return;
 
@@ -3010,6 +2888,10 @@ if (magnet) {
     }
   );
 
+
+  /* =========================================================
+     REDUCED MOTION
+     ========================================================= */
 
   const reduced =
     window.matchMedia(
@@ -3039,145 +2921,64 @@ if (magnet) {
 
 
       /* ===============================================
-         TORUS KNOT
+         MAIN OBJECT
          =============================================== */
 
       knot.rotation.x =
         t * 0.48;
 
-
       knot.rotation.y =
         t * 0.82;
 
-
       knot.rotation.z =
-        Math.sin(
-          t * 0.35
-        ) * 0.08;
+        Math.sin(t * 0.35) *
+        0.08;
 
 
       /* ===============================================
          CENTER SPHERE
          =============================================== */
 
-      sphere.rotation.y =
-        t * 0.45;
+      centerSphere.rotation.y =
+        t * 0.7;
 
+      centerSphere.rotation.x =
+        Math.sin(t * 0.5) *
+        0.08;
 
-      sphere.rotation.x =
-        Math.sin(
-          t * 0.5
-        ) * 0.15;
-
-
-      /*
-        Very subtle breathing effect.
-      */
-
-      const sphereScale =
-        1 +
-        Math.sin(
-          t * 1.2
-        ) * 0.025;
-
-
-      sphere.scale.setScalar(
-        sphereScale
-      );
+      centerSphere.position.y =
+        Math.sin(t * 0.9) *
+        0.035;
 
 
       /* ===============================================
-         FLOAT
-         =============================================== */
-
-      const width =
-        window.innerWidth;
-
-
-      let baseY;
-
-
-      if (width > 1200) {
-
-        baseY = 0;
-
-      }
-
-      else if (width > 900) {
-
-        baseY = 0;
-
-      }
-
-      else if (width > 600) {
-
-        baseY = -1.5;
-
-      }
-
-      else {
-
-        baseY = -2.15;
-
-      }
-
-
-      mainGroup.position.y =
-        baseY +
-        Math.sin(
-          t * 1.05
-        ) *
-        (
-          width <= 600
-            ? 0.10
-            : 0.27
-        );
-
-
-      /* ===============================================
-         ORBIT
+         ORBITS
          =============================================== */
 
       orbitGroup.rotation.y =
         t * 0.42;
 
-
       orbitGroup.rotation.x =
-        Math.sin(
-          t * 0.35
-        ) * 0.12;
-
+        Math.sin(t * 0.35) *
+        0.12;
 
       orbitGroup.rotation.z =
-        Math.cos(
-          t * 0.28
-        ) * 0.08;
+        Math.cos(t * 0.28) *
+        0.08;
 
-
-      /* ===============================================
-         RING 1
-         =============================================== */
 
       ring1.rotation.y =
         t * 0.65;
 
-
       ring1.rotation.z =
-        Math.sin(
-          t * 0.55
-        ) * 0.15;
+        Math.sin(t * 0.55) *
+        0.15;
 
-
-      /* ===============================================
-         RING 2
-         =============================================== */
 
       ring2.rotation.x =
         Math.PI * 0.34 +
-        Math.sin(
-          t * 0.45
-        ) * 0.16;
-
+        Math.sin(t * 0.45) *
+        0.16;
 
       ring2.rotation.y =
         t * -0.4;
@@ -3221,7 +3022,6 @@ if (magnet) {
       diamond.rotation.x =
         t * 2;
 
-
       diamond.rotation.y =
         t * 3;
 
@@ -3264,7 +3064,6 @@ if (magnet) {
       diamond2.rotation.x =
         -t * 2.5;
 
-
       diamond2.rotation.z =
         t * 2;
 
@@ -3297,39 +3096,23 @@ if (magnet) {
 
 
       /* ===============================================
-         DARK OBJECT LIGHTING
+         SUBTLE DARK MATERIAL SHIFT
          =============================================== */
 
       knotMat.emissiveIntensity =
         0.13 +
-        Math.sin(
-          t * 0.7
-        ) * 0.04;
-
-
-      ringMat1.emissiveIntensity =
-        0.16 +
-        Math.sin(
-          t * 0.8
-        ) * 0.08;
-
-
-      ringMat2.emissiveIntensity =
-        0.14 +
-        Math.cos(
-          t * 0.7
-        ) * 0.07;
+        Math.sin(t * 0.7) *
+        0.04;
 
 
       sphereMat.emissiveIntensity =
-        0.18 +
-        Math.sin(
-          t * 0.8
-        ) * 0.04;
+        0.23 +
+        Math.sin(t * 0.55) *
+        0.05;
 
 
       /* ===============================================
-         MOVING LIGHTS
+         MOVING LIGHT
          =============================================== */
 
       rim1.position.set(
@@ -3428,3 +3211,4 @@ if (magnet) {
 
 </body>
 </html>
+```
