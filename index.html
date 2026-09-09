@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PyStart — Python jo samajh aaye</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,1136 +13,1232 @@
 
 <style>
 
-  :root {
-    --bg: #f6f7fb;
-    --surface: #ffffff;
-    --text: #14171f;
-    --muted: #6b7186;
-    --amber: #e08a1e;
-    --violet: #7c5cff;
-    --mint: #35a879;
-    --border: #e3e6f0;
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #14171f;
+  --muted: #6b7186;
+
+  --amber: #e08a1e;
+  --violet: #7c5cff;
+  --mint: #35a879;
+
+  --border: #e3e6f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(
+      ellipse at 30% 15%,
+      #ffffff 0%,
+      #f6f7fb 55%,
+      #f1f2f7 100%
+    );
+
+  color: var(--text);
+
+  font-family: 'Sora', sans-serif;
+
+  line-height: 1.6;
+
+  overflow-x: hidden;
+
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   3D BACKGROUND
+   ========================================================= */
+
+#canvas-wrap {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  overflow: hidden;
+}
+
+#canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   CURSOR PARTICLES
+   ========================================================= */
+
+#trail-canvas {
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   GRAIN
+   ========================================================= */
+
+.grain {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 3;
+
+  pointer-events: none;
+
+  opacity: 0.025;
+
+  mix-blend-mode: multiply;
+}
+
+
+/* =========================================================
+   WRAPPER
+   ========================================================= */
+
+.wrap {
+  width: 100%;
+  max-width: 1040px;
+
+  margin: 0 auto;
+
+  padding: 0 24px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 24px 0;
+
+  min-height: 76px;
+}
+
+.logo {
+  font-weight: 800;
+
+  font-size: 1.25rem;
+
+  letter-spacing: -0.02em;
+
+  color: #14171f;
+}
+
+.logo span {
+  color: var(--violet);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: var(--muted);
+
+  text-decoration: none;
+
+  margin-left: 28px;
+
+  font-size: 0.95rem;
+
+  transition: color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.1fr)
+    minmax(0, 1fr);
+
+  gap: 48px;
+
+  align-items: center;
+
+  padding: 64px 0 110px;
+
+  min-height: 78vh;
+}
+
+.hero > div {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+h1 {
+  font-size: 2.75rem;
+
+  font-weight: 800;
+
+  letter-spacing: -0.035em;
+
+  line-height: 1.15;
+
+  max-width: 480px;
+
+  color: #14171f;
+}
+
+.hero p.sub {
+  margin-top: 18px;
+
+  color: var(--muted);
+
+  font-size: 1.05rem;
+
+  max-width: 440px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.cta-row {
+  margin-top: 32px;
+
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 13px 24px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  font-size: 0.95rem;
+
+  text-decoration: none;
+
+  display: inline-block;
+
+  border: 1px solid transparent;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn-primary {
+  background: #14171f;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  box-shadow:
+    0 10px 28px
+    rgba(20,23,31,0.18);
+}
+
+.btn-ghost {
+  border-color: var(--border);
+
+  color: #14171f;
+
+  background:
+    rgba(255,255,255,0.72);
+
+  backdrop-filter: blur(10px);
+}
+
+.btn-ghost:hover {
+  border-color: #c9c1ff;
+  color: var(--violet);
+}
+
+.magnetic {
+  transition:
+    transform 0.2s
+    cubic-bezier(0.33,1,0.68,1);
+}
+
+
+/* =========================================================
+   EDITOR
+   ========================================================= */
+
+.editor {
+  width: 100%;
+
+  background:
+    rgba(255,255,255,0.72);
+
+  backdrop-filter: blur(22px);
+
+  -webkit-backdrop-filter: blur(22px);
+
+  border:
+    1px solid rgba(255,255,255,0.9);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 30px 90px
+    rgba(55,65,95,0.15);
+}
+
+.editor-bar {
+  display: flex;
+
+  gap: 6px;
+
+  padding: 12px 16px;
+
+  background:
+    rgba(239,241,247,0.78);
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+}
+
+.dot.r {
+  background: #ff6b6b;
+}
+
+.dot.y {
+  background: #ffd166;
+}
+
+.dot.g {
+  background: #35c98c;
+}
+
+#code {
+  width: 100%;
+
+  min-height: 130px;
+
+  background: transparent;
+
+  color: #242832;
+
+  border: none;
+
+  padding: 16px;
+
+  font-family:
+    'JetBrains Mono',
+    monospace;
+
+  font-size: 0.9rem;
+
+  resize: vertical;
+
+  outline: none;
+
+  white-space: pre-wrap;
+
+  overflow-wrap: anywhere;
+}
+
+.run-row {
+  padding:
+    12px 16px;
+
+  border-top:
+    1px solid var(--border);
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap: 15px;
+}
+
+#run-btn {
+  background:
+    var(--violet);
+
+  color: white;
+
+  border: none;
+
+  padding:
+    8px 18px;
+
+  border-radius:
+    6px;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  font-family:
+    'Sora',
+    sans-serif;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+#run-btn:hover {
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 7px 20px
+    rgba(124,92,255,0.2);
+}
+
+#run-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+#output {
+  margin:
+    0 16px 16px;
+
+  background:
+    #f7f8fb;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    8px;
+
+  padding:
+    14px 16px;
+
+  font-family:
+    'JetBrains Mono',
+    monospace;
+
+  font-size:
+    0.85rem;
+
+  color:
+    #267652;
+
+  min-height:
+    24px;
+
+  white-space:
+    pre-wrap;
+
+  overflow-wrap:
+    anywhere;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+section.features {
+  padding:
+    30px 0 90px;
+}
+
+.features h2 {
+  font-size:
+    1.6rem;
+
+  font-weight:
+    700;
+
+  margin-bottom:
+    8px;
+}
+
+.features p.lead {
+  color:
+    var(--muted);
+
+  margin-bottom:
+    36px;
+
+  max-width:
+    520px;
+}
+
+
+/* =========================================================
+   FEATURE GRID
+   ========================================================= */
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
+  gap: 1px;
+
+  background:
+    var(--border);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    14px;
+
+  overflow:
+    hidden;
+}
+
+
+/* =========================================================
+   FLOATING CARDS
+   ========================================================= */
+
+.card-link {
+  text-decoration: none;
+
+  color: inherit;
+
+  display: block;
+
+  min-width: 0;
+}
+
+.card {
+  background:
+    rgba(255,255,255,0.82);
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  padding:
+    26px 24px;
+
+  position:
+    relative;
+
+  min-width:
+    0;
+
+  cursor:
+    pointer;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/*
+  Each card has a slightly different
+  floating rhythm.
+*/
+
+.card.c1 {
+  animation:
+    floatCard1 4.8s ease-in-out infinite;
+}
+
+.card.c2 {
+  animation:
+    floatCard2 5.4s ease-in-out infinite;
+}
+
+.card.c3 {
+  animation:
+    floatCard3 5.1s ease-in-out infinite;
+}
+
+
+@keyframes floatCard1 {
+
+  0%,100% {
+    transform:
+      translateY(0);
   }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  50% {
+    transform:
+      translateY(-7px);
   }
 
-  html {
-    scroll-behavior: smooth;
-    width: 100%;
+}
+
+
+@keyframes floatCard2 {
+
+  0%,100% {
+    transform:
+      translateY(-2px);
   }
 
-  body {
-    background:
-      radial-gradient(
-        ellipse at 30% 15%,
-        #ffffff 0%,
-        #f6f7fb 55%,
-        #f1f2f7 100%
-      );
-
-    color: var(--text);
-
-    font-family: 'Sora', sans-serif;
-
-    line-height: 1.6;
-
-    overflow-x: hidden;
-
-    position: relative;
-
-    width: 100%;
-    min-height: 100vh;
+  50% {
+    transform:
+      translateY(7px);
   }
 
+}
 
-  /* =========================================================
-     THREE.JS BACKGROUND
-     ========================================================= */
 
-  #canvas-wrap {
-    position: fixed;
+@keyframes floatCard3 {
 
-    inset: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    z-index: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
+  0%,100% {
+    transform:
+      translateY(3px);
   }
 
-  #canvas-wrap canvas {
-    display: block;
-
-    width: 100%;
-    height: 100%;
+  50% {
+    transform:
+      translateY(-6px);
   }
 
+}
 
-  /* =========================================================
-     CURSOR PARTICLE TRAIL
-     ========================================================= */
 
-  #trail-canvas {
-    position: fixed;
+.card-link:hover .card {
+  transform:
+    translateY(-10px)
+    scale(1.015);
 
-    inset: 0;
+  background:
+    rgba(255,255,255,0.98);
 
-    width: 100vw;
-    height: 100vh;
+  box-shadow:
+    0 18px 40px
+    rgba(50,55,80,0.12);
 
-    z-index: 1;
+  z-index:
+    5;
+}
 
-    pointer-events: none;
+
+/* Top colored line */
+
+.card::before {
+  content: "";
+
+  position:
+    absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 3px;
+}
+
+.card.c1::before {
+  background:
+    var(--amber);
+}
+
+.card.c2::before {
+  background:
+    #ff6b6b;
+}
+
+.card.c3::before {
+  background:
+    var(--mint);
+}
+
+
+.card h3 {
+  font-size:
+    1.05rem;
+
+  margin-bottom:
+    8px;
+}
+
+.card p {
+  color:
+    var(--muted);
+
+  font-size:
+    0.92rem;
+}
+
+
+/* =========================================================
+   INTERNAL SECTIONS
+   ========================================================= */
+
+.content-section {
+  scroll-margin-top: 90px;
+
+  padding:
+    80px 0 90px;
+}
+
+.section-box {
+  background:
+    rgba(255,255,255,0.82);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  padding:
+    42px;
+
+  box-shadow:
+    0 20px 60px
+    rgba(40,45,70,0.08);
+}
+
+.section-label {
+  font-family:
+    'JetBrains Mono',
+    monospace;
+
+  font-size:
+    0.75rem;
+
+  color:
+    var(--violet);
+
+  margin-bottom:
+    10px;
+
+  text-transform:
+    uppercase;
+
+  letter-spacing:
+    0.08em;
+}
+
+.content-section h2 {
+  font-size:
+    2rem;
+
+  margin-bottom:
+    12px;
+}
+
+.content-section .section-intro {
+  color:
+    var(--muted);
+
+  max-width:
+    650px;
+
+  margin-bottom:
+    30px;
+}
+
+
+/* =========================================================
+   SECTION ITEMS
+   ========================================================= */
+
+.lesson-list {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:
+    12px;
+}
+
+.lesson-item {
+  padding:
+    18px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(247,248,251,0.8);
+}
+
+.lesson-item strong {
+  display:
+    block;
+
+  margin-bottom:
+    4px;
+}
+
+.lesson-item span {
+  color:
+    var(--muted);
+
+  font-size:
+    0.88rem;
+}
+
+
+/* =========================================================
+   ERROR SECTION
+   ========================================================= */
+
+.error-item {
+  border-left:
+    3px solid #ff6b6b;
+}
+
+
+/* =========================================================
+   PROJECT SECTION
+   ========================================================= */
+
+.project-item {
+  border-left:
+    3px solid var(--mint);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.back-top {
+  display:
+    inline-block;
+
+  margin-top:
+    28px;
+
+  color:
+    var(--muted);
+
+  text-decoration:
+    none;
+
+  font-size:
+    0.85rem;
+}
+
+.back-top:hover {
+  color:
+    var(--text);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  border-top:
+    1px solid var(--border);
+
+  padding:
+    28px 0;
+
+  color:
+    var(--muted);
+
+  font-size:
+    0.85rem;
+
+  text-align:
+    center;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast-stack {
+  position:
+    fixed;
+
+  bottom:
+    24px;
+
+  right:
+    24px;
+
+  z-index:
+    50;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    10px;
+}
+
+.toast {
+  background:
+    rgba(255,255,255,0.94);
+
+  backdrop-filter:
+    blur(14px);
+
+  border:
+    1px solid var(--border);
+
+  border-left:
+    3px solid var(--mint);
+
+  padding:
+    12px 18px;
+
+  border-radius:
+    10px;
+
+  font-size:
+    0.88rem;
+
+  box-shadow:
+    0 12px 32px
+    rgba(30,35,50,0.12);
+
+  transform:
+    translateX(120%);
+
+  opacity:
+    0;
+
+  animation:
+    toastIn 0.4s forwards,
+    toastOut 0.4s 2.6s forwards;
+}
+
+@keyframes toastIn {
+
+  to {
+    transform:
+      translateX(0);
+
+    opacity:
+      1;
   }
 
+}
 
-  /* =========================================================
-     GRAIN
-     ========================================================= */
+@keyframes toastOut {
 
-  .grain {
-    position: fixed;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: 3;
-
-    pointer-events: none;
-
-    opacity: 0.025;
-
-    mix-blend-mode: multiply;
-  }
-
-
-  /* =========================================================
-     MAIN WRAPPER
-     ========================================================= */
-
-  .wrap {
-    width: 100%;
-
-    max-width: 1040px;
-
-    margin: 0 auto;
-
-    padding: 0 24px;
-
-    position: relative;
-
-    z-index: 2;
-  }
-
-
-  /* =========================================================
-     HEADER
-     ========================================================= */
-
-  header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 24px 0;
-
-    min-height: 76px;
-  }
-
-  .logo {
-    font-weight: 800;
-
-    font-size: 1.25rem;
-
-    letter-spacing: -0.02em;
-
-    white-space: nowrap;
-
-    color: #14171f;
-  }
-
-  .logo span {
-    color: var(--violet);
-  }
-
-  nav {
-    display: flex;
-
-    align-items: center;
-  }
-
-  nav a {
-    color: var(--muted);
-
-    text-decoration: none;
-
-    margin-left: 28px;
-
-    font-size: 0.95rem;
-
-    transition:
-      color 0.2s ease;
-  }
-
-  nav a:hover {
-    color: var(--text);
-  }
-
-
-  /* =========================================================
-     HERO
-     ========================================================= */
-
-  .hero {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1.1fr)
-      minmax(0, 1fr);
-
-    gap: 48px;
-
-    align-items: center;
-
-    padding: 64px 0 110px;
-
-    min-height: 78vh;
-  }
-
-  .hero > div {
-    min-width: 0;
-  }
-
-
-  /* =========================================================
-     HEADING
-     ========================================================= */
-
-  h1 {
-    font-size: 2.75rem;
-
-    font-weight: 800;
-
-    letter-spacing: -0.035em;
-
-    line-height: 1.15;
-
-    max-width: 480px;
-
-    color: #14171f;
-  }
-
-
-  .hero p.sub {
-    margin-top: 18px;
-
-    color: var(--muted);
-
-    font-size: 1.05rem;
-
-    max-width: 440px;
-  }
-
-
-  /* =========================================================
-     BUTTONS
-     ========================================================= */
-
-  .cta-row {
-    margin-top: 32px;
-
-    display: flex;
-
-    gap: 14px;
-
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    padding: 13px 24px;
-
-    border-radius: 8px;
-
-    font-weight: 600;
-
-    font-size: 0.95rem;
-
-    text-decoration: none;
-
-    display: inline-block;
-
-    border: 1px solid transparent;
-
-    transition:
-      transform 0.15s ease,
-      box-shadow 0.15s ease,
-      border-color 0.15s ease,
-      background 0.15s ease;
-  }
-
-  .btn-primary {
-    background: #14171f;
-
-    color: #ffffff;
-  }
-
-  .btn-primary:hover {
-    box-shadow:
-      0 10px 28px
-      rgba(20,23,31,0.18);
-  }
-
-  .btn-ghost {
-    border-color: var(--border);
-
-    color: #14171f;
-
-    background:
-      rgba(255,255,255,0.72);
-
-    backdrop-filter: blur(10px);
-
-    -webkit-backdrop-filter: blur(10px);
-  }
-
-  .btn-ghost:hover {
-    border-color: #c9c1ff;
-
-    color: var(--violet);
-
-    background:
-      rgba(255,255,255,0.95);
-  }
-
-  .magnetic {
-    transition:
-      transform 0.2s
-      cubic-bezier(0.33,1,0.68,1);
-
-    will-change: transform;
-  }
-
-
-  /* =========================================================
-     TOAST
-     ========================================================= */
-
-  .toast-stack {
-    position: fixed;
-
-    bottom: 24px;
-
-    right: 24px;
-
-    z-index: 50;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-  }
-
-  .toast {
-    background:
-      rgba(255,255,255,0.92);
-
-    backdrop-filter: blur(14px);
-
-    -webkit-backdrop-filter: blur(14px);
-
-    border:
-      1px solid var(--border);
-
-    border-left:
-      3px solid var(--mint);
-
-    padding:
-      12px 18px;
-
-    border-radius: 10px;
-
-    font-size: 0.88rem;
-
-    color: var(--text);
-
-    box-shadow:
-      0 12px 32px
-      rgba(30,35,50,0.12);
-
+  to {
     transform:
       translateX(120%);
 
-    opacity: 0;
-
-    animation:
-      toastIn 0.4s
-      cubic-bezier(0.33,1,0.68,1)
-      forwards,
-
-      toastOut 0.4s
-      ease-in 2.6s
-      forwards;
+    opacity:
+      0;
   }
 
-  @keyframes toastIn {
+}
 
-    to {
-      transform:
-        translateX(0);
 
-      opacity: 1;
-    }
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
+@media (max-width:1100px) {
+
+  .wrap {
+    padding-left:
+      28px;
+
+    padding-right:
+      28px;
   }
 
-  @keyframes toastOut {
+  .hero {
+    grid-template-columns:
+      minmax(0,1.05fr)
+      minmax(0,0.95fr);
 
-    to {
-      transform:
-        translateX(120%);
-
-      opacity: 0;
-    }
-
+    gap:
+      36px;
   }
 
-
-  /* =========================================================
-     SKELETON
-     ========================================================= */
-
-  .skeleton {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    padding: 2px 0;
+  h1 {
+    font-size:
+      2.55rem;
   }
-
-  .skeleton-line {
-    height: 12px;
-
-    border-radius: 4px;
-
-    background:
-      linear-gradient(
-        90deg,
-        rgba(20,23,31,0.05) 0%,
-        rgba(20,23,31,0.12) 50%,
-        rgba(20,23,31,0.05) 100%
-      );
-
-    background-size:
-      200% 100%;
-
-    animation:
-      shimmer 1.3s
-      ease-in-out infinite;
-  }
-
-  @keyframes shimmer {
-
-    0% {
-      background-position:
-        200% 0;
-    }
-
-    100% {
-      background-position:
-        -200% 0;
-    }
-
-  }
-
-
-  /* =========================================================
-     EDITOR
-     ========================================================= */
-
-  .editor {
-    width: 100%;
-
-    max-width: 100%;
-
-    background:
-      rgba(255,255,255,0.72);
-
-    backdrop-filter:
-      blur(22px);
-
-    -webkit-backdrop-filter:
-      blur(22px);
-
-    border:
-      1px solid rgba(255,255,255,0.9);
-
-    border-radius: 16px;
-
-    overflow: hidden;
-
-    box-shadow:
-      0 30px 90px
-      rgba(55,65,95,0.15);
-  }
-
-  .editor-bar {
-    display: flex;
-
-    gap: 6px;
-
-    padding: 12px 16px;
-
-    background:
-      rgba(239,241,247,0.78);
-
-    border-bottom:
-      1px solid var(--border);
-  }
-
-  .dot {
-    width: 10px;
-
-    height: 10px;
-
-    flex: 0 0 10px;
-
-    border-radius: 50%;
-  }
-
-  .dot.r {
-    background: #ff6b6b;
-  }
-
-  .dot.y {
-    background: #ffd166;
-  }
-
-  .dot.g {
-    background: #35c98c;
-  }
-
-
-  /* =========================================================
-     CODE
-     ========================================================= */
 
   #code {
-    width: 100%;
-
-    min-height: 130px;
-
-    background: transparent;
-
-    color: #242832;
-
-    border: none;
-
-    padding: 16px;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
-    font-size: 0.9rem;
-
-    resize: vertical;
-
-    outline: none;
-
-    white-space: pre-wrap;
-
-    overflow-wrap: anywhere;
-  }
-
-
-  /* =========================================================
-     RUN ROW
-     ========================================================= */
-
-  .run-row {
-    padding:
-      12px 16px;
-
-    border-top:
-      1px solid var(--border);
-
-    display: flex;
-
-    justify-content:
-      space-between;
-
-    align-items: center;
-
-    gap: 15px;
-  }
-
-  .run-row span {
-    min-width: 0;
-
-    color: var(--muted);
-  }
-
-  #run-btn {
-    background:
-      var(--violet);
-
-    color: #ffffff;
-
-    border: none;
-
-    padding:
-      8px 18px;
-
-    border-radius: 6px;
-
-    font-weight: 600;
-
-    font-family:
-      'Sora',
-      sans-serif;
-
-    cursor: pointer;
-
-    font-size: 0.9rem;
-
-    transition:
-      transform 0.15s ease,
-      opacity 0.15s ease,
-      box-shadow 0.15s ease;
-  }
-
-  #run-btn:hover {
-    transform:
-      translateY(-1px);
-
-    box-shadow:
-      0 7px 20px
-      rgba(124,92,255,0.2);
-  }
-
-  #run-btn:disabled {
-    opacity: 0.6;
-
-    cursor: wait;
-  }
-
-
-  /* =========================================================
-     OUTPUT
-     ========================================================= */
-
-  #output {
-    margin:
-      0 16px 16px;
-
-    background:
-      #f7f8fb;
-
-    border:
-      1px solid var(--border);
-
-    border-radius: 8px;
-
-    padding:
-      14px 16px;
-
-    font-family:
-      'JetBrains Mono',
-      monospace;
-
-    font-size: 0.85rem;
-
-    color:
-      #267652;
-
-    min-height: 24px;
-
-    white-space:
-      pre-wrap;
-
-    overflow-wrap:
-      anywhere;
-  }
-
-
-  /* =========================================================
-     FEATURES
-     ========================================================= */
-
-  section.features {
-    padding:
-      30px 0 90px;
-  }
-
-  .features h2 {
     font-size:
-      1.6rem;
-
-    font-weight:
-      700;
-
-    margin-bottom:
-      8px;
+      0.82rem;
   }
 
-  .features p.lead {
-    color:
-      var(--muted);
+}
 
-    margin-bottom:
-      36px;
 
+@media (max-width:900px) {
+
+  .hero {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      42px;
+
+    padding:
+      42px 0 75px;
+
+    min-height:
+      auto;
+  }
+
+  h1 {
     max-width:
-      520px;
+      600px;
+
+    font-size:
+      2.5rem;
   }
 
   .grid {
-    display: grid;
-
     grid-template-columns:
-      repeat(3,minmax(0,1fr));
-
-    gap: 1px;
-
-    background:
-      var(--border);
-
-    border:
-      1px solid var(--border);
-
-    border-radius:
-      14px;
-
-    overflow:
-      hidden;
+      1fr;
   }
 
-  .card {
-    background:
-      rgba(255,255,255,0.78);
+  .lesson-list {
+    grid-template-columns:
+      1fr;
+  }
 
-    backdrop-filter:
-      blur(12px);
+}
 
-    -webkit-backdrop-filter:
-      blur(12px);
+
+@media (max-width:600px) {
+
+  .wrap {
+    padding-left:
+      18px;
+
+    padding-right:
+      18px;
+  }
+
+  header {
+    padding:
+      18px 0;
+  }
+
+  nav {
+    display:
+      none;
+  }
+
+  h1 {
+    font-size:
+      2rem;
+
+    line-height:
+      1.18;
+  }
+
+  .hero {
+    gap:
+      32px;
 
     padding:
-      26px 24px;
-
-    position:
-      relative;
-
-    min-width:
-      0;
+      30px 0 65px;
   }
 
-  .card::before {
-    content: "";
-
-    position:
-      absolute;
-
-    top:
-      0;
-
-    left:
-      0;
-
-    right:
-      0;
-
-    height:
-      3px;
-  }
-
-  .card.c1::before {
-    background:
-      var(--amber);
-  }
-
-  .card.c2::before {
-    background:
-      #ff6b6b;
-  }
-
-  .card.c3::before {
-    background:
-      var(--mint);
-  }
-
-  .card h3 {
+  .hero p.sub {
     font-size:
-      1.05rem;
-
-    margin-bottom:
-      8px;
+      0.94rem;
   }
 
-  .card p {
-    color:
-      var(--muted);
+  .cta-row {
+    margin-top:
+      26px;
 
-    font-size:
-      0.92rem;
+    flex-direction:
+      column;
   }
 
-
-  /* =========================================================
-     FOOTER
-     ========================================================= */
-
-  footer {
-    border-top:
-      1px solid var(--border);
-
-    padding:
-      28px 0;
-
-    color:
-      var(--muted);
-
-    font-size:
-      0.85rem;
+  .btn {
+    width:
+      100%;
 
     text-align:
       center;
-
-    position:
-      relative;
-
-    z-index:
-      2;
   }
 
+  #code {
+    min-height:
+      125px;
 
-  /* =========================================================
-     LAPTOP
-     ========================================================= */
-
-  @media (max-width:1100px) {
-
-    .wrap {
-      max-width:
-        100%;
-
-      padding-left:
-        28px;
-
-      padding-right:
-        28px;
-    }
-
-    .hero {
-      grid-template-columns:
-        minmax(0,1.05fr)
-        minmax(0,0.95fr);
-
-      gap:
-        36px;
-    }
-
-    h1 {
-      font-size:
-        2.55rem;
-    }
-
-    .hero p.sub {
-      font-size:
-        1rem;
-    }
-
-    #code {
-      font-size:
-        0.82rem;
-    }
-
+    font-size:
+      0.74rem;
   }
 
+  .run-row span {
+    font-size:
+      0.7rem !important;
+  }
 
-  /* =========================================================
-     TABLET
-     ========================================================= */
+  #run-btn {
+    padding:
+      7px 13px;
 
-  @media (max-width:900px) {
+    font-size:
+      0.8rem;
+  }
 
-    .wrap {
-      padding-left:
-        24px;
+  #output {
+    font-size:
+      0.74rem;
+  }
 
-      padding-right:
-        24px;
-    }
+  .section-box {
+    padding:
+      28px 20px;
+  }
 
-    .hero {
-      grid-template-columns:
-        1fr;
+  .content-section h2 {
+    font-size:
+      1.6rem;
+  }
 
-      gap:
-        42px;
+  .toast-stack {
+    left:
+      12px;
 
-      padding:
-        42px 0 75px;
+    right:
+      12px;
 
-      min-height:
-        auto;
-    }
+    bottom:
+      12px;
+  }
 
-    h1 {
-      max-width:
-        600px;
+}
 
-      font-size:
-        2.5rem;
-    }
 
-    .hero p.sub {
-      max-width:
-        600px;
-    }
+@media (max-width:380px) {
 
-    .editor {
-      width:
-        100%;
-    }
+  h1 {
+    font-size:
+      1.75rem;
+  }
 
-    .grid {
-      grid-template-columns:
-        1fr;
-    }
+  #code {
+    font-size:
+      0.68rem;
+  }
+
+  .run-row span {
+    display:
+      none;
+  }
+
+  .run-row {
+    justify-content:
+      flex-end;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    scroll-behavior:
+      auto !important;
 
   }
 
-
-  /* =========================================================
-     MOBILE
-     ========================================================= */
-
-  @media (max-width:600px) {
-
-    .wrap {
-      padding-left:
-        18px;
-
-      padding-right:
-        18px;
-    }
-
-    header {
-      padding:
-        18px 0;
-
-      min-height:
-        65px;
-    }
-
-    nav {
-      display:
-        none;
-    }
-
-    h1 {
-      font-size:
-        2rem;
-
-      line-height:
-        1.18;
-    }
-
-    .hero {
-      gap:
-        32px;
-
-      padding:
-        30px 0 65px;
-    }
-
-    .hero p.sub {
-      font-size:
-        0.94rem;
-
-      margin-top:
-        16px;
-    }
-
-    .cta-row {
-      margin-top:
-        26px;
-
-      flex-direction:
-        column;
-
-      gap:
-        10px;
-    }
-
-    .btn {
-      width:
-        100%;
-
-      text-align:
-        center;
-    }
-
-    #code {
-      min-height:
-        125px;
-
-      font-size:
-        0.74rem;
-
-      padding:
-        14px;
-    }
-
-    .editor-bar {
-      padding:
-        10px 14px;
-    }
-
-    .run-row {
-      padding:
-        10px 14px;
-    }
-
-    .run-row span {
-      font-size:
-        0.7rem !important;
-    }
-
-    #run-btn {
-      padding:
-        7px 13px;
-
-      font-size:
-        0.8rem;
-    }
-
-    #output {
-      margin:
-        0 14px 14px;
-
-      font-size:
-        0.74rem;
-
-      padding:
-        12px;
-    }
-
-    .features {
-      padding-top:
-        10px !important;
-    }
-
-    .features h2 {
-      font-size:
-        1.4rem;
-    }
-
-    .card {
-      padding:
-        23px 20px;
-    }
-
-    .toast-stack {
-      right:
-        12px;
-
-      bottom:
-        12px;
-
-      left:
-        12px;
-    }
-
-    .toast {
-      font-size:
-        0.8rem;
-    }
-
-  }
-
-
-  /* =========================================================
-     VERY SMALL PHONES
-     ========================================================= */
-
-  @media (max-width:380px) {
-
-    h1 {
-      font-size:
-        1.75rem;
-    }
-
-    .hero {
-      padding-top:
-        25px;
-    }
-
-    #code {
-      font-size:
-        0.68rem;
-    }
-
-    .run-row span {
-      display:
-        none;
-    }
-
-    .run-row {
-      justify-content:
-        flex-end;
-    }
-
-    .card p {
-      font-size:
-        0.86rem;
-    }
-
-  }
-
-
-  /* =========================================================
-     REDUCED MOTION
-     ========================================================= */
-
-  @media (prefers-reduced-motion:reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-      animation-duration:
-        0.01ms !important;
-
-      animation-iteration-count:
-        1 !important;
-
-      scroll-behavior:
-        auto !important;
-
-      transition-duration:
-        0.01ms !important;
-    }
-
-  }
+}
 
 </style>
 </head>
@@ -1151,14 +1248,14 @@
 
 
 <!-- =========================================================
-     3D BACKGROUND
+     3D
      ========================================================= -->
 
 <div id="canvas-wrap"></div>
 
 
 <!-- =========================================================
-     CURSOR PARTICLE TRAIL
+     CURSOR PARTICLES
      ========================================================= -->
 
 <canvas id="trail-canvas"></canvas>
@@ -1200,143 +1297,148 @@
 <div class="wrap">
 
 
-  <!-- HEADER -->
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 
-  <header>
+<header>
 
-    <div class="logo">
-      Py<span>Start</span>
+  <div class="logo">
+    Py<span>Start</span>
+  </div>
+
+  <nav>
+
+    <a href="#lessons-section">
+      Lessons
+    </a>
+
+    <a href="#errors-section">
+      Errors
+    </a>
+
+    <a href="#projects-section">
+      Projects
+    </a>
+
+  </nav>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero">
+
+
+  <!-- LEFT -->
+
+  <div>
+
+    <h1>
+      Python seekho jaise koi doubt hi nahi bacha.
+    </h1>
+
+    <p class="sub">
+      Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
+    </p>
+
+    <div class="cta-row">
+
+      <a
+        href="#lessons-section"
+        class="btn btn-primary magnetic"
+        id="magnet-btn"
+      >
+        Shuru karo — Free
+      </a>
+
+      <a
+        href="#errors-section"
+        class="btn btn-ghost"
+      >
+        Error Dictionary dekho
+      </a>
+
     </div>
 
-    <nav>
-
-      <a href="lessons-variables.html">
-        Lessons
-      </a>
-
-      <a href="errors.html">
-        Errors
-      </a>
-
-      <a href="projects.html">
-        Projects
-      </a>
-
-    </nav>
-
-  </header>
+  </div>
 
 
-  <!-- =======================================================
-       HERO
-       ======================================================= -->
+  <!-- RIGHT EDITOR -->
 
-  <section class="hero">
+  <div class="editor">
 
+    <div class="editor-bar">
 
-    <!-- HERO TEXT -->
-
-    <div>
-
-      <h1>
-        Python seekho jaise koi doubt hi nahi.
-      </h1>
-
-      <p class="sub">
-        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
-      </p>
-
-      <div class="cta-row">
-
-        <a
-          href="lessons-variables.html"
-          class="btn btn-primary magnetic"
-          id="magnet-btn"
-        >
-          Shuru karo — Free
-        </a>
-
-        <a
-          href="errors.html"
-          class="btn btn-ghost"
-        >
-          Error Dictionary dekho
-        </a>
-
-      </div>
+      <span class="dot r"></span>
+      <span class="dot y"></span>
+      <span class="dot g"></span>
 
     </div>
 
 
-    <!-- =====================================================
-         PYTHON EDITOR
-         ===================================================== -->
-
-    <div class="editor">
-
-      <div class="editor-bar">
-
-        <span class="dot r"></span>
-
-        <span class="dot y"></span>
-
-        <span class="dot g"></span>
-
-      </div>
-
-
-      <textarea id="code">print("Chalo shuru karte hain!")
+    <textarea id="code">print("Chalo shuru karte hain!")
 for i in range(3):
     print("Line", i)</textarea>
 
 
-      <div class="run-row">
+    <div class="run-row">
 
-        <span
-          style="
-            color:var(--muted);
-            font-size:0.8rem;
-          "
-        >
-          Browser mein hi chalega
-        </span>
+      <span
+        style="
+          color:var(--muted);
+          font-size:0.8rem;
+        "
+      >
+        Browser mein hi chalega
+      </span>
 
-        <button
-          id="run-btn"
-          onclick="runCode()"
-        >
-          ▶ Run
-        </button>
-
-      </div>
-
-
-      <div id="output">
-        Output yahan dikhega...
-      </div>
+      <button
+        id="run-btn"
+        onclick="runCode()"
+      >
+        ▶ Run
+      </button>
 
     </div>
 
-  </section>
+
+    <div id="output">
+      Output yahan dikhega...
+    </div>
+
+  </div>
+
+</section>
 
 
-  <!-- =======================================================
-       FEATURES
-       ======================================================= -->
+<!-- =========================================================
+     FEATURES
+     ========================================================= -->
 
-  <section class="features">
+<section class="features">
 
-    <h2>
-      Sab kuch ek jagah
-    </h2>
+  <h2>
+    Sab kuch ek jagah
+  </h2>
 
-    <p class="lead">
-      Beginner se lekar apni website/app banane tak — sab structured order mein.
-    </p>
+  <p class="lead">
+    Beginner se lekar apni website/app banane tak — sab structured order mein.
+  </p>
 
 
-    <div class="grid">
+  <div class="grid">
 
+
+    <!-- FOUNDATION -->
+
+    <a
+      href="#lessons-section"
+      class="card-link"
+    >
 
       <div class="card c1">
 
@@ -1350,6 +1452,15 @@ for i in range(3):
 
       </div>
 
+    </a>
+
+
+    <!-- ERRORS -->
+
+    <a
+      href="#errors-section"
+      class="card-link"
+    >
 
       <div class="card c2">
 
@@ -1363,6 +1474,15 @@ for i in range(3):
 
       </div>
 
+    </a>
+
+
+    <!-- PROJECTS -->
+
+    <a
+      href="#projects-section"
+      class="card-link"
+    >
 
       <div class="card c3">
 
@@ -1376,15 +1496,372 @@ for i in range(3):
 
       </div>
 
+    </a>
+
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     LESSONS SECTION
+     ========================================================= -->
+
+<section
+  class="content-section"
+  id="lessons-section"
+>
+
+  <div class="section-box">
+
+    <div class="section-label">
+      Lesson Path
+    </div>
+
+    <h2>
+      Python Foundations
+    </h2>
+
+    <p class="section-intro">
+      Python ko step-by-step seekho. Har concept ke baad practical examples aur exercises, taaki fundamentals genuinely strong ho.
+    </p>
+
+
+    <div class="lesson-list">
+
+      <div class="lesson-item">
+
+        <strong>
+          01 — Variables
+        </strong>
+
+        <span>
+          Variables, values aur data store karna.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item">
+
+        <strong>
+          02 — Data Types
+        </strong>
+
+        <span>
+          Strings, integers, floats, booleans aur type conversion.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item">
+
+        <strong>
+          03 — Conditions
+        </strong>
+
+        <span>
+          if, elif aur else ko practical examples ke saath.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item">
+
+        <strong>
+          04 — Loops
+        </strong>
+
+        <span>
+          for aur while loops se repetitive tasks automate karna.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item">
+
+        <strong>
+          05 — Functions
+        </strong>
+
+        <span>
+          Reusable aur clean Python code likhna.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item">
+
+        <strong>
+          06 — Lists & Dictionaries
+        </strong>
+
+        <span>
+          Python ke important data structures ko samajhna.
+        </span>
+
+      </div>
 
     </div>
 
-  </section>
+
+    <a
+      href="#"
+      class="back-top"
+    >
+      ↑ Back to top
+    </a>
+
+  </div>
+
+</section>
 
 
-  <footer>
-    Built by a student, for students. PyStart.
-  </footer>
+<!-- =========================================================
+     ERRORS SECTION
+     ========================================================= -->
+
+<section
+  class="content-section"
+  id="errors-section"
+>
+
+  <div class="section-box">
+
+    <div class="section-label">
+      Error Dictionary
+    </div>
+
+    <h2>
+      Error aaye? Panic nahi.
+    </h2>
+
+    <p class="section-intro">
+      Common Python errors ko samjho: error ka matlab kya hai, kyun aaya aur practical way mein kaise fix karna hai.
+    </p>
+
+
+    <div class="lesson-list">
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          IndentationError
+        </strong>
+
+        <span>
+          Python mein spacing/indentation ka issue identify aur fix karo.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          SyntaxError
+        </strong>
+
+        <span>
+          Code ka grammar galat hone par error ko read karna seekho.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          TypeError
+        </strong>
+
+        <span>
+          Jab incompatible data types ko ek saath use kiya jaata hai.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          NameError
+        </strong>
+
+        <span>
+          Variable ya function ka naam Python ko nahi mil raha.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          IndexError
+        </strong>
+
+        <span>
+          List/string ke invalid index ko access karne ka issue.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item error-item">
+
+        <strong>
+          KeyError
+        </strong>
+
+        <span>
+          Dictionary mein unavailable key access karne ka issue.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <a
+      href="#"
+      class="back-top"
+    >
+      ↑ Back to top
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROJECTS SECTION
+     ========================================================= -->
+
+<section
+  class="content-section"
+  id="projects-section"
+>
+
+  <div class="section-box">
+
+    <div class="section-label">
+      Build Mode
+    </div>
+
+    <h2>
+      Learn → Build → Improve
+    </h2>
+
+    <p class="section-intro">
+      Concepts ko real projects mein apply karo. Chhote projects se start karke gradually bigger applications tak jao.
+    </p>
+
+
+    <div class="lesson-list">
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          01 — Calculator
+        </strong>
+
+        <span>
+          Variables, functions aur conditions practice karne ke liye.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          02 — Number Guessing Game
+        </strong>
+
+        <span>
+          Loops, conditions aur user input ka practical use.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          03 — To-Do App
+        </strong>
+
+        <span>
+          Data structures aur application logic ko combine karo.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          04 — Expense Tracker
+        </strong>
+
+        <span>
+          Real-world data handling aur calculations.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          05 — Weather App
+        </strong>
+
+        <span>
+          APIs aur external data ke saath Python ka use.
+        </span>
+
+      </div>
+
+
+      <div class="lesson-item project-item">
+
+        <strong>
+          06 — Personal Automation
+        </strong>
+
+        <span>
+          Python se repetitive tasks automate karna.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <a
+      href="#"
+      class="back-top"
+    >
+      ↑ Back to top
+    </a>
+
+  </div>
+
+</section>
+
+
+<footer>
+  Built by a student, for students. PyStart.
+</footer>
+
 
 </div>
 
@@ -1403,226 +1880,212 @@ for i in range(3):
      PYODIDE
      ========================================================= -->
 
-<script
-  src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"
-></script>
-
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 
 <script>
 
-  let pyodideReady = null;
+let pyodideReady = null;
 
 
-  async function initPyodide() {
+async function initPyodide() {
 
-    if (!pyodideReady) {
+  if (!pyodideReady) {
 
-      pyodideReady =
-        await loadPyodide();
-
-    }
-
-    return pyodideReady;
-  }
-
-
-  async function runCode() {
-
-    const btn =
-      document.getElementById(
-        'run-btn'
-      );
-
-    const out =
-      document.getElementById(
-        'output'
-      );
-
-    const code =
-      document.getElementById(
-        'code'
-      ).value;
-
-
-    btn.disabled =
-      true;
-
-    btn.textContent =
-      '⏳ Loading...';
-
-
-    out.innerHTML =
-      '<div class="skeleton">' +
-        '<div class="skeleton-line" style="width:70%"></div>' +
-        '<div class="skeleton-line" style="width:45%"></div>' +
-      '</div>';
-
-
-    try {
-
-      const pyodide =
-        await initPyodide();
-
-
-      btn.textContent =
-        '▶ Run';
-
-
-      pyodide.runPython(
-        `import sys, io\nsys.stdout = io.StringIO()`
-      );
-
-
-      pyodide.runPython(
-        code
-      );
-
-
-      const result =
-        pyodide.runPython(
-          "sys.stdout.getvalue()"
-        );
-
-
-      out.textContent =
-        result ||
-        '(koi output nahi — print() use karo)';
-
-
-      showToast(
-        'Code chal gaya ✅'
-      );
-
-    }
-
-    catch (err) {
-
-      out.textContent =
-        'Error:\n' +
-        err.message;
-
-
-      showToast(
-        'Code mein error hai ⚠️'
-      );
-
-    }
-
-
-    btn.disabled =
-      false;
-
-    btn.textContent =
-      '▶ Run';
+    pyodideReady =
+      await loadPyodide();
 
   }
 
-
-  /* =========================================================
-     TOAST
-     ========================================================= */
-
-  function showToast(message) {
-
-    const stack =
-      document.getElementById(
-        'toast-stack'
-      );
+  return pyodideReady;
+}
 
 
-    const el =
-      document.createElement(
-        'div'
-      );
+async function runCode() {
 
-
-    el.className =
-      'toast';
-
-
-    el.textContent =
-      message;
-
-
-    stack.appendChild(
-      el
-    );
-
-
-    setTimeout(
-      () => el.remove(),
-      3200
-    );
-
-  }
-
-
-  /* =========================================================
-     MAGNETIC BUTTON
-     ========================================================= */
-
-  const magnet =
+  const btn =
     document.getElementById(
-      'magnet-btn'
+      'run-btn'
+    );
+
+  const out =
+    document.getElementById(
+      'output'
+    );
+
+  const code =
+    document.getElementById(
+      'code'
+    ).value;
+
+
+  btn.disabled = true;
+
+  btn.textContent =
+    '⏳ Loading...';
+
+
+  out.innerHTML =
+    '<div class="skeleton">' +
+      '<div class="skeleton-line"></div>' +
+      '<div class="skeleton-line"></div>' +
+    '</div>';
+
+
+  try {
+
+    const pyodide =
+      await initPyodide();
+
+
+    pyodide.runPython(
+      `import sys, io\nsys.stdout = io.StringIO()`
     );
 
 
-  if (magnet) {
-
-    magnet.addEventListener(
-      'mousemove',
-      (e) => {
-
-        if (
-          window.innerWidth <= 900
-        ) {
-          return;
-        }
-
-
-        const rect =
-          magnet.getBoundingClientRect();
-
-
-        const relX =
-          e.clientX -
-          rect.left -
-          rect.width / 2;
-
-
-        const relY =
-          e.clientY -
-          rect.top -
-          rect.height / 2;
-
-
-        magnet.style.transform =
-          `translate(
-            ${relX * 0.25}px,
-            ${relY * 0.4}px
-          )`;
-
-      }
+    pyodide.runPython(
+      code
     );
 
 
-    magnet.addEventListener(
-      'mouseleave',
-      () => {
+    const result =
+      pyodide.runPython(
+        "sys.stdout.getvalue()"
+      );
 
-        magnet.style.transform =
-          'translate(0,0)';
 
-      }
+    out.textContent =
+      result ||
+      '(koi output nahi — print() use karo)';
+
+
+    showToast(
+      'Code chal gaya ✅'
     );
 
   }
+
+  catch (err) {
+
+    out.textContent =
+      'Error:\n' +
+      err.message;
+
+
+    showToast(
+      'Code mein error hai ⚠️'
+    );
+
+  }
+
+
+  btn.disabled =
+    false;
+
+  btn.textContent =
+    '▶ Run';
+
+}
+
+
+function showToast(message) {
+
+  const stack =
+    document.getElementById(
+      'toast-stack'
+    );
+
+
+  const el =
+    document.createElement(
+      'div'
+    );
+
+
+  el.className =
+    'toast';
+
+
+  el.textContent =
+    message;
+
+
+  stack.appendChild(
+    el
+  );
+
+
+  setTimeout(
+    () => el.remove(),
+    3200
+  );
+
+}
+
+
+/* =========================================================
+   MAGNETIC BUTTON
+   ========================================================= */
+
+const magnet =
+  document.getElementById(
+    'magnet-btn'
+  );
+
+
+if (magnet) {
+
+  magnet.addEventListener(
+    'mousemove',
+    (e) => {
+
+      if (
+        window.innerWidth <= 900
+      ) return;
+
+
+      const rect =
+        magnet.getBoundingClientRect();
+
+
+      const x =
+        e.clientX -
+        rect.left -
+        rect.width / 2;
+
+
+      const y =
+        e.clientY -
+        rect.top -
+        rect.height / 2;
+
+
+      magnet.style.transform =
+        `translate(
+          ${x * 0.25}px,
+          ${y * 0.4}px
+        )`;
+
+    }
+  );
+
+
+  magnet.addEventListener(
+    'mouseleave',
+    () => {
+
+      magnet.style.transform =
+        'translate(0,0)';
+
+    }
+  );
+
+}
 
 </script>
 
 
 <!-- =========================================================
-     CURSOR PARTICLE TRAIL
+     CURSOR PARTICLES
      ========================================================= -->
 
 <script>
@@ -1678,38 +2141,28 @@ for i in range(3):
   let particles = [];
 
 
-  let mouseX =
+  let lastX =
     window.innerWidth / 2;
 
-
-  let mouseY =
-    window.innerHeight / 2;
-
-
-  let lastX =
-    mouseX;
-
-
   let lastY =
-    mouseY;
+    window.innerHeight / 2;
 
 
   window.addEventListener(
     'mousemove',
     (e) => {
 
-      mouseX =
+      const x =
         e.clientX;
 
-
-      mouseY =
+      const y =
         e.clientY;
 
 
       const dist =
         Math.hypot(
-          mouseX - lastX,
-          mouseY - lastY
+          x - lastX,
+          y - lastY
         );
 
 
@@ -1734,12 +2187,12 @@ for i in range(3):
 
           x:
             lastX +
-            (mouseX - lastX) * p +
+            (x - lastX) * p +
             (Math.random() - 0.5) * 6,
 
           y:
             lastY +
-            (mouseY - lastY) * p +
+            (y - lastY) * p +
             (Math.random() - 0.5) * 6,
 
           vx:
@@ -1769,12 +2222,8 @@ for i in range(3):
       }
 
 
-      lastX =
-        mouseX;
-
-
-      lastY =
-        mouseY;
+      lastX = x;
+      lastY = y;
 
 
       if (
@@ -1807,9 +2256,7 @@ for i in range(3):
     );
 
 
-    if (reduced) {
-      return;
-    }
+    if (reduced) return;
 
 
     particles.forEach(
@@ -1835,10 +2282,7 @@ for i in range(3):
       p => {
 
         ctx.globalAlpha =
-          Math.max(
-            p.life,
-            0
-          ) * 0.55;
+          p.life * 0.55;
 
 
         ctx.beginPath();
@@ -1871,12 +2315,9 @@ for i in range(3):
     );
 
 
-    ctx.globalAlpha =
-      1;
+    ctx.globalAlpha = 1;
 
-
-    ctx.shadowBlur =
-      0;
+    ctx.shadowBlur = 0;
 
   }
 
@@ -1892,9 +2333,7 @@ for i in range(3):
      THREE.JS
      ========================================================= -->
 
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 
 <script>
@@ -1903,9 +2342,7 @@ for i in range(3):
 
   if (
     typeof THREE === 'undefined'
-  ) {
-    return;
-  }
+  ) return;
 
 
   const wrap =
@@ -1981,8 +2418,6 @@ for i in range(3):
 
   /* =========================================================
      LIGHTING
-     
-     Dark object + soft studio lighting.
      ========================================================= */
 
   scene.add(
@@ -1992,8 +2427,6 @@ for i in range(3):
     )
   );
 
-
-  /* Soft violet highlight */
 
   const rim1 =
     new THREE.PointLight(
@@ -2015,8 +2448,6 @@ for i in range(3):
   );
 
 
-  /* Warm highlight */
-
   const rim2 =
     new THREE.PointLight(
       0xe08a1e,
@@ -2036,8 +2467,6 @@ for i in range(3):
     rim2
   );
 
-
-  /* Very soft white key */
 
   const key =
     new THREE.DirectionalLight(
@@ -2072,10 +2501,7 @@ for i in range(3):
 
 
   /* =========================================================
-     DARK MAIN OBJECT
-     
-     This is deliberately dark so it contrasts
-     against the white frontend.
+     DARK TORUS KNOT
      ========================================================= */
 
   const knotMat =
@@ -2122,52 +2548,68 @@ for i in range(3):
 
 
   /* =========================================================
-     SECONDARY DARK INNER MATERIAL
+     ⭐ DARK SPHERE IN THE MIDDLE ⭐
      ========================================================= */
 
-  const innerMat =
-    new THREE.MeshStandardMaterial({
+  const sphereMat =
+    new THREE.MeshPhysicalMaterial({
 
       color:
-        0x101116,
+        0x111217,
 
       metalness:
-        0.85,
+        0.82,
 
       roughness:
-        0.28
+        0.16,
+
+      clearcoat:
+        1.0,
+
+      clearcoatRoughness:
+        0.12,
+
+      emissive:
+        0x18151f,
+
+      emissiveIntensity:
+        0.22
 
     });
 
 
-  /*
-    Small inner octahedron.
-
-    Not a sphere.
-    Gives the central object another
-    moving visual layer.
-  */
-
-  const core =
+  const sphere =
     new THREE.Mesh(
 
-      new THREE.OctahedronGeometry(
-        0.34,
-        1
+      new THREE.SphereGeometry(
+        0.40,
+        64,
+        64
       ),
 
-      innerMat
+      sphereMat
 
     );
 
 
+  /*
+    Exact center of the Torus Knot.
+  */
+
+  sphere.position.set(
+    0,
+    0,
+    0
+  );
+
+
   mainGroup.add(
-    core
+    sphere
   );
 
 
   /* =========================================================
-     ORBIT SYSTEM
+     ORBIT GROUP
      ========================================================= */
 
   const orbitGroup =
@@ -2180,7 +2622,7 @@ for i in range(3):
 
 
   /* =========================================================
-     DARK METALLIC RING
+     FIRST RING
      ========================================================= */
 
   const ringMat1 =
@@ -2290,9 +2732,7 @@ for i in range(3):
 
 
   /* =========================================================
-     SMALL DARK MOVING DIAMOND
-     
-     Replaces the colorful sphere.
+     MOVING DARK DIAMOND
      ========================================================= */
 
   const diamondMat =
@@ -2335,7 +2775,7 @@ for i in range(3):
 
 
   /* =========================================================
-     SECOND SMALL MOVING DIAMOND
+     SECOND MOVING DIAMOND
      ========================================================= */
 
   const diamond2Mat =
@@ -2378,21 +2818,8 @@ for i in range(3):
 
 
   /* =========================================================
-     SMALL LIGHT DOT
-     
-     This is NOT a sphere.
-     It gives a tiny highlight moving
-     around the orbital path.
+     TINY LIGHT POINT
      ========================================================= */
-
-  const lightDotMat =
-    new THREE.MeshBasicMaterial({
-
-      color:
-        0xffffff
-
-    });
-
 
   const lightDot =
     new THREE.Mesh(
@@ -2403,7 +2830,10 @@ for i in range(3):
         12
       ),
 
-      lightDotMat
+      new THREE.MeshBasicMaterial({
+        color:
+          0xffffff
+      })
 
     );
 
@@ -2413,10 +2843,6 @@ for i in range(3):
   );
 
 
-  /* =========================================================
-     ORBIT VARIABLES
-     ========================================================= */
-
   let orbitAngle1 =
     0;
 
@@ -2425,7 +2851,7 @@ for i in range(3):
 
 
   /* =========================================================
-     RESPONSIVE POSITION
+     RESPONSIVE 3D POSITION
      ========================================================= */
 
   function update3DPosition() {
@@ -2433,8 +2859,6 @@ for i in range(3):
     const width =
       window.innerWidth;
 
-
-    /* LARGE DESKTOP */
 
     if (width > 1200) {
 
@@ -2450,9 +2874,6 @@ for i in range(3):
 
     }
 
-
-    /* LAPTOP */
-
     else if (width > 900) {
 
       mainGroup.position.set(
@@ -2467,9 +2888,6 @@ for i in range(3):
 
     }
 
-
-    /* TABLET */
-
     else if (width > 600) {
 
       mainGroup.position.set(
@@ -2483,9 +2901,6 @@ for i in range(3):
       );
 
     }
-
-
-    /* PHONE */
 
     else {
 
@@ -2513,23 +2928,17 @@ for i in range(3):
 
   function onResize() {
 
-    const width =
-      window.innerWidth;
-
-    const height =
-      window.innerHeight;
-
-
     camera.aspect =
-      width / height;
+      window.innerWidth /
+      window.innerHeight;
 
 
     camera.updateProjectionMatrix();
 
 
     renderer.setSize(
-      width,
-      height
+      window.innerWidth,
+      window.innerHeight
     );
 
 
@@ -2553,7 +2962,7 @@ for i in range(3):
 
 
   /* =========================================================
-     CURSOR PARALLAX
+     PARALLAX
      ========================================================= */
 
   let targetX =
@@ -2577,11 +2986,8 @@ for i in range(3):
         window.innerWidth <= 900
       ) {
 
-        targetX =
-          0;
-
-        targetY =
-          0;
+        targetX = 0;
+        targetY = 0;
 
         return;
 
@@ -2604,10 +3010,6 @@ for i in range(3):
     }
   );
 
-
-  /* =========================================================
-     REDUCED MOTION
-     ========================================================= */
 
   const reduced =
     window.matchMedia(
@@ -2637,7 +3039,7 @@ for i in range(3):
 
 
       /* ===============================================
-         MAIN DARK OBJECT ROTATION
+         TORUS KNOT
          =============================================== */
 
       knot.rotation.x =
@@ -2649,28 +3051,43 @@ for i in range(3):
 
 
       knot.rotation.z =
-        Math.sin(t * 0.35) *
-        0.08;
+        Math.sin(
+          t * 0.35
+        ) * 0.08;
 
 
       /* ===============================================
-         INNER CORE ROTATION
+         CENTER SPHERE
          =============================================== */
 
-      core.rotation.x =
-        -t * 0.7;
+      sphere.rotation.y =
+        t * 0.45;
 
 
-      core.rotation.y =
-        t * 0.9;
+      sphere.rotation.x =
+        Math.sin(
+          t * 0.5
+        ) * 0.15;
 
 
-      core.rotation.z =
-        t * 0.35;
+      /*
+        Very subtle breathing effect.
+      */
+
+      const sphereScale =
+        1 +
+        Math.sin(
+          t * 1.2
+        ) * 0.025;
+
+
+      sphere.scale.setScalar(
+        sphereScale
+      );
 
 
       /* ===============================================
-         FLOATING MOTION
+         FLOAT
          =============================================== */
 
       const width =
@@ -2680,44 +3097,36 @@ for i in range(3):
       let baseY;
 
 
-      if (
-        width > 1200
-      ) {
+      if (width > 1200) {
 
-        baseY =
-          0;
+        baseY = 0;
 
       }
 
-      else if (
-        width > 900
-      ) {
+      else if (width > 900) {
 
-        baseY =
-          0;
+        baseY = 0;
 
       }
 
-      else if (
-        width > 600
-      ) {
+      else if (width > 600) {
 
-        baseY =
-          -1.5;
+        baseY = -1.5;
 
       }
 
       else {
 
-        baseY =
-          -2.15;
+        baseY = -2.15;
 
       }
 
 
       mainGroup.position.y =
         baseY +
-        Math.sin(t * 1.05) *
+        Math.sin(
+          t * 1.05
+        ) *
         (
           width <= 600
             ? 0.10
@@ -2726,7 +3135,7 @@ for i in range(3):
 
 
       /* ===============================================
-         ORBIT GROUP
+         ORBIT
          =============================================== */
 
       orbitGroup.rotation.y =
@@ -2734,13 +3143,15 @@ for i in range(3):
 
 
       orbitGroup.rotation.x =
-        Math.sin(t * 0.35) *
-        0.12;
+        Math.sin(
+          t * 0.35
+        ) * 0.12;
 
 
       orbitGroup.rotation.z =
-        Math.cos(t * 0.28) *
-        0.08;
+        Math.cos(
+          t * 0.28
+        ) * 0.08;
 
 
       /* ===============================================
@@ -2752,8 +3163,9 @@ for i in range(3):
 
 
       ring1.rotation.z =
-        Math.sin(t * 0.55) *
-        0.15;
+        Math.sin(
+          t * 0.55
+        ) * 0.15;
 
 
       /* ===============================================
@@ -2762,8 +3174,9 @@ for i in range(3):
 
       ring2.rotation.x =
         Math.PI * 0.34 +
-        Math.sin(t * 0.45) *
-        0.16;
+        Math.sin(
+          t * 0.45
+        ) * 0.16;
 
 
       ring2.rotation.y =
@@ -2771,7 +3184,7 @@ for i in range(3):
 
 
       /* ===============================================
-         MOVING DIAMOND 1
+         DIAMOND 1
          =============================================== */
 
       orbitAngle1 +=
@@ -2806,15 +3219,15 @@ for i in range(3):
 
 
       diamond.rotation.x =
-        t * 2.0;
+        t * 2;
 
 
       diamond.rotation.y =
-        t * 3.0;
+        t * 3;
 
 
       /* ===============================================
-         MOVING DIAMOND 2
+         DIAMOND 2
          =============================================== */
 
       orbitAngle2 -=
@@ -2853,11 +3266,11 @@ for i in range(3):
 
 
       diamond2.rotation.z =
-        t * 2.0;
+        t * 2;
 
 
       /* ===============================================
-         TINY LIGHT DOT
+         LIGHT DOT
          =============================================== */
 
       lightDot.position.x =
@@ -2884,33 +3297,35 @@ for i in range(3):
 
 
       /* ===============================================
-         DARK MATERIAL SUBTLE LIGHT SHIFT
+         DARK OBJECT LIGHTING
          =============================================== */
-
-      const highlight =
-        0.13 +
-        Math.sin(t * 0.7) *
-        0.045;
-
 
       knotMat.emissiveIntensity =
-        highlight;
+        0.13 +
+        Math.sin(
+          t * 0.7
+        ) * 0.04;
 
-
-      /* ===============================================
-         RING REFLECTION SHIFT
-         =============================================== */
 
       ringMat1.emissiveIntensity =
         0.16 +
-        Math.sin(t * 0.8) *
-        0.08;
+        Math.sin(
+          t * 0.8
+        ) * 0.08;
 
 
       ringMat2.emissiveIntensity =
         0.14 +
-        Math.cos(t * 0.7) *
-        0.07;
+        Math.cos(
+          t * 0.7
+        ) * 0.07;
+
+
+      sphereMat.emissiveIntensity =
+        0.18 +
+        Math.sin(
+          t * 0.8
+        ) * 0.04;
 
 
       /* ===============================================
@@ -2954,7 +3369,7 @@ for i in range(3):
 
 
       /* ===============================================
-         SUBTLE CAMERA DRIFT
+         CAMERA DRIFT
          =============================================== */
 
       curX +=
@@ -2967,36 +3382,25 @@ for i in range(3):
         0.035;
 
 
-      const driftX =
-        Math.sin(
-          t * 0.16
-        ) *
-        0.08;
-
-
-      const driftY =
-        Math.cos(
-          t * 0.13
-        ) *
-        0.05;
-
-
       camera.position.x =
         curX * 0.75 +
-        driftX;
+        Math.sin(
+          t * 0.16
+        ) * 0.08;
 
 
       camera.position.y =
         -curY * 0.5 +
-        driftY;
+        Math.cos(
+          t * 0.13
+        ) * 0.05;
 
 
       camera.position.z =
         7 +
         Math.sin(
           t * 0.12
-        ) *
-        0.08;
+        ) * 0.08;
 
 
       camera.lookAt(
@@ -3021,7 +3425,6 @@ for i in range(3):
 })();
 
 </script>
-
 
 </body>
 </html>
