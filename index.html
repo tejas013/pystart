@@ -11,7 +11,579 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<style>
+<style><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PyStart — Python jo samajh aaye</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PyStart — Python jo samajh aaye</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="css/global.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     3D BACKGROUND
+     ========================================================= -->
+
+<div id="canvas-wrap"></div>
+
+
+<!-- =========================================================
+     CURSOR PARTICLE TRAIL
+     ========================================================= -->
+
+<canvas id="trail-canvas"></canvas>
+
+
+<!-- =========================================================
+     GRAIN
+     ========================================================= -->
+
+<svg
+  class="grain"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <filter id="n">
+
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.85"
+      numOctaves="2"
+      stitchTiles="stitch"
+    />
+
+  </filter>
+
+  <rect
+    width="100%"
+    height="100%"
+    filter="url(#n)"
+  />
+
+</svg>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+
+<div class="wrap">
+
+
+  <!-- HEADER -->
+
+  <header>
+
+    <a href="index.html" class="logo">
+      Py<span>Start</span>
+    </a>
+
+    <nav>
+
+      <a href="index.html" class="active">
+        Home
+      </a>
+
+      <a href="lessons-variables.html">
+        Lessons
+      </a>
+
+      <a href="errors.html">
+        Errors
+      </a>
+
+      <a href="projects.html">
+        Projects
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
+
+  <section class="hero">
+
+
+    <!-- HERO TEXT -->
+
+    <div>
+
+      <h1>
+        Python seekho jaise koi doubt hi nahi.
+      </h1>
+
+      <p class="sub">
+        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
+      </p>
+
+      <div class="cta-row">
+
+        <a
+          href="lessons-variables.html"
+          class="btn btn-primary magnetic"
+          id="magnet-btn"
+        >
+          Shuru karo — Free
+        </a>
+
+        <a
+          href="errors.html"
+          class="btn btn-ghost"
+        >
+          Error Dictionary dekho
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PYTHON EDITOR
+         ===================================================== -->
+
+    <div class="editor">
+
+      <div class="editor-bar">
+
+        <span class="dot r"></span>
+
+        <span class="dot y"></span>
+
+        <span class="dot g"></span>
+
+      </div>
+
+
+      <textarea id="code">print("Chalo shuru karte hain!")
+for i in range(3):
+    print("Line", i)</textarea>
+
+
+      <div class="run-row">
+
+        <span
+          style="
+            color:var(--muted);
+            font-size:0.8rem;
+          "
+        >
+          Browser mein hi chalega
+        </span>
+
+        <button
+          id="run-btn"
+          onclick="runCode()"
+        >
+          ▶ Run
+        </button>
+
+      </div>
+
+
+      <div id="output">
+        Output yahan dikhega...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       FEATURES
+       ======================================================= -->
+
+  <section class="features">
+
+    <h2>
+      Sab kuch ek jagah
+    </h2>
+
+    <p class="lead">
+      Beginner se lekar apni website/app banane tak — sab structured order mein.
+    </p>
+
+
+    <div class="grid">
+
+
+      <a class="card c1 card-link" href="lessons-variables.html">
+
+        <h3>
+          Foundations
+        </h3>
+
+        <p>
+          Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.
+        </p>
+
+      </a>
+
+
+      <a class="card c2 card-link" href="errors.html">
+
+        <h3>
+          Error Dictionary
+        </h3>
+
+        <p>
+          Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.
+        </p>
+
+      </a>
+
+
+      <a class="card c3 card-link" href="projects.html">
+
+        <h3>
+          Real Projects
+        </h3>
+
+        <p>
+          Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.
+        </p>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    Built by a student, for students. PyStart.
+  </footer>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div
+  class="toast-stack"
+  id="toast-stack"
+></div>
+
+
+<!-- =========================================================
+     PYODIDE
+     ========================================================= -->
+<!-- =========================================================
+     CURSOR PARTICLE TRAIL
+     ========================================================= -->
+<!-- =========================================================
+     THREE.JS
+     ========================================================= -->
+  <script src="js/global.js" defer></script>
+
+</body>
+</html>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="css/global.css">
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     3D BACKGROUND
+     ========================================================= -->
+
+<div id="canvas-wrap"></div>
+
+
+<!-- =========================================================
+     CURSOR PARTICLE TRAIL
+     ========================================================= -->
+
+<canvas id="trail-canvas"></canvas>
+
+
+<!-- =========================================================
+     GRAIN
+     ========================================================= -->
+
+<svg
+  class="grain"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <filter id="n">
+
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.85"
+      numOctaves="2"
+      stitchTiles="stitch"
+    />
+
+  </filter>
+
+  <rect
+    width="100%"
+    height="100%"
+    filter="url(#n)"
+  />
+
+</svg>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+
+<div class="wrap">
+
+
+  <!-- HEADER -->
+
+  <header>
+
+    <a href="index.html" class="logo">
+      Py<span>Start</span>
+    </a>
+
+    <nav>
+
+      <a href="index.html" class="active">
+        Home
+      </a>
+
+      <a href="lessons-variables.html">
+        Lessons
+      </a>
+
+      <a href="errors.html">
+        Errors
+      </a>
+
+      <a href="projects.html">
+        Projects
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =======================================================
+       HERO
+       ======================================================= -->
+
+  <section class="hero">
+
+
+    <!-- HERO TEXT -->
+
+    <div>
+
+      <h1>
+        Python seekho jaise koi doubt hi nahi.
+      </h1>
+
+      <p class="sub">
+        Basics se advanced tak — har error explained, har concept ek chhote project ke saath. Focus khone waalon ke liye banaya gaya.
+      </p>
+
+      <div class="cta-row">
+
+        <a
+          href="lessons-variables.html"
+          class="btn btn-primary magnetic"
+          id="magnet-btn"
+        >
+          Shuru karo — Free
+        </a>
+
+        <a
+          href="errors.html"
+          class="btn btn-ghost"
+        >
+          Error Dictionary dekho
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PYTHON EDITOR
+         ===================================================== -->
+
+    <div class="editor">
+
+      <div class="editor-bar">
+
+        <span class="dot r"></span>
+
+        <span class="dot y"></span>
+
+        <span class="dot g"></span>
+
+      </div>
+
+
+      <textarea id="code">print("Chalo shuru karte hain!")
+for i in range(3):
+    print("Line", i)</textarea>
+
+
+      <div class="run-row">
+
+        <span
+          style="
+            color:var(--muted);
+            font-size:0.8rem;
+          "
+        >
+          Browser mein hi chalega
+        </span>
+
+        <button
+          id="run-btn"
+          onclick="runCode()"
+        >
+          ▶ Run
+        </button>
+
+      </div>
+
+
+      <div id="output">
+        Output yahan dikhega...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       FEATURES
+       ======================================================= -->
+
+  <section class="features">
+
+    <h2>
+      Sab kuch ek jagah
+    </h2>
+
+    <p class="lead">
+      Beginner se lekar apni website/app banane tak — sab structured order mein.
+    </p>
+
+
+    <div class="grid">
+
+
+      <a class="card c1 card-link" href="lessons-variables.html">
+
+        <h3>
+          Foundations
+        </h3>
+
+        <p>
+          Variables, loops, functions — simple Hinglish explanation ke saath, taaki concept clear ho, ratna na pade.
+        </p>
+
+      </a>
+
+
+      <a class="card c2 card-link" href="errors.html">
+
+        <h3>
+          Error Dictionary
+        </h3>
+
+        <p>
+          Har common error (IndentationError, TypeError, etc.) — matlab kya hai aur kaise fix karna hai.
+        </p>
+
+      </a>
+
+
+      <a class="card c3 card-link" href="projects.html">
+
+        <h3>
+          Real Projects
+        </h3>
+
+        <p>
+          Seekhe hue concept se chhote web apps aur scripts banana — taaki knowledge apply ho, sirf yaad na ho.
+        </p>
+
+      </a>
+
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    Built by a student, for students. PyStart.
+  </footer>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div
+  class="toast-stack"
+  id="toast-stack"
+></div>
+
+
+<!-- =========================================================
+     PYODIDE
+     ========================================================= -->
+<!-- =========================================================
+     CURSOR PARTICLE TRAIL
+     ========================================================= -->
+<!-- =========================================================
+     THREE.JS
+     ========================================================= -->
+  <script src="js/global.js" defer></script>
+
+</body>
+</html>
+
 
   :root {
     --bg: #f6f7fb;
