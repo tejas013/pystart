@@ -7,9 +7,14 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet"
+>
 
 <style>
+
   :root {
     --bg: #14121f;
     --surface: #1c1930;
@@ -33,18 +38,23 @@
   }
 
   body {
-    background: radial-gradient(
-      ellipse at 30% 20%,
-      #1e1a35 0%,
-      var(--bg) 55%
-    );
+    background:
+      radial-gradient(
+        ellipse at 30% 20%,
+        #1e1a35 0%,
+        var(--bg) 55%
+      );
 
     color: var(--text);
+
     font-family: 'Sora', sans-serif;
+
     line-height: 1.6;
 
     overflow-x: hidden;
+
     position: relative;
+
     cursor: default;
 
     width: 100%;
@@ -52,12 +62,13 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      THREE.JS BACKGROUND
-     ========================= */
+     ========================================================= */
 
   #canvas-wrap {
     position: fixed;
+
     inset: 0;
 
     width: 100vw;
@@ -66,83 +77,98 @@
     z-index: 0;
 
     pointer-events: none;
+
     overflow: hidden;
   }
 
   #canvas-wrap canvas {
     display: block;
+
     width: 100%;
     height: 100%;
   }
 
 
-  /* =========================
+  /* =========================================================
      CURSOR PARTICLE TRAIL
-     ========================= */
+     ========================================================= */
 
   #trail-canvas {
     position: fixed;
+
     inset: 0;
 
     width: 100vw;
     height: 100vh;
 
     z-index: 1;
+
     pointer-events: none;
   }
 
 
-  /* =========================
+  /* =========================================================
      GRAIN
-     ========================= */
+     ========================================================= */
 
   .grain {
     position: fixed;
+
     inset: 0;
 
     width: 100%;
     height: 100%;
 
     z-index: 3;
+
     pointer-events: none;
 
     opacity: 0.05;
+
     mix-blend-mode: overlay;
   }
 
 
-  /* =========================
+  /* =========================================================
      MAIN WRAPPER
-     ========================= */
+     ========================================================= */
 
   .wrap {
     width: 100%;
+
     max-width: 1040px;
 
     margin: 0 auto;
+
     padding: 0 24px;
 
     position: relative;
+
     z-index: 2;
   }
 
 
-  /* =========================
+  /* =========================================================
      HEADER
-     ========================= */
+     ========================================================= */
 
   header {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     padding: 24px 0;
+
     min-height: 76px;
   }
 
   .logo {
     font-weight: 800;
+
     font-size: 1.25rem;
+
     letter-spacing: -0.02em;
 
     white-space: nowrap;
@@ -154,11 +180,13 @@
 
   nav {
     display: flex;
+
     align-items: center;
   }
 
   nav a {
     color: var(--muted);
+
     text-decoration: none;
 
     margin-left: 28px;
@@ -173,20 +201,15 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      HERO
-     ========================= */
+     ========================================================= */
 
   .hero {
     width: 100%;
 
     display: grid;
 
-    /*
-      IMPORTANT:
-      minmax(0, ...) prevents the editor/code
-      from making the desktop layout wider.
-    */
     grid-template-columns:
       minmax(0, 1.1fr)
       minmax(0, 1fr);
@@ -205,9 +228,9 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      HEADING
-     ========================= */
+     ========================================================= */
 
   h1 {
     font-size: 2.75rem;
@@ -220,18 +243,20 @@
 
     max-width: 480px;
 
-    background: linear-gradient(
-      100deg,
-      #ffe4b8 0%,
-      #ffb84d 25%,
-      #a78bfa 55%,
-      #6ee7b7 80%,
-      #ffe4b8 100%
-    );
+    background:
+      linear-gradient(
+        100deg,
+        #ffe4b8 0%,
+        #ffb84d 25%,
+        #a78bfa 55%,
+        #6ee7b7 80%,
+        #ffe4b8 100%
+      );
 
     background-size: 300% auto;
 
     -webkit-background-clip: text;
+
     background-clip: text;
 
     color: transparent;
@@ -241,6 +266,7 @@
   }
 
   @keyframes gradientShift {
+
     0%,
     100% {
       background-position: 0% center;
@@ -249,6 +275,7 @@
     50% {
       background-position: 100% center;
     }
+
   }
 
   .hero p.sub {
@@ -262,9 +289,9 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      BUTTONS
-     ========================= */
+     ========================================================= */
 
   .cta-row {
     margin-top: 32px;
@@ -300,12 +327,14 @@
 
   .btn-primary {
     background: var(--amber);
+
     color: #14121f;
   }
 
   .btn-primary:hover {
     box-shadow:
-      0 10px 28px rgba(255, 184, 77, 0.3);
+      0 10px 28px
+      rgba(255,184,77,0.3);
   }
 
   .btn-ghost {
@@ -313,29 +342,32 @@
 
     color: var(--text);
 
-    background: rgba(255, 255, 255, 0.04);
+    background:
+      rgba(255,255,255,0.04);
 
     backdrop-filter: blur(8px);
+
     -webkit-backdrop-filter: blur(8px);
   }
 
   .btn-ghost:hover {
     border-color: var(--violet);
+
     color: var(--violet);
   }
 
   .magnetic {
     transition:
       transform 0.2s
-      cubic-bezier(0.33, 1, 0.68, 1);
+      cubic-bezier(0.33,1,0.68,1);
 
     will-change: transform;
   }
 
 
-  /* =========================
+  /* =========================================================
      TOAST
-     ========================= */
+     ========================================================= */
 
   .toast-stack {
     position: fixed;
@@ -346,20 +378,25 @@
     z-index: 50;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 10px;
   }
 
   .toast {
-    background: rgba(28, 25, 48, 0.9);
+    background:
+      rgba(28,25,48,0.9);
 
     backdrop-filter: blur(12px);
+
     -webkit-backdrop-filter: blur(12px);
 
-    border: 1px solid var(--border);
+    border:
+      1px solid var(--border);
 
-    border-left: 3px solid var(--mint);
+    border-left:
+      3px solid var(--mint);
 
     padding: 12px 18px;
 
@@ -370,39 +407,51 @@
     color: var(--text);
 
     box-shadow:
-      0 12px 32px rgba(0, 0, 0, 0.4);
+      0 12px 32px
+      rgba(0,0,0,0.4);
 
     transform: translateX(120%);
+
     opacity: 0;
 
     animation:
       toastIn 0.4s
-      cubic-bezier(0.33, 1, 0.68, 1)
+      cubic-bezier(0.33,1,0.68,1)
       forwards,
-      toastOut 0.4s ease-in 2.6s forwards;
+
+      toastOut 0.4s
+      ease-in 2.6s
+      forwards;
   }
 
   @keyframes toastIn {
+
     to {
       transform: translateX(0);
+
       opacity: 1;
     }
+
   }
 
   @keyframes toastOut {
+
     to {
       transform: translateX(120%);
+
       opacity: 0;
     }
+
   }
 
 
-  /* =========================
+  /* =========================================================
      SKELETON
-     ========================= */
+     ========================================================= */
 
   .skeleton {
     display: flex;
+
     flex-direction: column;
 
     gap: 8px;
@@ -415,12 +464,13 @@
 
     border-radius: 4px;
 
-    background: linear-gradient(
-      90deg,
-      rgba(255,255,255,0.05) 0%,
-      rgba(255,255,255,0.15) 50%,
-      rgba(255,255,255,0.05) 100%
-    );
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255,255,255,0.05) 0%,
+        rgba(255,255,255,0.15) 50%,
+        rgba(255,255,255,0.05) 100%
+      );
 
     background-size: 200% 100%;
 
@@ -430,6 +480,7 @@
   }
 
   @keyframes shimmer {
+
     0% {
       background-position: 200% 0;
     }
@@ -437,30 +488,36 @@
     100% {
       background-position: -200% 0;
     }
+
   }
 
 
-  /* =========================
-     EDITOR
-     ========================= */
+  /* =========================================================
+     CODE EDITOR
+     ========================================================= */
 
   .editor {
     width: 100%;
+
     max-width: 100%;
 
-    background: rgba(28, 25, 48, 0.65);
+    background:
+      rgba(28,25,48,0.65);
 
     backdrop-filter: blur(20px);
+
     -webkit-backdrop-filter: blur(20px);
 
-    border: 1px solid rgba(255,255,255,0.1);
+    border:
+      1px solid rgba(255,255,255,0.1);
 
     border-radius: 16px;
 
     overflow: hidden;
 
     box-shadow:
-      0 30px 90px rgba(0,0,0,0.5);
+      0 30px 90px
+      rgba(0,0,0,0.5);
   }
 
   .editor-bar {
@@ -470,7 +527,8 @@
 
     padding: 12px 16px;
 
-    background: rgba(0,0,0,0.2);
+    background:
+      rgba(0,0,0,0.2);
 
     border-bottom:
       1px solid var(--border);
@@ -478,6 +536,7 @@
 
   .dot {
     width: 10px;
+
     height: 10px;
 
     flex: 0 0 10px;
@@ -496,11 +555,6 @@
   .dot.g {
     background: #6ee7b7;
   }
-
-
-  /* =========================
-     CODE AREA
-     ========================= */
 
   #code {
     width: 100%;
@@ -525,19 +579,10 @@
 
     outline: none;
 
-    /*
-      Prevents horizontal overflow.
-    */
-    overflow-x: auto;
-
     white-space: pre-wrap;
+
     overflow-wrap: anywhere;
   }
-
-
-  /* =========================
-     RUN ROW
-     ========================= */
 
   .run-row {
     padding: 12px 16px;
@@ -621,9 +666,9 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      FEATURES
-     ========================= */
+     ========================================================= */
 
   section.features {
     padding: 30px 0 90px;
@@ -649,7 +694,7 @@
     display: grid;
 
     grid-template-columns:
-      repeat(3, minmax(0, 1fr));
+      repeat(3,minmax(0,1fr));
 
     gap: 1px;
 
@@ -668,6 +713,7 @@
       rgba(28,25,48,0.7);
 
     backdrop-filter: blur(10px);
+
     -webkit-backdrop-filter: blur(10px);
 
     padding: 26px 24px;
@@ -714,9 +760,9 @@
   }
 
 
-  /* =========================
+  /* =========================================================
      FOOTER
-     ========================= */
+     ========================================================= */
 
   footer {
     border-top:
@@ -740,18 +786,19 @@
      LAPTOP
      ========================================================= */
 
-  @media (max-width: 1100px) {
+  @media (max-width:1100px) {
 
     .wrap {
       max-width: 100%;
+
       padding-left: 28px;
       padding-right: 28px;
     }
 
     .hero {
       grid-template-columns:
-        minmax(0, 1.05fr)
-        minmax(0, 0.95fr);
+        minmax(0,1.05fr)
+        minmax(0,0.95fr);
 
       gap: 36px;
     }
@@ -767,6 +814,7 @@
     #code {
       font-size: 0.82rem;
     }
+
   }
 
 
@@ -774,7 +822,7 @@
      TABLET
      ========================================================= */
 
-  @media (max-width: 900px) {
+  @media (max-width:900px) {
 
     .wrap {
       padding-left: 24px;
@@ -807,9 +855,9 @@
     }
 
     .grid {
-      grid-template-columns:
-        1fr;
+      grid-template-columns: 1fr;
     }
+
   }
 
 
@@ -817,7 +865,7 @@
      MOBILE
      ========================================================= */
 
-  @media (max-width: 600px) {
+  @media (max-width:600px) {
 
     .wrap {
       padding-left: 18px;
@@ -886,32 +934,37 @@
     }
 
     .run-row span {
-      font-size: 0.7rem !important;
+      font-size:
+        0.7rem !important;
     }
 
     #run-btn {
       padding:
         7px 13px;
 
-      font-size: 0.8rem;
+      font-size:
+        0.8rem;
     }
 
     #output {
       margin:
         0 14px 14px;
 
-      font-size: 0.74rem;
+      font-size:
+        0.74rem;
 
       padding:
         12px;
     }
 
     .features {
-      padding-top: 10px !important;
+      padding-top:
+        10px !important;
     }
 
     .features h2 {
-      font-size: 1.4rem;
+      font-size:
+        1.4rem;
     }
 
     .card {
@@ -921,13 +974,17 @@
 
     .toast-stack {
       right: 12px;
+
       bottom: 12px;
+
       left: 12px;
     }
 
     .toast {
-      font-size: 0.8rem;
+      font-size:
+        0.8rem;
     }
+
   }
 
 
@@ -935,18 +992,21 @@
      VERY SMALL PHONES
      ========================================================= */
 
-  @media (max-width: 380px) {
+  @media (max-width:380px) {
 
     h1 {
-      font-size: 1.75rem;
+      font-size:
+        1.75rem;
     }
 
     .hero {
-      padding-top: 25px;
+      padding-top:
+        25px;
     }
 
     #code {
-      font-size: 0.68rem;
+      font-size:
+        0.68rem;
     }
 
     .run-row span {
@@ -954,12 +1014,15 @@
     }
 
     .run-row {
-      justify-content: flex-end;
+      justify-content:
+        flex-end;
     }
 
     .card p {
-      font-size: 0.86rem;
+      font-size:
+        0.86rem;
     }
+
   }
 
 
@@ -967,40 +1030,66 @@
      REDUCED MOTION
      ========================================================= */
 
-  @media (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-motion:reduce) {
 
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-      transition-duration: 0.01ms !important;
+
+      animation-duration:
+        0.01ms !important;
+
+      animation-iteration-count:
+        1 !important;
+
+      scroll-behavior:
+        auto !important;
+
+      transition-duration:
+        0.01ms !important;
     }
+
   }
 
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =========================================================
+     3D BACKGROUND
+     ========================================================= -->
 
 <div id="canvas-wrap"></div>
 
+
+<!-- =========================================================
+     CURSOR PARTICLES
+     ========================================================= -->
+
 <canvas id="trail-canvas"></canvas>
+
+
+<!-- =========================================================
+     GRAIN
+     ========================================================= -->
 
 <svg
   class="grain"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <filter
-    id="n"
-  >
+
+  <filter id="n">
+
     <feTurbulence
       type="fractalNoise"
       baseFrequency="0.85"
       numOctaves="2"
       stitchTiles="stitch"
     />
+
   </filter>
 
   <rect
@@ -1008,10 +1097,18 @@
     height="100%"
     filter="url(#n)"
   />
+
 </svg>
 
 
+<!-- =========================================================
+     CONTENT
+     ========================================================= -->
+
 <div class="wrap">
+
+
+  <!-- HEADER -->
 
   <header>
 
@@ -1038,11 +1135,14 @@
   </header>
 
 
-  <!-- =========================
+  <!-- =======================================================
        HERO
-       ========================= -->
+       ======================================================= -->
 
   <section class="hero">
+
+
+    <!-- HERO TEXT -->
 
     <div>
 
@@ -1076,30 +1176,34 @@
     </div>
 
 
-    <!-- =========================
-         CODE EDITOR
-         ========================= -->
+    <!-- =====================================================
+         PYTHON EDITOR
+         ===================================================== -->
 
     <div class="editor">
 
       <div class="editor-bar">
 
         <span class="dot r"></span>
+
         <span class="dot y"></span>
+
         <span class="dot g"></span>
 
       </div>
+
 
       <textarea id="code">print("Chalo shuru karte hain!")
 for i in range(3):
     print("Line", i)</textarea>
 
+
       <div class="run-row">
 
         <span
           style="
-            color: var(--muted);
-            font-size: 0.8rem;
+            color:var(--muted);
+            font-size:0.8rem;
           "
         >
           Browser mein hi chalega
@@ -1114,6 +1218,7 @@ for i in range(3):
 
       </div>
 
+
       <div id="output">
         Output yahan dikhega...
       </div>
@@ -1123,9 +1228,9 @@ for i in range(3):
   </section>
 
 
-  <!-- =========================
+  <!-- =======================================================
        FEATURES
-       ========================= -->
+       ======================================================= -->
 
   <section class="features">
 
@@ -1137,7 +1242,9 @@ for i in range(3):
       Beginner se lekar apni website/app banane tak — sab structured order mein.
     </p>
 
+
     <div class="grid">
+
 
       <div class="card c1">
 
@@ -1177,6 +1284,7 @@ for i in range(3):
 
       </div>
 
+
     </div>
 
   </section>
@@ -1189,17 +1297,24 @@ for i in range(3):
 </div>
 
 
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
 <div
   class="toast-stack"
   id="toast-stack"
 ></div>
 
 
-<!-- =========================
+<!-- =========================================================
      PYODIDE
-     ========================= -->
+     ========================================================= -->
 
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"
+></script>
+
 
 <script>
 
@@ -1209,7 +1324,10 @@ for i in range(3):
   async function initPyodide() {
 
     if (!pyodideReady) {
-      pyodideReady = await loadPyodide();
+
+      pyodideReady =
+        await loadPyodide();
+
     }
 
     return pyodideReady;
@@ -1219,13 +1337,19 @@ for i in range(3):
   async function runCode() {
 
     const btn =
-      document.getElementById('run-btn');
+      document.getElementById(
+        'run-btn'
+      );
 
     const out =
-      document.getElementById('output');
+      document.getElementById(
+        'output'
+      );
 
     const code =
-      document.getElementById('code').value;
+      document.getElementById(
+        'code'
+      ).value;
 
 
     btn.disabled = true;
@@ -1256,7 +1380,9 @@ for i in range(3):
       );
 
 
-      pyodide.runPython(code);
+      pyodide.runPython(
+        code
+      );
 
 
       const result =
@@ -1274,7 +1400,9 @@ for i in range(3):
         'Code chal gaya ✅'
       );
 
-    } catch (err) {
+    }
+
+    catch (err) {
 
       out.textContent =
         'Error:\n' +
@@ -1284,6 +1412,7 @@ for i in range(3):
       showToast(
         'Code mein error hai ⚠️'
       );
+
     }
 
 
@@ -1291,12 +1420,13 @@ for i in range(3):
 
     btn.textContent =
       '▶ Run';
+
   }
 
 
-  /* =========================
+  /* =========================================================
      TOAST
-     ========================= */
+     ========================================================= */
 
   function showToast(message) {
 
@@ -1305,30 +1435,37 @@ for i in range(3):
         'toast-stack'
       );
 
+
     const el =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
 
     el.className =
       'toast';
 
+
     el.textContent =
       message;
 
 
-    stack.appendChild(el);
+    stack.appendChild(
+      el
+    );
 
 
     setTimeout(
       () => el.remove(),
       3200
     );
+
   }
 
 
-  /* =========================
+  /* =========================================================
      MAGNETIC BUTTON
-     ========================= */
+     ========================================================= */
 
   const magnet =
     document.getElementById(
@@ -1341,11 +1478,6 @@ for i in range(3):
     magnet.addEventListener(
       'mousemove',
       (e) => {
-
-        /*
-          Disable magnetic effect
-          on small/touch devices.
-        */
 
         if (
           window.innerWidth <= 900
@@ -1375,6 +1507,7 @@ for i in range(3):
             ${relX * 0.25}px,
             ${relY * 0.4}px
           )`;
+
       }
     );
 
@@ -1384,17 +1517,19 @@ for i in range(3):
       () => {
 
         magnet.style.transform =
-          'translate(0, 0)';
+          'translate(0,0)';
+
       }
     );
+
   }
 
 </script>
 
 
-<!-- =========================
+<!-- =========================================================
      CURSOR PARTICLE TRAIL
-     ========================= -->
+     ========================================================= -->
 
 <script>
 
@@ -1405,8 +1540,11 @@ for i in range(3):
       'trail-canvas'
     );
 
+
   const ctx =
-    canvas.getContext('2d');
+    canvas.getContext(
+      '2d'
+    );
 
 
   function resize() {
@@ -1416,6 +1554,7 @@ for i in range(3):
 
     canvas.height =
       window.innerHeight;
+
   }
 
 
@@ -1435,10 +1574,15 @@ for i in range(3):
 
 
   const colors = [
+
     '#ffb84d',
+
     '#a78bfa',
+
     '#6ee7b7',
+
     '#ff8fb1'
+
   ];
 
 
@@ -1448,12 +1592,14 @@ for i in range(3):
   let mouseX =
     window.innerWidth / 2;
 
+
   let mouseY =
     window.innerHeight / 2;
 
 
   let lastX =
     mouseX;
+
 
   let lastY =
     mouseY;
@@ -1465,6 +1611,7 @@ for i in range(3):
 
       mouseX =
         e.clientX;
+
 
       mouseY =
         e.clientY;
@@ -1510,7 +1657,8 @@ for i in range(3):
             (Math.random() - 0.5) * 0.6,
 
           vy:
-            (Math.random() - 0.5) * 0.6 - 0.3,
+            (Math.random() - 0.5) * 0.6 -
+            0.3,
 
           life: 1,
 
@@ -1525,12 +1673,15 @@ for i in range(3):
                 colors.length
               )
             ]
+
         });
+
       }
 
 
       lastX =
         mouseX;
+
 
       lastY =
         mouseY;
@@ -1544,6 +1695,7 @@ for i in range(3):
           0,
           particles.length - 220
         );
+
       }
 
     }
@@ -1578,6 +1730,7 @@ for i in range(3):
         p.y += p.vy;
 
         p.life -= 0.018;
+
       }
     );
 
@@ -1592,8 +1745,10 @@ for i in range(3):
       p => {
 
         ctx.globalAlpha =
-          Math.max(p.life, 0) *
-          0.85;
+          Math.max(
+            p.life,
+            0
+          ) * 0.85;
 
 
         ctx.beginPath();
@@ -1621,13 +1776,18 @@ for i in range(3):
 
 
         ctx.fill();
+
       }
     );
 
 
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha =
+      1;
 
-    ctx.shadowBlur = 0;
+
+    ctx.shadowBlur =
+      0;
+
   }
 
 
@@ -1638,11 +1798,14 @@ for i in range(3):
 </script>
 
 
-<!-- =========================
+<!-- =========================================================
      THREE.JS
-     ========================= -->
+     ========================================================= -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+></script>
+
 
 <script>
 
@@ -1661,17 +1824,26 @@ for i in range(3):
     );
 
 
+  /* =========================================================
+     SCENE
+     ========================================================= */
+
   const scene =
     new THREE.Scene();
 
 
   const camera =
     new THREE.PerspectiveCamera(
+
       45,
+
       window.innerWidth /
-        window.innerHeight,
+      window.innerHeight,
+
       0.1,
+
       100
+
     );
 
 
@@ -1681,6 +1853,10 @@ for i in range(3):
     7
   );
 
+
+  /* =========================================================
+     RENDERER
+     ========================================================= */
 
   const renderer =
     new THREE.WebGLRenderer({
@@ -1711,9 +1887,9 @@ for i in range(3):
   );
 
 
-  /* =========================
+  /* =========================================================
      LIGHTING
-     ========================= */
+     ========================================================= */
 
   scene.add(
     new THREE.AmbientLight(
@@ -1730,13 +1906,17 @@ for i in range(3):
       26
     );
 
+
   rim1.position.set(
     4,
     3,
     4
   );
 
-  scene.add(rim1);
+
+  scene.add(
+    rim1
+  );
 
 
   const rim2 =
@@ -1746,13 +1926,17 @@ for i in range(3):
       26
     );
 
+
   rim2.position.set(
     -3,
     -2,
     3
   );
 
-  scene.add(rim2);
+
+  scene.add(
+    rim2
+  );
 
 
   const rim3 =
@@ -1762,13 +1946,17 @@ for i in range(3):
       22
     );
 
+
   rim3.position.set(
     0,
     -3,
     2
   );
 
-  scene.add(rim3);
+
+  scene.add(
+    rim3
+  );
 
 
   const key =
@@ -1777,122 +1965,35 @@ for i in range(3):
       0.6
     );
 
+
   key.position.set(
     2,
     4,
     5
   );
 
-  scene.add(key);
+
+  scene.add(
+    key
+  );
 
 
-  /* =========================
-     3D GROUP
-     ========================= */
+  /* =========================================================
+     MAIN OBJECT GROUP
+     ========================================================= */
 
-  const group =
+  const mainGroup =
     new THREE.Group();
 
 
-  scene.add(group);
+  scene.add(
+    mainGroup
+  );
 
 
-  /*
-    THIS IS THE IMPORTANT PART.
-
-    Original first version:
-      knot.position.set(2.4, 0, -1)
-
-    So desktop is kept close to that.
-  */
-
-  function update3DPosition() {
-
-    const width =
-      window.innerWidth;
-
-
-    /* =====================
-       LARGE DESKTOP
-       ===================== */
-
-    if (width > 1200) {
-
-      group.position.set(
-        2.4,
-        0,
-        -1
-      );
-
-      group.scale.setScalar(
-        1
-      );
-
-    }
-
-
-    /* =====================
-       LAPTOP
-       ===================== */
-
-    else if (width > 900) {
-
-      group.position.set(
-        2.05,
-        0,
-        -1
-      );
-
-      group.scale.setScalar(
-        0.85
-      );
-
-    }
-
-
-    /* =====================
-       TABLET
-       ===================== */
-
-    else if (width > 600) {
-
-      group.position.set(
-        1.0,
-        -1.5,
-        -1
-      );
-
-      group.scale.setScalar(
-        0.7
-      );
-
-    }
-
-
-    /* =====================
-       PHONE
-       ===================== */
-
-    else {
-
-      group.position.set(
-        0,
-        -2.2,
-        -1
-      );
-
-      group.scale.setScalar(
-        0.55
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-     MATERIAL
-     ========================= */
+  /* =========================================================
+     MAIN TORUS KNOT
+     ========================================================= */
 
   const knotMat =
     new THREE.MeshStandardMaterial({
@@ -1910,19 +2011,12 @@ for i in range(3):
     });
 
 
-  /* =========================
-     TORUS KNOT
-
-     Same basic size/shape as
-     your first version.
-     ========================= */
-
   const knot =
     new THREE.Mesh(
 
       new THREE.TorusKnotGeometry(
-        1.3,
-        0.42,
+        1.35,
+        0.44,
         220,
         32,
         2,
@@ -1934,20 +2028,317 @@ for i in range(3):
     );
 
 
-  group.add(knot);
+  mainGroup.add(
+    knot
+  );
+
+
+  /* =========================================================
+     ORBIT SYSTEM
+     ========================================================= */
+
+  const orbitGroup =
+    new THREE.Group();
+
+
+  mainGroup.add(
+    orbitGroup
+  );
+
+
+  /* =========================================================
+     RING MATERIALS
+     ========================================================= */
+
+  const ringMat1 =
+    new THREE.MeshStandardMaterial({
+
+      color: 0xffb84d,
+
+      metalness: 0.85,
+
+      roughness: 0.15,
+
+      emissive: 0xff8a00,
+
+      emissiveIntensity: 0.7
+
+    });
+
+
+  const ringMat2 =
+    new THREE.MeshStandardMaterial({
+
+      color: 0xa78bfa,
+
+      metalness: 0.8,
+
+      roughness: 0.16,
+
+      emissive: 0x7c5cff,
+
+      emissiveIntensity: 0.65
+
+    });
+
+
+  /* =========================================================
+     RING 1
+     ========================================================= */
+
+  const ring1 =
+    new THREE.Mesh(
+
+      new THREE.TorusGeometry(
+        1.85,
+        0.025,
+        16,
+        180
+      ),
+
+      ringMat1
+
+    );
+
+
+  ring1.rotation.x =
+    Math.PI * 0.58;
+
+
+  ring1.rotation.z =
+    Math.PI * 0.12;
+
+
+  orbitGroup.add(
+    ring1
+  );
+
+
+  /* =========================================================
+     RING 2
+     ========================================================= */
+
+  const ring2 =
+    new THREE.Mesh(
+
+      new THREE.TorusGeometry(
+        2.05,
+        0.018,
+        16,
+        180
+      ),
+
+      ringMat2
+
+    );
+
+
+  ring2.rotation.x =
+    Math.PI * 0.34;
+
+
+  ring2.rotation.y =
+    Math.PI * 0.18;
+
+
+  ring2.rotation.z =
+    -Math.PI * 0.2;
+
+
+  orbitGroup.add(
+    ring2
+  );
+
+
+  /* =========================================================
+     SMALL MOVING DIAMOND
+     
+     NOT A SPHERE.
+     
+     This is the moving element that travels
+     around the orbital path.
+     ========================================================= */
+
+  const diamondMat =
+    new THREE.MeshStandardMaterial({
+
+      color: 0xffc66d,
+
+      metalness: 0.7,
+
+      roughness: 0.12,
+
+      emissive: 0xff9d24,
+
+      emissiveIntensity: 1.2
+
+    });
+
+
+  const diamond =
+    new THREE.Mesh(
+
+      new THREE.OctahedronGeometry(
+        0.13,
+        1
+      ),
+
+      diamondMat
+
+    );
+
+
+  orbitGroup.add(
+    diamond
+  );
+
+
+  /* =========================================================
+     SECOND SMALL DIAMOND
+     ========================================================= */
+
+  const diamond2Mat =
+    new THREE.MeshStandardMaterial({
+
+      color: 0x9e8cff,
+
+      metalness: 0.75,
+
+      roughness: 0.12,
+
+      emissive: 0x8066ff,
+
+      emissiveIntensity: 1.0
+
+    });
+
+
+  const diamond2 =
+    new THREE.Mesh(
+
+      new THREE.OctahedronGeometry(
+        0.09,
+        1
+      ),
+
+      diamond2Mat
+
+    );
+
+
+  orbitGroup.add(
+    diamond2
+  );
+
+
+  /* =========================================================
+     ORBIT PARAMETERS
+     ========================================================= */
+
+  let orbitAngle1 =
+    0;
+
+
+  let orbitAngle2 =
+    Math.PI;
+
+
+  /* =========================================================
+     RESPONSIVE 3D POSITION
+     ========================================================= */
+
+  function update3DPosition() {
+
+    const width =
+      window.innerWidth;
+
+
+    /* LARGE DESKTOP */
+
+    if (width > 1200) {
+
+      mainGroup.position.set(
+        2.4,
+        0,
+        -1
+      );
+
+
+      mainGroup.scale.setScalar(
+        1
+      );
+
+    }
+
+
+    /* LAPTOP */
+
+    else if (width > 900) {
+
+      mainGroup.position.set(
+        2.05,
+        0,
+        -1
+      );
+
+
+      mainGroup.scale.setScalar(
+        0.85
+      );
+
+    }
+
+
+    /* TABLET */
+
+    else if (width > 600) {
+
+      mainGroup.position.set(
+        1.0,
+        -1.5,
+        -1
+      );
+
+
+      mainGroup.scale.setScalar(
+        0.7
+      );
+
+    }
+
+
+    /* PHONE */
+
+    else {
+
+      mainGroup.position.set(
+        0,
+        -2.15,
+        -1
+      );
+
+
+      mainGroup.scale.setScalar(
+        0.55
+      );
+
+    }
+
+  }
 
 
   update3DPosition();
 
 
-  /* =========================
+  /* =========================================================
      RESIZE
-     ========================= */
+     ========================================================= */
 
   function onResize() {
 
     const width =
       window.innerWidth;
+
 
     const height =
       window.innerHeight;
@@ -1975,6 +2366,7 @@ for i in range(3):
 
 
     update3DPosition();
+
   }
 
 
@@ -1984,24 +2376,16 @@ for i in range(3):
   );
 
 
-  /* =========================
-     REDUCED MOTION
-     ========================= */
-
-  const reduced =
-    window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-
-  /* =========================
+  /* =========================================================
      CURSOR PARALLAX
-     ========================= */
+     ========================================================= */
 
   let targetX = 0;
+
   let targetY = 0;
 
   let curX = 0;
+
   let curY = 0;
 
 
@@ -2009,19 +2393,16 @@ for i in range(3):
     'mousemove',
     (e) => {
 
-      /*
-        Don't calculate unnecessary
-        cursor parallax on small screens.
-      */
-
       if (
         window.innerWidth <= 900
       ) {
 
         targetX = 0;
+
         targetY = 0;
 
         return;
+
       }
 
 
@@ -2042,9 +2423,19 @@ for i in range(3):
   );
 
 
-  /* =========================
+  /* =========================================================
+     REDUCED MOTION
+     ========================================================= */
+
+  const reduced =
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+
+  /* =========================================================
      ANIMATION
-     ========================= */
+     ========================================================= */
 
   let t = 0;
 
@@ -2061,121 +2452,329 @@ for i in range(3):
       t += 0.005;
 
 
-      /*
-        Continuous rotation
-      */
+      /* ===============================================
+         MAIN OBJECT ROTATION
+         =============================================== */
 
       knot.rotation.x =
-        t * 0.6;
+        t * 0.48;
 
 
       knot.rotation.y =
-        t * 1.0;
+        t * 0.85;
 
 
-      /*
-        Color cycle
-      */
+      knot.rotation.z =
+        Math.sin(t * 0.4) *
+        0.08;
+
+
+      /* ===============================================
+         MAIN FLOATING MOTION
+         =============================================== */
+
+      const width =
+        window.innerWidth;
+
+
+      let baseY;
+
+
+      if (width > 1200) {
+
+        baseY = 0;
+
+      }
+
+      else if (width > 900) {
+
+        baseY = 0;
+
+      }
+
+      else if (width > 600) {
+
+        baseY = -1.5;
+
+      }
+
+      else {
+
+        baseY = -2.15;
+
+      }
+
+
+      mainGroup.position.y =
+        baseY +
+        Math.sin(t * 1.1) *
+        (
+          width <= 600
+            ? 0.10
+            : 0.28
+        );
+
+
+      /* ===============================================
+         ORBIT RINGS
+
+         This creates the cinematic rotating
+         planetary-system effect.
+         =============================================== */
+
+      orbitGroup.rotation.y =
+        t * 0.42;
+
+
+      orbitGroup.rotation.x =
+        Math.sin(t * 0.35) *
+        0.12;
+
+
+      orbitGroup.rotation.z =
+        Math.cos(t * 0.28) *
+        0.08;
+
+
+      /* ===============================================
+         INDIVIDUAL RING MOVEMENT
+         =============================================== */
+
+      ring1.rotation.y =
+        t * 0.65;
+
+
+      ring1.rotation.z =
+        Math.sin(t * 0.55) *
+        0.15;
+
+
+      ring2.rotation.x =
+        Math.PI * 0.34 +
+        Math.sin(t * 0.45) *
+        0.16;
+
+
+      ring2.rotation.y =
+        t * -0.4;
+
+
+      /* ===============================================
+         MOVING DIAMOND #1
+
+         Travels around ring.
+         =============================================== */
+
+      orbitAngle1 +=
+        0.018;
+
+
+      const radius1 =
+        1.85;
+
+
+      diamond.position.x =
+        Math.cos(
+          orbitAngle1
+        ) *
+        radius1;
+
+
+      diamond.position.y =
+        Math.sin(
+          orbitAngle1
+        ) *
+        radius1 *
+        0.42;
+
+
+      diamond.position.z =
+        Math.sin(
+          orbitAngle1
+        ) *
+        radius1 *
+        0.82;
+
+
+      diamond.rotation.x =
+        t * 2.0;
+
+
+      diamond.rotation.y =
+        t * 3.0;
+
+
+      /* ===============================================
+         MOVING DIAMOND #2
+
+         Opposite direction.
+         =============================================== */
+
+      orbitAngle2 -=
+        0.012;
+
+
+      const radius2 =
+        2.05;
+
+
+      diamond2.position.x =
+        Math.cos(
+          orbitAngle2
+        ) *
+        radius2;
+
+
+      diamond2.position.y =
+        Math.sin(
+          orbitAngle2
+        ) *
+        radius2 *
+        0.28;
+
+
+      diamond2.position.z =
+        Math.sin(
+          orbitAngle2
+        ) *
+        radius2 *
+        0.92;
+
+
+      diamond2.rotation.x =
+        -t * 2.5;
+
+
+      diamond2.rotation.z =
+        t * 2.0;
+
+
+      /* ===============================================
+         SHIMMERING LIGHT COLORS
+         =============================================== */
 
       const hue =
-        (t * 0.025) % 1;
+        (t * 0.018) % 1;
 
 
       knotMat.color.setHSL(
         hue,
         0.55,
-        0.35
+        0.34
       );
 
 
       knotMat.emissive.setHSL(
         hue,
         0.8,
-        0.55
+        0.52
       );
 
 
-      /*
-        Smooth floating movement.
+      /* ===============================================
+         RING LIGHT SHIFT
+         =============================================== */
 
-        Keep the base position set by
-        update3DPosition().
-      */
-
-      const baseY =
-        window.innerWidth > 1200
-          ? 0
-          : window.innerWidth > 900
-            ? 0
-            : window.innerWidth > 600
-              ? -1.5
-              : -2.2;
+      const ringHue =
+        (t * 0.025) % 1;
 
 
-      group.position.y =
-        baseY +
-        Math.sin(t * 1.1) *
-        (
-          window.innerWidth <= 600
-            ? 0.15
-            : 0.35
-        );
+      ringMat1.emissive.setHSL(
+        0.09 + ringHue * 0.08,
+        0.85,
+        0.45
+      );
 
 
-      group.rotation.z =
-        Math.sin(t * 0.5) *
-        0.08;
+      ringMat2.emissive.setHSL(
+        0.70 + ringHue * 0.08,
+        0.75,
+        0.5
+      );
 
 
-      /*
-        Moving lights
-      */
+      /* ===============================================
+         MOVING LIGHT SOURCES
+         =============================================== */
 
       rim1.position.set(
 
-        Math.cos(t * 0.6) * 5,
+        Math.cos(t * 0.55) * 5,
 
         3 +
-        Math.sin(t * 0.4) * 1.5,
+        Math.sin(t * 0.45) * 1.5,
 
-        Math.sin(t * 0.6) * 5
+        Math.sin(t * 0.55) * 5
 
       );
 
 
       rim2.position.set(
 
-        Math.cos(t * 0.4 + 2) * 4,
+        Math.cos(t * 0.38 + 2) * 4,
 
         -2 +
         Math.cos(t * 0.5) * 1.5,
 
-        Math.sin(t * 0.4 + 2) * 4
+        Math.sin(t * 0.38 + 2) * 4
 
       );
 
 
-      /*
-        Cursor parallax
-      */
+      rim3.position.set(
+
+        Math.sin(t * 0.45) * 3,
+
+        Math.cos(t * 0.35) * 3,
+
+        2
+
+      );
+
+
+      /* ===============================================
+         SUBTLE CAMERA DRIFT
+         =============================================== */
 
       curX +=
         (targetX - curX) *
-        0.04;
+        0.035;
 
 
       curY +=
         (targetY - curY) *
-        0.04;
+        0.035;
+
+
+      const driftX =
+        Math.sin(t * 0.16) *
+        0.08;
+
+
+      const driftY =
+        Math.cos(t * 0.13) *
+        0.05;
 
 
       camera.position.x =
-        curX * 0.9;
+        curX * 0.75 +
+        driftX;
 
 
       camera.position.y =
-        -curY * 0.6;
+        -curY * 0.5 +
+        driftY;
 
+
+      camera.position.z =
+        7 +
+        Math.sin(t * 0.12) *
+        0.08;
+
+
+      /* ===============================================
+         CAMERA LOOK AT
+         =============================================== */
 
       camera.lookAt(
         1.0,
