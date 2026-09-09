@@ -2374,3 +2374,51 @@ html[data-theme="light"] #canvas-wrap {
   background:
     radial-gradient(circle at 50% 46%, rgba(255, 255, 255, .98) 0%, rgba(247, 248, 252, .94) 38%, rgba(242, 244, 249, .98) 100%);
 }
+
+
+/* Conditionals / Functions reusable lesson components */
+.lesson-page .note.warn {
+  border-left: 3px solid #e05b5b;
+  background: #fff3f3;
+  color: #7f3030;
+}
+
+.lesson-page .note.warn strong {
+  color: #b23a3a;
+}
+
+.lesson-page .milestone {
+  background: linear-gradient(135deg, rgba(224, 138, 30, .10), rgba(53, 168, 121, .08));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 26px 0;
+}
+
+.lesson-page .milestone .tag {
+  color: var(--mint);
+  font-family: "JetBrains Mono", monospace;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.lesson-page .milestone p {
+  margin: 7px 0 0;
+  color: var(--text);
+}
+
+html[data-theme="dark"] .lesson-page .note.warn {
+  background: #211315;
+  border-left-color: #ff6969;
+  color: #f0b2b2;
+}
+
+html[data-theme="dark"] .lesson-page .note.warn strong {
+  color: #ff8585;
+}
+
+html[data-theme="dark"] .lesson-page .milestone {
+  background: linear-gradient(135deg, rgba(242, 162, 58, .10), rgba(76, 207, 152, .07));
+  border-color: #202531;
+}
