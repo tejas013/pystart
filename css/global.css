@@ -1703,3 +1703,62 @@
     font-size: 0.72rem;
   }
 }
+
+
+/* =========================================================
+   LESSON TABLES
+   ========================================================= */
+
+.lesson-page article table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0 24px;
+  font-size: 0.88rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: rgba(255,255,255,0.72);
+  box-shadow: 0 10px 28px rgba(55,65,95,0.045);
+}
+
+.lesson-page article th,
+.lesson-page article td {
+  text-align: left;
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lesson-page article th {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.76rem;
+  background: rgba(239,241,247,0.72);
+}
+
+.lesson-page article td {
+  color: #4f5568;
+}
+
+.lesson-page article tr:last-child td {
+  border-bottom: none;
+}
+
+.lesson-page article td code {
+  color: #4f3db0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@media (max-width:600px) {
+  .lesson-page article table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.76rem;
+  }
+
+  .lesson-page article th,
+  .lesson-page article td {
+    padding: 9px 10px;
+  }
+}
