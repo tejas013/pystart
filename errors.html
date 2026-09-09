@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,12 +11,17 @@
 <body class="errors-page">
 
 <header>
-  <div class="logo">Py<span>Start</span></div>
+  <a href="index.html" class="logo">Py<span>Start</span></a>
   <nav>
+    <a href="index.html">Home</a>
     <a href="lessons-variables.html">Lessons</a>
     <a href="errors.html" class="active">Errors</a>
     <a href="projects.html">Projects</a>
   </nav>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
+  <span class="theme-icon" aria-hidden="true">☾</span>
+  <span class="theme-label">Dark</span>
+</button>
 </header>
 
 <div class="wrap">
@@ -118,6 +123,7 @@ age.upper()   # numbers ke paas 'upper' nahi hota, strings ke paas hota hai</div
   </div>
 
   <div id="no-results">Koi error match nahi hua. Alag keyword try karo.</div>
+
 </div>
   <script src="js/global.js" defer></script>
 </body>
