@@ -7,26 +7,23 @@
   <link rel="stylesheet" href="css/global.css">
   <script src="js/global.js" defer></script>
 </head>
-
 <body class="lesson-page">
 
 <header class="site-header">
   <a href="index.html" class="logo">PyStart</a>
-
   <nav class="top-nav">
     <a href="index.html">Home</a>
     <a href="lessons-variables.html" class="active">Lessons</a>
     <a href="errors.html">Errors</a>
     <a href="#">Projects</a>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
-      <span class="theme-icon" aria-hidden="true">☾</span>
+    <button class="theme-toggle" id="theme-toggle" type="button">
+      <span class="theme-icon">☾</span>
       <span class="theme-label">Dark</span>
     </button>
   </nav>
 </header>
 
 <main class="lesson-layout">
-
   <aside class="lesson-sidebar">
     <div class="sidebar-section">
       <h3>Basics</h3>
@@ -34,15 +31,13 @@
       <a href="lessons-data-types.html">2. Data Types</a>
       <a href="lessons-loops.html">3. Loops</a>
       <a href="lessons-conditionals.html">4. Conditionals</a>
-      <a href="lessons-functions.html">5. Functions</a>
+      <a href="lessons-functions.html" class="active">5. Functions</a>
     </div>
-
     <div class="sidebar-section">
       <h3>Intermediate</h3>
       <a href="lessons-oop.html">OOP Basics</a>
       <a href="lessons-exceptions.html">Exception Handling</a>
     </div>
-
     <div class="sidebar-section">
       <h3>Advanced</h3>
       <a href="lessons-apis.html">APIs &amp; Requests</a>
@@ -60,13 +55,11 @@
       <p>A function is a named block of code that you can call whenever you need it. This makes your code shorter, cleaner, and reusable.</p>
 
       <h2>Create and Call a Function</h2>
-      <div class="codeblock">
-<pre><code>def greet(name):
+      <div class="codeblock"><pre><code>def greet(name):
     print("Hello,", name)
 
 greet("Tejas")
-greet("Riya")</code></pre>
-      </div>
+greet("Riya")</code></pre></div>
 
       <p><code>def</code> is used to define a function. <code>name</code> is a <strong>parameter</strong> that receives a value when the function is called.</p>
     </section>
@@ -75,13 +68,11 @@ greet("Riya")</code></pre>
       <h2>return — Send a Value Back</h2>
       <p><code>print()</code> displays something on the screen. If you want to use a function's result later, use <code>return</code>.</p>
 
-      <div class="codeblock">
-<pre><code>def add(a, b):
+      <div class="codeblock"><pre><code>def add(a, b):
     return a + b
 
 result = add(5, 3)
-print(result)   # 8</code></pre>
-      </div>
+print(result)   # 8</code></pre></div>
 
       <div class="note">
         <strong>Tip:</strong> <code>print()</code> displays a value, while <code>return</code> sends a value back so it can be stored or used elsewhere in your program.
@@ -92,13 +83,11 @@ print(result)   # 8</code></pre>
       <h2>Default Parameters</h2>
       <p>You can give a parameter a default value that is used when no value is provided.</p>
 
-      <div class="codeblock">
-<pre><code>def greet(name="Student"):
+      <div class="codeblock"><pre><code>def greet(name="Student"):
     print("Hello,", name)
 
 greet()          # Hello, Student
-greet("Tejas")   # Hello, Tejas</code></pre>
-      </div>
+greet("Tejas")   # Hello, Tejas</code></pre></div>
     </section>
 
     <div class="milestone">
@@ -117,7 +106,6 @@ result = average(85, 91)
 print("Average:", result)</textarea>
 
       <button id="run-btn" class="run-btn magnetic" onclick="runCode()">Run Code</button>
-
       <pre id="output" class="output">Output will appear here...</pre>
     </section>
 
@@ -126,8 +114,6 @@ print("Average:", result)</textarea>
       <a href="errors.html" class="lesson-nav-btn">Next: Error Dictionary →</a>
     </div>
   </article>
-
 </main>
-
 </body>
 </html>
