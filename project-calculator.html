@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project: Calculator — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171f; --surface: #1c2130; --surface-2: #232a3d; --text: #edeff5;
+    --muted: #8a90a6; --amber: #ffb84d; --mint: #6ee7b7; --border: #2c3348;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--border); }
+  .logo { font-weight: 800; font-size: 1.15rem; }
+  .logo span { color: var(--amber); }
+  header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 44px 24px 90px; }
+  .crumb { color: var(--muted); font-size: 0.85rem; margin-bottom: 10px; }
+  .crumb span { color: var(--amber); }
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); margin-bottom: 32px; max-width: 520px; }
+
+  .demo-row { display: flex; justify-content: center; margin-bottom: 40px; }
+
+  .calc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    width: 280px;
+  }
+  #display {
+    background: #0e111a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    margin-bottom: 14px;
+    color: var(--mint);
+    min-height: 32px;
+    overflow-x: auto;
+  }
+  .keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .keys button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .keys button:hover { border-color: var(--amber); }
+  .keys button.op { color: var(--amber); }
+  .keys button.eq { background: var(--mint); color: #0e1a15; grid-column: span 2; }
+  .keys button.clear { color: #ff8080; }
+
+  article p { margin-bottom: 16px; color: #d3d7e4; }
+  article h2 { font-size: 1.2rem; margin: 28px 0 10px; }
+  article p code { font-family: 'JetBrains Mono', monospace; color: var(--mint); font-size: 0.85em; }
+  .codeblock {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    margin: 14px 0 20px; overflow-x: auto; color: var(--mint); white-space: pre;
+  }
+  .note { background: rgba(255, 184, 77, 0.08); border-left: 3px solid var(--amber); padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; color: #e8dcc8; margin: 18px 0; }
+
+  .nav-buttons { margin-top: 32px; }
+  .btn-prev { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; border: 1px solid var(--border); color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Py<span>Start</span></div>
+  <a href="index.html">← Home</a>
+</header>
+
+<div class="wrap">
+  <div class="crumb">Projects / <span>Calculator</span></div>
+  <h1>Project: Calculator</h1>
+  <p class="subtitle">Ek real working calculator — same logic jo tumne Conditionals aur Functions lesson mein seekhi, bas ab ek button dikhne wali app mein.</p>
+
+  <div class="demo-row">
+    <div class="calc">
+      <div id="display">0</div>
+      <div class="keys">
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="appendValue('/')" class="op">÷</button>
+        <button onclick="appendValue('*')" class="op">×</button>
+        <button onclick="deleteLast()" class="op">⌫</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('-')" class="op">−</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="appendValue('+')" class="op">+</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendValue('.')">.</button>
+
+        <button onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+        <button class="eq" onclick="calculate()">=</button>
+      </div>
+    </div>
+  </div>
+
+  <article>
+    <h2>Ye kaam kaise karta hai</h2>
+    <p>Poori calculator ka logic ek hi function mein hai — <code>calculate()</code>. Ye <code>display</code> mein jo text hai (jaise <code>"12+5"</code>) usko leta hai aur JavaScript ke built-in <code>eval()</code> se calculate karta hai.</p>
+
+    <div class="codeblock">function calculate() {
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = "Error";
+  }
+}</div>
+
+    <p>Dekha? Yahi <b><code>try/except</code></b> wala pattern hai jo tumne Exception Handling lesson mein seekha — JS mein isko <code>try/catch</code> kehte hain, kaam bilkul same hai: agar calculation galat ho (jaise <code>5//</code>), crash hone ki jagah "Error" dikha do.</p>
+
+    <h2>Buttons aur functions ka connection</h2>
+    <p>Har button ek function call karta hai — <code>onclick="appendValue('7')"</code> ka matlab hai "click hone par <code>appendValue</code> function ko 7 bhejo." Ye bilkul waisa hi hai jaise Python mein <code>greet("Tejas")</code> likh ke function ko value bhejte hain.</p>
+
+    <div class="note">💡 Isi tarah se real apps banti hain — chhote functions jo ek-ek kaam karte hain (add karna, clear karna, delete karna), aur buttons unhe trigger karte hain.</div>
+
+    <h2>Try karo</h2>
+    <p>Upar calculator use karo — kuch galat bhi try karo (jaise sirf "+" dabao aur "=" dabao) — dekho "Error" kaise handle hota hai crash ki jagah.</p>
+
+    <div class="nav-buttons">
+      <a href="projects.html" class="btn-prev">← Projects</a>
+    </div>
+  </article>
+</div>
+
+<script>
+  const display = document.getElementById('display');
+  let justCalculated = false;
+
+  function appendValue(val) {
+    if (display.textContent === '0' || justCalculated) {
+      display.textContent = '';
+      justCalculated = false;
+    }
+    display.textContent += val;
+  }
+
+  function clearDisplay() {
+    display.textContent = '0';
+  }
+
+  function deleteLast() {
+    display.textContent = display.textContent.slice(0, -1) || '0';
+  }
+
+  function calculate() {
+    try {
+      display.textContent = eval(display.textContent);
+    } catch {
+      display.textContent = 'Error';
+    }
+    justCalculated = true;
+  }
+</script>
+
+</body>
+</html>

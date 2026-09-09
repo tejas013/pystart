@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Projects — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171f; --surface: #1c2130; --text: #edeff5; --muted: #8a90a6;
+    --amber: #ffb84d; --mint: #6ee7b7; --border: #2c3348;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--border); }
+  .logo { font-weight: 800; font-size: 1.15rem; }
+  .logo span { color: var(--amber); }
+  header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 90px; }
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: var(--muted); margin-bottom: 36px; max-width: 540px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 22px; text-decoration: none; color: var(--text); display: block;
+  }
+  .card .diff { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--mint); }
+  .card .diff.mid { color: var(--amber); }
+  .card h3 { margin: 10px 0 8px; font-size: 1.1rem; }
+  .card p { color: var(--muted); font-size: 0.9rem; }
+  .card .uses { margin-top: 14px; font-size: 0.78rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .card.locked { opacity: 0.5; cursor: default; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Py<span>Start</span></div>
+  <a href="index.html">← Home</a>
+</header>
+
+<div class="wrap">
+  <h1>Projects</h1>
+  <p class="subtitle">Ab tak jo seekha usko combine karke real chhoti apps banao. Yahi se asli confidence aata hai.</p>
+
+  <div class="grid">
+    <a href="project-calculator.html" class="card">
+      <div class="diff">EASY</div>
+      <h3>Calculator</h3>
+      <p>Ek web-based calculator jo add, subtract, multiply, divide kar sake.</p>
+      <div class="uses">Uses: Functions, Conditionals</div>
+    </a>
+
+    <div class="card locked">
+      <div class="diff mid">MEDIUM</div>
+      <h3>To-Do List</h3>
+      <p>Tasks add/remove karne wala app — coming soon.</p>
+      <div class="uses">Uses: Lists, Functions, DOM</div>
+    </div>
+
+    <div class="card locked">
+      <div class="diff mid">MEDIUM</div>
+      <h3>Number Guessing Game</h3>
+      <p>Computer ek number sochega, tum guess karoge — coming soon.</p>
+      <div class="uses">Uses: Loops, Conditionals, random</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

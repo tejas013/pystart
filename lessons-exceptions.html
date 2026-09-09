@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exception Handling — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171f; --surface: #1c2130; --surface-2: #232a3d; --text: #edeff5;
+    --muted: #8a90a6; --amber: #ffb84d; --mint: #6ee7b7; --border: #2c3348;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--border); }
+  .logo { font-weight: 800; font-size: 1.15rem; }
+  .logo span { color: var(--amber); }
+  header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .layout { display: grid; grid-template-columns: 260px 1fr; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+  aside { border-right: 1px solid var(--border); padding: 28px 20px; }
+  @media (max-width: 800px) { aside { border-right: none; border-bottom: 1px solid var(--border); } }
+  aside .section-label { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; margin: 18px 0 8px; }
+  aside .section-label:first-child { margin-top: 0; }
+  aside ul { list-style: none; }
+  aside li a { display: block; padding: 7px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 2px; }
+  aside li a.active { background: var(--surface); color: var(--amber); font-weight: 600; }
+  aside li a:hover:not(.active) { color: var(--text); }
+  article { padding: 40px 40px 80px; max-width: 680px; }
+  .crumb { color: var(--muted); font-size: 0.85rem; margin-bottom: 10px; }
+  .crumb span { color: var(--amber); }
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); margin-bottom: 32px; }
+  article p { margin-bottom: 16px; color: #d3d7e4; }
+  article h2 { font-size: 1.2rem; margin: 28px 0 10px; }
+  article p code, li code { font-family: 'JetBrains Mono', monospace; color: var(--mint); font-size: 0.85em; }
+  .codeblock { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; margin: 14px 0 20px; overflow-x: auto; color: var(--mint); white-space: pre; }
+  .note { background: rgba(255, 184, 77, 0.08); border-left: 3px solid var(--amber); padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; color: #e8dcc8; margin: 18px 0; }
+  .milestone { background: linear-gradient(135deg, rgba(255,184,77,0.12), rgba(110,231,183,0.08)); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 26px 0; }
+  .milestone .tag { color: var(--mint); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  .milestone p { margin: 6px 0 0; color: var(--text); }
+  .editor { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 24px; }
+  .editor-bar { display: flex; gap: 6px; padding: 10px 16px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot.r { background: #ff6b6b; } .dot.y { background: #ffd166; } .dot.g { background: #6ee7b7; }
+  #code { width: 100%; min-height: 130px; background: transparent; color: var(--text); border: none; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; resize: vertical; outline: none; }
+  .run-row { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  #run-btn { background: var(--mint); color: #0e1a15; border: none; padding: 7px 16px; border-radius: 6px; font-weight: 600; font-family: 'Sora', sans-serif; cursor: pointer; font-size: 0.85rem; }
+  #run-btn:disabled { opacity: 0.6; cursor: wait; }
+  #output { margin: 0 16px 16px; background: #0e111a; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.83rem; color: var(--mint); min-height: 20px; white-space: pre-wrap; }
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; }
+  .btn-next, .btn-prev { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+  .btn-next { background: var(--amber); color: #14171f; }
+  .btn-prev { border: 1px solid var(--border); color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Py<span>Start</span></div>
+  <a href="index.html">← Home</a>
+</header>
+
+<div class="layout">
+  <aside>
+    <div class="section-label">BASICS</div>
+    <ul>
+      <li><a href="lessons-variables.html">1. Variables</a></li>
+      <li><a href="lessons-data-types.html">2. Data Types</a></li>
+      <li><a href="lessons-loops.html">3. Loops</a></li>
+      <li><a href="lessons-conditionals.html">4. Conditionals</a></li>
+      <li><a href="lessons-functions.html">5. Functions</a></li>
+    </ul>
+    <div class="section-label">INTERMEDIATE</div>
+    <ul>
+      <li><a href="lessons-oop.html">OOP Basics</a></li>
+      <li><a href="#" class="active">Exception Handling</a></li>
+    </ul>
+    <div class="section-label">ADVANCED</div>
+    <ul>
+      <li><a href="lessons-apis.html">APIs & Requests</a></li>
+    </ul>
+  </aside>
+
+  <article>
+    <div class="crumb">Intermediate / <span>Exception Handling</span></div>
+    <h1>Exception Handling</h1>
+    <p class="subtitle">Error aane par program crash na ho — usko "handle" karo</p>
+
+    <p>Abhi tak jab error aata tha, program wahin ruk jata tha (crash). Real apps mein ye nahi chalta — agar ek user galat input de, to poora program band nahi hona chahiye. Isliye <code>try / except</code> use karte hain.</p>
+
+    <h2>Basic try-except</h2>
+    <div class="codeblock">try:
+    age = int(input("Apni age batao: "))
+    print("Agle saal tum", age + 1, "ke ho jaoge")
+except:
+    print("Ye valid number nahi tha!")</div>
+    <p><code>try</code> ke andar wo code likho jisme error aa sakta hai. Agar error aaya, program crash nahi hoga — seedha <code>except</code> block chal jayega.</p>
+
+    <h2>Specific error catch karo</h2>
+    <p>Better practice hai specific error ka naam batana (jo humne Error Dictionary mein seekha):</p>
+    <div class="codeblock">try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Zero se divide nahi ho sakta!")
+except ValueError:
+    print("Value sahi nahi thi!")</div>
+
+    <div class="note">💡 Har error ke liye alag <code>except</code> rakhna better hai kyunki tumhe pata chalta hai <b>exact</b> kya problem hui — sirf "kuch error aaya" jaanna kaafi nahi hota.</div>
+
+    <h2>finally — hamesha chalta hai</h2>
+    <p><code>finally</code> block error aaye ya na aaye, hamesha chalta hai — cleanup jaise kaam ke liye useful (jaise file close karna):</p>
+    <div class="codeblock">try:
+    print("Kaam ho raha hai")
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Error pakda gaya")
+finally:
+    print("Ye hamesha chalega")</div>
+
+    <div class="milestone">
+      <div class="tag">🎉 MILESTONE</div>
+      <p>OOP aur Exception Handling ke saath, ab tumhare paas structured, crash-proof programs likhne ka gyaan hai. Ye woh skills hain jo real-world job interviews mein directly poochi jaati hain.</p>
+    </div>
+
+    <h2>Try it yourself</h2>
+    <p>Code change karke dekho — number ki jagah text daalo aur dekho <code>except</code> kaise bachata hai crash se:</p>
+
+    <div class="editor">
+      <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <textarea id="code">def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "Zero se divide nahi ho sakta"
+
+print(safe_divide(10, 2))
+print(safe_divide(10, 0))</textarea>
+      <div class="run-row">
+        <span style="color: var(--muted); font-size: 0.78rem;">Browser mein hi chalega</span>
+        <button id="run-btn" onclick="runCode()">▶ Run</button>
+      </div>
+      <div id="output">Output yahan dikhega...</div>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="lessons-oop.html" class="btn-prev">← Previous: OOP Basics</a>
+      <a href="lessons-apis.html" class="btn-next">Next: APIs & Requests →</a>
+    </div>
+  </article>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<script>
+  let pyodideReady = null;
+  async function initPyodide() {
+    if (!pyodideReady) pyodideReady = await loadPyodide();
+    return pyodideReady;
+  }
+  async function runCode() {
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('output');
+    const code = document.getElementById('code').value;
+    btn.disabled = true; btn.textContent = '⏳ Loading...';
+    out.textContent = 'Python load ho raha hai...';
+    try {
+      const pyodide = await initPyodide();
+      btn.textContent = '▶ Run';
+      pyodide.runPython(`import sys, io\nsys.stdout = io.StringIO()`);
+      pyodide.runPython(code);
+      const result = pyodide.runPython("sys.stdout.getvalue()");
+      out.textContent = result || '(koi output nahi — print() use karo)';
+    } catch (err) {
+      out.textContent = 'Error:\n' + err.message;
+    }
+    btn.disabled = false; btn.textContent = '▶ Run';
+  }
+</script>
+
+</body>
+</html>
