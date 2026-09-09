@@ -1774,3 +1774,572 @@
 .lesson-page .note.warn strong {
   color: #b23a3a;
 }
+
+
+/* Shared Home navigation button */
+.lesson-page .nav-buttons {
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lesson-page .btn-home,
+.lesson-page .btn-prev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.lesson-page .btn-home:hover,
+.lesson-page .btn-prev:hover {
+  transform: translateY(-2px);
+  border-color: rgba(124,92,255,0.35);
+  box-shadow: 0 10px 25px rgba(55,65,95,0.10);
+}
+
+.errors-home-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 34px 0 10px;
+}
+
+.errors-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--violet);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.errors-home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(124,92,255,0.18);
+}
+
+
+/* =========================================================
+   THEME SYSTEM — LIGHT (default) / DARK
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+  --page-bg: #f6f7fb;
+  --page-bg-2: #f1f2f7;
+  --surface-strong: #ffffff;
+  --surface-soft: rgba(255,255,255,0.82);
+  --surface-softer: rgba(255,255,255,0.68);
+  --text-strong: #14171f;
+  --text-soft: #6b7186;
+  --border-soft: #e3e6f0;
+  --shadow-soft: rgba(20,23,31,0.08);
+  --code-bg: #171923;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #090b10;
+  --surface: #12151d;
+  --text: #f1f3f8;
+  --muted: #9ca3b5;
+  --border: #292e3a;
+  --page-bg: #090b10;
+  --page-bg-2: #0f1219;
+  --surface-strong: #12151d;
+  --surface-soft: rgba(18,21,29,0.88);
+  --surface-softer: rgba(18,21,29,0.72);
+  --text-strong: #f1f3f8;
+  --text-soft: #9ca3b5;
+  --border-soft: #292e3a;
+  --shadow-soft: rgba(0,0,0,0.32);
+  --code-bg: #090b10;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(124,92,255,0.10), transparent 34%),
+    radial-gradient(circle at 15% 20%, rgba(53,168,121,0.045), transparent 28%),
+    linear-gradient(180deg, var(--page-bg-2) 0%, var(--page-bg) 70%, #07090d 100%);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .logo,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] strong,
+html[data-theme="dark"] b {
+  color: var(--text-strong);
+}
+
+html[data-theme="dark"] nav a,
+html[data-theme="dark"] .hero p.sub,
+html[data-theme="dark"] .subtitle,
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .crumb,
+html[data-theme="dark"] .section-label {
+  color: var(--text-soft);
+}
+
+html[data-theme="dark"] nav a:hover,
+html[data-theme="dark"] nav a.active {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .surface,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .error-card,
+html[data-theme="dark"] .editor,
+html[data-theme="dark"] table,
+html[data-theme="dark"] .lesson-sidebar,
+html[data-theme="dark"] .sidebar,
+html[data-theme="dark"] .project-card {
+  background: var(--surface-soft);
+  border-color: var(--border-soft);
+  box-shadow: 0 18px 50px var(--shadow-soft);
+}
+
+html[data-theme="dark"] .btn-secondary,
+html[data-theme="dark"] .btn-outline,
+html[data-theme="dark"] .lesson-nav-btn,
+html[data-theme="dark"] .nav-buttons a,
+html[data-theme="dark"] .errors-home-btn {
+  background: rgba(255,255,255,0.045);
+  color: var(--text-strong);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .btn-secondary:hover,
+html[data-theme="dark"] .btn-outline:hover,
+html[data-theme="dark"] .lesson-nav-btn:hover,
+html[data-theme="dark"] .nav-buttons a:hover {
+  background: rgba(124,92,255,0.12);
+  border-color: rgba(124,92,255,0.45);
+}
+
+html[data-theme="dark"] .lesson-page .note {
+  background: rgba(124,92,255,0.10);
+  border-color: rgba(124,92,255,0.24);
+  color: #cfd3ff;
+}
+
+html[data-theme="dark"] .lesson-page .note.warn {
+  background: rgba(210,70,70,0.10);
+  border-color: rgba(240,130,130,0.28);
+  color: #f2bcbc;
+}
+
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea {
+  background: rgba(8,10,15,0.78);
+  color: var(--text-strong);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #737b8d;
+}
+
+html[data-theme="dark"] table th {
+  background: rgba(124,92,255,0.10);
+  color: var(--text-strong);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] table td {
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .codeblock,
+html[data-theme="dark"] pre,
+html[data-theme="dark"] #output {
+  background: var(--code-bg);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .grain {
+  mix-blend-mode: screen;
+  opacity: 0.018;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 22px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font: 600 0.78rem/1 'Sora', sans-serif;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  border-color: rgba(124,92,255,.45);
+}
+
+.theme-toggle .theme-icon {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+}
+
+.theme-toggle .theme-label {
+  min-width: 35px;
+  text-align: left;
+}
+
+@media (max-width: 760px) {
+  .theme-toggle {
+    margin-left: 10px;
+    padding: 7px 9px;
+  }
+  .theme-toggle .theme-label { display: none; }
+}
+
+@media (max-width: 560px) {
+  header {
+    gap: 10px;
+  }
+  nav a {
+    margin-left: 12px;
+    font-size: 0.78rem;
+  }
+  .theme-toggle { margin-left: 6px; }
+}
+
+/* =========================================================
+   DARK MODE — LESSON / ERROR DETAIL OVERRIDES
+   ========================================================= */
+
+html[data-theme="dark"] .lesson-page,
+html[data-theme="dark"] .errors-page {
+  background:
+    radial-gradient(circle at 30% 0%, rgba(124,92,255,0.08), transparent 32%),
+    linear-gradient(180deg, #0f1219 0%, #090b10 100%);
+}
+
+html[data-theme="dark"] .lesson-page header,
+html[data-theme="dark"] .errors-page header {
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page article p,
+html[data-theme="dark"] .error-card .meaning,
+html[data-theme="dark"] .error-card .fix {
+  color: #c1c6d3;
+}
+
+html[data-theme="dark"] .lesson-page aside {
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page aside li a {
+  color: #9ca3b5;
+}
+
+html[data-theme="dark"] .lesson-page aside li a:hover:not(.active) {
+  color: #f1f3f8;
+  background: rgba(255,255,255,0.045);
+}
+
+html[data-theme="dark"] .lesson-page aside li a.active {
+  background: rgba(124,92,255,0.14);
+  color: #b9adff;
+}
+
+html[data-theme="dark"] .lesson-page article code,
+html[data-theme="dark"] .lesson-page article td code {
+  color: #b9adff;
+}
+
+html[data-theme="dark"] .lesson-page article table {
+  background: rgba(18,21,29,0.88);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page article th {
+  color: #dce0ea;
+  background: rgba(124,92,255,0.10);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page article td {
+  color: #c1c6d3;
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page .editor {
+  background: rgba(18,21,29,0.90);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page .editor-bar {
+  background: rgba(255,255,255,0.035);
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .lesson-page #code {
+  color: #f0f2f7;
+}
+
+html[data-theme="dark"] .lesson-page .run-row {
+  border-color: var(--border-soft);
+}
+
+html[data-theme="dark"] .error-card {
+  background: rgba(18,21,29,0.82);
+  border-color: var(--border-soft);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.26);
+}
+
+html[data-theme="dark"] .error-card:hover {
+  border-color: rgba(124,92,255,0.38);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.34);
+}
+
+html[data-theme="dark"] .error-card .label {
+  color: #8f97aa;
+}
+
+html[data-theme="dark"] .error-card .codeblock,
+html[data-theme="dark"] .lesson-page .codeblock {
+  background: #090b10;
+  border-color: #292e3a;
+  color: #a8f3d1;
+}
+
+html[data-theme="dark"] .error-card .fix {
+  color: #72d4a7;
+}
+
+html[data-theme="dark"] #search {
+  background: rgba(18,21,29,0.86);
+  border-color: var(--border-soft);
+  color: #f1f3f8;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.20);
+}
+
+html[data-theme="dark"] .errors-page .subtitle,
+html[data-theme="dark"] #count,
+html[data-theme="dark"] #no-results {
+  color: #9ca3b5;
+}
+
+html[data-theme="dark"] .theme-toggle {
+  background: rgba(18,21,29,0.88);
+  border-color: #303646;
+}
+
+
+/* =========================================================
+   Theme Switcher
+   ========================================================= */
+.theme-toggle {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  min-height: 38px;
+  padding: 0 13px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font: 600 12px/1 Sora, sans-serif;
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, color .25s ease, transform .2s ease;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.theme-label {
+  letter-spacing: .01em;
+}
+
+@media (max-width: 640px) {
+  .theme-toggle {
+    min-height: 34px;
+    padding: 0 10px;
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .theme-icon {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   Dark Theme
+   ========================================================= */
+html[data-theme="dark"] {
+  --bg: #0a0c12;
+  --surface: #11141d;
+  --surface-2: #171b26;
+  --text: #f3f5fa;
+  --muted: #a6adbf;
+  --amber: #f2a23a;
+  --violet: #9a83ff;
+  --mint: #4cc58f;
+  --border: #292f3d;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .32);
+}
+
+html[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .site-header {
+  background: rgba(10, 12, 18, .82);
+  border-bottom-color: var(--border);
+}
+
+html[data-theme="dark"] .logo,
+html[data-theme="dark"] .top-nav a,
+html[data-theme="dark"] .lesson-sidebar a,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3 {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .top-nav a {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .top-nav a:hover,
+html[data-theme="dark"] .top-nav a.active {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .lesson-sidebar,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .error-card,
+html[data-theme="dark"] .lesson-content {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .lesson-sidebar a {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .lesson-sidebar a:hover,
+html[data-theme="dark"] .lesson-sidebar a.active {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .lesson-content > p {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .theme-toggle {
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .note {
+  background: #171a23;
+  border-color: #343b4b;
+}
+
+html[data-theme="dark"] .lesson-page .note.warn {
+  background: #241719;
+  border-color: #673238;
+  color: #f0b2b2;
+}
+
+html[data-theme="dark"] .lesson-page .note.warn strong {
+  color: #ff8585;
+}
+
+html[data-theme="dark"] .codeblock,
+html[data-theme="dark"] .output {
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] textarea#code {
+  background: #080a0f;
+  color: #e8ecf5;
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .lesson-nav-btn {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] table {
+  color: var(--text);
+}
+
+html[data-theme="dark"] th,
+html[data-theme="dark"] td {
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] th {
+  background: var(--surface-2);
+}
+
+html[data-theme="dark"] .search-box,
+html[data-theme="dark"] input#search {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .error-card p {
+  color: var(--muted);
+}
+
+/* Dark hero: keep the central 3D core visibly brighter. */
+html[data-theme="dark"] #canvas-wrap {
+  background: radial-gradient(circle at 50% 45%, #252b3a 0%, #11151f 38%, #080a0f 78%);
+}
