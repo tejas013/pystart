@@ -1165,3 +1165,197 @@
   }
 }
 
+
+
+/* =========================================================
+   ERROR DICTIONARY PAGE
+   Shared light PyStart UI
+   ========================================================= */
+
+.errors-page {
+  background:
+    radial-gradient(
+      ellipse at 25% 0%,
+      #ffffff 0%,
+      #f6f7fb 58%,
+      #f1f2f7 100%
+    );
+}
+
+.errors-page header {
+  border-bottom: 1px solid var(--border);
+}
+
+.errors-page nav a.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.errors-page .wrap {
+  max-width: 860px;
+  padding-top: 54px;
+}
+
+.errors-page h1 {
+  max-width: none;
+  font-size: 2.15rem;
+  margin-bottom: 6px;
+}
+
+.errors-page .subtitle {
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 620px;
+}
+
+#search {
+  width: 100%;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  margin-bottom: 8px;
+  box-shadow: 0 10px 30px rgba(55,65,95,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+#search:focus {
+  border-color: rgba(124,92,255,0.55);
+  box-shadow:
+    0 0 0 4px rgba(124,92,255,0.08),
+    0 12px 34px rgba(55,65,95,0.07);
+}
+
+#count {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-bottom: 22px;
+}
+
+.error-card {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 21px 22px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(55,65,95,0.045);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.22s cubic-bezier(0.33,1,0.68,1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.error-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ff6b6b;
+}
+
+.error-card:hover {
+  transform: translateY(-3px);
+  border-color: #d9d4f5;
+  box-shadow: 0 18px 40px rgba(55,65,95,0.10);
+}
+
+.error-card .title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.error-card h3 {
+  font-family: 'JetBrains Mono', monospace;
+  color: #d94f5f;
+  font-size: 1.02rem;
+}
+
+.error-card .meaning {
+  color: #4f5568;
+  margin-bottom: 12px;
+  font-size: 0.94rem;
+}
+
+.error-card .label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  margin-bottom: 5px;
+}
+
+.error-card .codeblock {
+  background: #171923;
+  border: 1px solid #2c3040;
+  border-radius: 9px;
+  padding: 13px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.83rem;
+  color: #f0b3b3;
+  white-space: pre;
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.error-card .fix {
+  color: #267652;
+  font-size: 0.9rem;
+}
+
+.error-card .fix b {
+  color: var(--text);
+}
+
+.error-card code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+}
+
+#no-results {
+  display: none;
+  color: var(--muted);
+  text-align: center;
+  padding: 40px 0;
+}
+
+@media (max-width:600px) {
+  .errors-page .wrap {
+    padding-top: 34px;
+    padding-bottom: 65px;
+  }
+
+  .errors-page h1 {
+    font-size: 1.8rem;
+  }
+
+  .errors-page .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 22px;
+  }
+
+  .error-card {
+    padding: 18px 18px 18px 20px;
+  }
+
+  .error-card .meaning,
+  .error-card .fix {
+    font-size: 0.86rem;
+  }
+
+  .error-card .codeblock {
+    font-size: 0.74rem;
+  }
+}
