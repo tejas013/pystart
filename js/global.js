@@ -549,6 +549,36 @@
       updateThreeTheme(event.detail.theme);
     });
 
+  function updateHeroTheme() {
+    const dark = document.documentElement.getAttribute("data-theme") === "dark";
+
+    if (typeof scene === "undefined") return;
+
+    // Dark mode: darker metallic environment + stronger cool-white core glow.
+    if (typeof coreMaterial !== "undefined" && coreMaterial) {
+      coreMaterial.color.setHex(dark ? 0x8f98ad : 0xffffff);
+      coreMaterial.emissive.setHex(dark ? 0x59657d : 0xffffff);
+      coreMaterial.emissiveIntensity = dark ? 1.15 : 0.55;
+    }
+
+    if (typeof coreLight !== "undefined" && coreLight) {
+      coreLight.color.setHex(dark ? 0xbfc8dc : 0xffffff);
+      coreLight.intensity = dark ? 4.2 : 2.0;
+    }
+
+    if (typeof ambientLight !== "undefined" && ambientLight) {
+      ambientLight.intensity = dark ? 0.22 : 0.48;
+    }
+
+    if (typeof renderer !== "undefined" && renderer) {
+      renderer.setClearColor(dark ? 0x030405 : 0xf6f7fb, dark ? 1 : 0);
+    }
+  }
+
+  window.addEventListener("pystart-theme-change", updateHeroTheme);
+  updateHeroTheme();
+
+
     function animate() {
       requestAnimationFrame(animate);
       t += 0.005;
