@@ -6,199 +6,119 @@
 <title>Error Dictionary — PyStart</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #14171f; --surface: #1c2130; --surface-2: #232a3d; --text: #edeff5;
-    --muted: #8a90a6; --amber: #ffb84d; --mint: #6ee7b7; --red: #ff6b6b; --border: #2c3348;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; }
-  header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--border); }
-  .logo { font-weight: 800; font-size: 1.15rem; }
-  .logo span { color: var(--amber); }
-  header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
-
-  .wrap { max-width: 780px; margin: 0 auto; padding: 44px 24px 90px; }
-
-  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
-  .subtitle { color: var(--muted); margin-bottom: 28px; max-width: 520px; }
-
-  #search {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 13px 16px;
-    color: var(--text);
-    font-family: 'Sora', sans-serif;
-    font-size: 0.95rem;
-    outline: none;
-    margin-bottom: 8px;
-  }
-  #search:focus { border-color: var(--amber); }
-  #count { color: var(--muted); font-size: 0.82rem; margin-bottom: 24px; }
-
-  .error-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 22px;
-    margin-bottom: 16px;
-  }
-  .error-card .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .error-card h3 {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--red);
-    font-size: 1.02rem;
-  }
-  .error-card .meaning { color: #d3d7e4; margin-bottom: 12px; font-size: 0.95rem; }
-  .error-card .label { color: var(--muted); font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; margin-bottom: 5px; }
-  .error-card .codeblock {
-    background: #0e111a;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.83rem;
-    color: #f0b3b3;
-    white-space: pre;
-    overflow-x: auto;
-    margin-bottom: 12px;
-  }
-  .error-card .fix { color: var(--mint); font-size: 0.9rem; }
-  .error-card .fix b { color: var(--text); }
-
-  #no-results { display: none; color: var(--muted); text-align: center; padding: 40px 0; }
-</style>
+  <link rel="stylesheet" href="css/global.css">
 </head>
-<body>
+<body class="errors-page">
 
 <header>
   <div class="logo">Py<span>Start</span></div>
-  <a href="index.html">← Home</a>
+  <nav>
+    <a href="lessons-variables.html">Lessons</a>
+    <a href="errors.html" class="active">Errors</a>
+    <a href="projects.html">Projects</a>
+  </nav>
 </header>
 
 <div class="wrap">
   <h1>Error Dictionary</h1>
   <p class="subtitle">Python mein error aana normal hai — har programmer ko roz aata hai. Yahan common errors ka matlab, karan, aur fix diya hai.</p>
 
-  <input type="text" id="search" placeholder="Error type karo... jaise 'IndentationError' ya 'list index'" oninput="filterErrors()">
+  <input type="search" id="search" autocomplete="off" placeholder="Error type karo... jaise 'IndentationError' ya 'list index'" oninput="filterErrors()">
   <div id="count"></div>
 
   <div id="error-list">
 
-    <div class="error-card" data-search="syntaxerror syntax invalid galat likha colon missing">
+    <article class="error-card" data-search="syntaxerror syntax invalid galat likha colon missing">
       <div class="title-row"><h3>SyntaxError</h3></div>
       <p class="meaning">Code ka structure hi galat hai — jaise ek colon (<code>:</code>) chhoot gaya, ya bracket close nahi hua.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">if age > 18
     print("Adult")</div>
       <div class="fix"><b>Fix:</b> <code>if</code> ke baad colon lagao — <code>if age > 18:</code></div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="indentationerror indent spaces tab galat spacing">
+    <article class="error-card" data-search="indentationerror indent spaces tab galat spacing">
       <div class="title-row"><h3>IndentationError</h3></div>
       <p class="meaning">Python mein spacing (indentation) se pata chalta hai konsa code kis block ke andar hai. Ye mismatch ho jaye to error aati hai.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">if age > 18:
 print("Adult")</div>
       <div class="fix"><b>Fix:</b> <code>print</code> line ko indent karo (4 spaces andar) — <code>if</code> ke andar jo bhi code hai wo indented hona chahiye.</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="nameerror not defined variable spelling galat naam">
+    <article class="error-card" data-search="nameerror not defined variable spelling galat naam">
       <div class="title-row"><h3>NameError</h3></div>
       <p class="meaning">Ek variable ya function use kiya jo pehle define hi nahi hua — ya spelling galat hai.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">print(nam)   # 'name' likhna tha</div>
       <div class="fix"><b>Fix:</b> Variable pehle define karo, aur spelling double-check karo. Python case-sensitive hai — <code>Name</code> aur <code>name</code> alag hain.</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="typeerror type mismatch string number add concatenate">
+    <article class="error-card" data-search="typeerror type mismatch string number add concatenate">
       <div class="title-row"><h3>TypeError</h3></div>
       <p class="meaning">Do alag types ko aise combine karne ki koshish jo Python allow nahi karta — jaise number aur text ko directly jodna.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">age = 22
 print("Age hai: " + age)</div>
       <div class="fix"><b>Fix:</b> Number ko string mein convert karo — <code>str(age)</code> use karo, ya f-string: <code>f"Age hai: {age}"</code></div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="valueerror value convert int string invalid literal">
+    <article class="error-card" data-search="valueerror value convert int string invalid literal">
       <div class="title-row"><h3>ValueError</h3></div>
       <p class="meaning">Type sahi hai, but value convert nahi ho sakti — jaise text ko number mein convert karne ki koshish jab text actually number nahi hai.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">age = int("bees")   # 'bees' number nahi hai</div>
       <div class="fix"><b>Fix:</b> Convert karne se pehle check karo ki value valid number-jaisi hai ya nahi (jaise <code>.isdigit()</code> se).</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="indexerror index out of range list array element nahi mila">
+    <article class="error-card" data-search="indexerror index out of range list array element nahi mila">
       <div class="title-row"><h3>IndexError</h3></div>
       <p class="meaning">List mein jo position (index) maangi wo exist hi nahi karti.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">skills = ["Python", "SQL"]
 print(skills[5])   # sirf 2 items hain (index 0,1)</div>
       <div class="fix"><b>Fix:</b> Yaad rakho list ki length se pehle index rukta hai — <code>len(skills)</code> se check kar sakte ho, ya <code>skills[-1]</code> se last item milega.</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="keyerror dictionary key nahi mila dict missing">
+    <article class="error-card" data-search="keyerror dictionary key nahi mila dict missing">
       <div class="title-row"><h3>KeyError</h3></div>
       <p class="meaning">Dictionary mein jo key maangi wo exist nahi karti.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">user = {"name": "Tejas"}
 print(user["age"])   # 'age' key hai hi nahi</div>
       <div class="fix"><b>Fix:</b> <code>.get()</code> use karo — <code>user.get("age", "Not set")</code> — agar key na mile to error nahi, default value milegi.</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="attributeerror method function nahi hai object wrong type">
+    <article class="error-card" data-search="attributeerror method function nahi hai object wrong type">
       <div class="title-row"><h3>AttributeError</h3></div>
       <p class="meaning">Kisi object pe aisa method/function call kiya jo us type ke paas hota hi nahi.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">age = 22
 age.upper()   # numbers ke paas 'upper' nahi hota, strings ke paas hota hai</div>
       <div class="fix"><b>Fix:</b> Check karo variable ka type kya hai (<code>type(age)</code>) aur us type ke sahi methods use karo.</div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="zerodivisionerror divide by zero division">
+    <article class="error-card" data-search="zerodivisionerror divide by zero division">
       <div class="title-row"><h3>ZeroDivisionError</h3></div>
       <p class="meaning">Kisi number ko 0 se divide karne ki koshish — math mein ye possible hi nahi hai.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">result = 10 / 0</div>
       <div class="fix"><b>Fix:</b> Divide karne se pehle check karo denominator 0 to nahi hai — <code>if b != 0:</code></div>
-    </div>
+    </article>
 
-    <div class="error-card" data-search="modulenotfounderror import module install pip library nahi mili">
+    <article class="error-card" data-search="modulenotfounderror import module install pip library nahi mili">
       <div class="title-row"><h3>ModuleNotFoundError</h3></div>
       <p class="meaning">Jo library/module import karne ki koshish ki wo installed hi nahi hai tumhare system pe.</p>
       <div class="label">EXAMPLE JO ERROR DETA HAI</div>
       <div class="codeblock">import requests
 # agar requests installed nahi hai</div>
       <div class="fix"><b>Fix:</b> Terminal mein install karo — <code>pip install requests</code> — phir dobara run karo.</div>
-    </div>
+    </article>
 
   </div>
 
   <div id="no-results">Koi error match nahi hua. Alag keyword try karo.</div>
 </div>
-
-<script>
-  function filterErrors() {
-    const query = document.getElementById('search').value.toLowerCase();
-    const cards = document.querySelectorAll('.error-card');
-    let visible = 0;
-
-    cards.forEach(card => {
-      const searchable = card.getAttribute('data-search');
-      if (searchable.includes(query)) {
-        card.style.display = 'block';
-        visible++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    document.getElementById('count').textContent = query ? `${visible} errors mile` : '';
-    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
-  }
-</script>
-
+  <script src="js/global.js" defer></script>
 </body>
 </html>
