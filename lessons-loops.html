@@ -1,166 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Loops — PyStart</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #14171f; --surface: #1c2130; --surface-2: #232a3d; --text: #edeff5;
-    --muted: #8a90a6; --amber: #ffb84d; --mint: #6ee7b7; --border: #2c3348;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; line-height: 1.6; }
-  header { display: flex; justify-content: space-between; align-items: center; padding: 18px 32px; border-bottom: 1px solid var(--border); }
-  .logo { font-weight: 800; font-size: 1.15rem; }
-  .logo span { color: var(--amber); }
-  header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
-  .layout { display: grid; grid-template-columns: 260px 1fr; max-width: 1100px; margin: 0 auto; }
-  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
-  aside { border-right: 1px solid var(--border); padding: 28px 20px; }
-  @media (max-width: 800px) { aside { border-right: none; border-bottom: 1px solid var(--border); } }
-  aside .section-label { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.04em; margin: 18px 0 8px; }
-  aside .section-label:first-child { margin-top: 0; }
-  aside ul { list-style: none; }
-  aside li a { display: block; padding: 7px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 2px; }
-  aside li a.active { background: var(--surface); color: var(--amber); font-weight: 600; }
-  aside li a:hover:not(.active) { color: var(--text); }
-  article { padding: 40px 40px 80px; max-width: 680px; }
-  .crumb { color: var(--muted); font-size: 0.85rem; margin-bottom: 10px; }
-  .crumb span { color: var(--amber); }
-  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
-  .subtitle { color: var(--muted); margin-bottom: 32px; }
-  article p { margin-bottom: 16px; color: #d3d7e4; }
-  article h2 { font-size: 1.2rem; margin: 28px 0 10px; }
-  article p code, li code { font-family: 'JetBrains Mono', monospace; color: var(--mint); font-size: 0.85em; }
-  .codeblock { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; margin: 14px 0 20px; overflow-x: auto; color: var(--mint); white-space: pre; }
-  .note { background: rgba(255, 184, 77, 0.08); border-left: 3px solid var(--amber); padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; color: #e8dcc8; margin: 18px 0; }
-  .warn { background: rgba(255, 107, 107, 0.08); border-left: 3px solid #ff6b6b; padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; color: #f0c9c9; margin: 18px 0; }
-  .editor { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 24px; }
-  .editor-bar { display: flex; gap: 6px; padding: 10px 16px; background: var(--surface-2); border-bottom: 1px solid var(--border); }
-  .dot { width: 9px; height: 9px; border-radius: 50%; }
-  .dot.r { background: #ff6b6b; } .dot.y { background: #ffd166; } .dot.g { background: #6ee7b7; }
-  #code { width: 100%; min-height: 120px; background: transparent; color: var(--text); border: none; padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; resize: vertical; outline: none; }
-  .run-row { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  #run-btn { background: var(--mint); color: #0e1a15; border: none; padding: 7px 16px; border-radius: 6px; font-weight: 600; font-family: 'Sora', sans-serif; cursor: pointer; font-size: 0.85rem; }
-  #run-btn:disabled { opacity: 0.6; cursor: wait; }
-  #output { margin: 0 16px 16px; background: #0e111a; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.83rem; color: var(--mint); min-height: 20px; white-space: pre-wrap; }
-  .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; }
-  .btn-next, .btn-prev { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
-  .btn-next { background: var(--amber); color: #14171f; }
-  .btn-prev { border: 1px solid var(--border); color: var(--text); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loops — PyStart</title>
+  <link rel="stylesheet" href="css/global.css">
+  <script src="js/global.js" defer></script>
 </head>
-<body>
 
-<header>
-  <div class="logo">Py<span>Start</span></div>
-  <a href="index.html">← Home</a>
+<body class="lesson-page">
+
+<header class="site-header">
+  <a href="index.html" class="logo">PyStart</a>
+
+  <nav class="top-nav">
+    <a href="index.html">Home</a>
+    <a href="lessons-variables.html" class="active">Lessons</a>
+    <a href="errors.html">Errors</a>
+    <a href="#">Projects</a>
+  </nav>
 </header>
 
-<div class="layout">
-  <aside>
-    <div class="section-label">BASICS</div>
-    <ul>
-      <li><a href="lessons-variables.html">1. Variables</a></li>
-      <li><a href="lessons-data-types.html">2. Data Types</a></li>
-      <li><a href="#" class="active">3. Loops</a></li>
-      <li><a href="lessons-conditionals.html">4. Conditionals</a></li>
-      <li><a href="#">5. Functions</a></li>
-    </ul>
-    <div class="section-label">INTERMEDIATE</div>
-    <ul>
-      <li><a href="lessons-oop.html">OOP Basics</a></li>
-      <li><a href="lessons-exceptions.html">Exception Handling</a></li>
-    </ul>
-    <div class="section-label">ADVANCED</div>
-    <ul>
-      <li><a href="lessons-apis.html">APIs & Requests</a></li>
-    </ul>
+<main class="lesson-layout">
+
+  <aside class="lesson-sidebar">
+    <div class="sidebar-section">
+      <h3>Basics</h3>
+      <a href="lessons-variables.html">1. Variables</a>
+      <a href="lessons-data-types.html">2. Data Types</a>
+      <a href="lessons-loops.html" class="active">3. Loops</a>
+      <a href="lessons-conditionals.html">4. Conditionals</a>
+      <a href="#">5. Functions</a>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Intermediate</h3>
+      <a href="lessons-oop.html">OOP Basics</a>
+      <a href="lessons-exceptions.html">Exception Handling</a>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Advanced</h3>
+      <a href="lessons-apis.html">APIs &amp; Requests</a>
+    </div>
   </aside>
 
-  <article>
-    <div class="crumb">Basics / <span>Loops</span></div>
-    <h1>Loops</h1>
-    <p class="subtitle">Ek kaam baar-baar karwana ho to loop use karo</p>
+  <article class="lesson-content">
+    <div class="lesson-heading">
+      <span class="lesson-kicker">Python Basics</span>
+      <h1>Loops</h1>
+      <p>Repeat a task multiple times with Python loops.</p>
+    </div>
 
-    <p>Socho tumhe 1 se 5 tak print karna hai. Bina loop ke tumhe 5 baar <code>print()</code> likhna padega. Loop se ek hi line mein ho jayega — "jab tak condition sahi hai, ye kaam karte raho."</p>
+    <section class="lesson-section">
+      <h2>For Loop</h2>
+      <p>A <code>for</code> loop is used when you want to repeat code for each item in a sequence.</p>
 
-    <h2>for loop — jab pata ho kitni baar</h2>
-    <p><code>for</code> loop tab use karo jab pata ho kitni baar repeat karna hai — jaise list ke har item pe ya fixed number of times.</p>
-    <div class="codeblock">for i in range(5):
-    print(i)
-# Output: 0 1 2 3 4</div>
-    <p><code>range(5)</code> ka matlab hai 0 se 4 tak 5 numbers. Python mein counting <b>0 se shuru hoti hai</b>, ye bahut students ko confuse karta hai — yaad rakho.</p>
+      <div class="codeblock">
+<pre><code>for i in range(5):
+    print(i)</code></pre>
+      </div>
 
-    <h2>while loop — jab tak condition sahi hai</h2>
-    <p><code>while</code> loop tab use karo jab pata na ho kitni baar chalega — bas ek condition di jaati hai.</p>
-    <div class="codeblock">count = 0
-while count < 3:
-    print("Count hai:", count)
-    count = count + 1</div>
+      <p>This prints numbers from <code>0</code> to <code>4</code>.</p>
+    </section>
 
-    <div class="warn">⚠️ Sabse common mistake: <code>while</code> loop mein agar tum <code>count = count + 1</code> likhna bhool jao, to loop <b>kabhi khatam nahi hoga</b> (infinite loop). Agar code atak jaye, ye pehle check karo.</div>
+    <section class="lesson-section">
+      <h2>While Loop</h2>
+      <p>A <code>while</code> loop keeps running as long as its condition is <code>True</code>.</p>
 
-    <h2>List ke saath for loop</h2>
-    <p>Ye sabse zyada use hone wala pattern hai — kisi list ke har item pe kuch karna:</p>
-    <div class="codeblock">skills = ["Python", "SQL", "Excel"]
+      <div class="codeblock">
+<pre><code>count = 0
+
+while count &lt; 5:
+    print(count)
+    count = count + 1</code></pre>
+      </div>
+    </section>
+
+    <div class="note warn">
+      <strong>Warning:</strong> Make sure the condition eventually becomes <code>False</code>, otherwise you can create an infinite loop.
+    </div>
+
+    <section class="lesson-section">
+      <h2>Loop Through a List</h2>
+      <p>You can use a <code>for</code> loop to process every item in a list.</p>
+
+      <div class="codeblock">
+<pre><code>skills = ["Python", "SQL", "Excel"]
+
 for skill in skills:
-    print("Main seekh raha hoon:", skill)</div>
+    print(skill)</code></pre>
+      </div>
+    </section>
 
-    <h2>Try it yourself</h2>
-    <p>Change karke dekho — <code>range()</code> ka number badlo, ya apni khud ki list bana ke loop chalao:</p>
+    <section class="lesson-section editor-section">
+      <h2>Try It Yourself</h2>
+      <p>Run the code below and experiment with your own loops.</p>
 
-    <div class="editor">
-      <div class="editor-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
-      <textarea id="code">for i in range(5):
+      <textarea id="code" spellcheck="false">for i in range(5):
     print("Number:", i)
 
 skills = ["Python", "SQL", "Excel"]
 for skill in skills:
-    print("Seekh raha hoon:", skill)</textarea>
-      <div class="run-row">
-        <span style="color: var(--muted); font-size: 0.78rem;">Browser mein hi chalega</span>
-        <button id="run-btn" onclick="runCode()">▶ Run</button>
-      </div>
-      <div id="output">Output yahan dikhega...</div>
-    </div>
+    print("Learning:", skill)</textarea>
 
-    <div class="nav-buttons">
-      <a href="lessons-data-types.html" class="btn-prev">← Previous: Data Types</a>
-      <a href="lessons-conditionals.html" class="btn-next">Next: Conditionals →</a>
+      <button id="run-btn" class="run-btn magnetic" onclick="runCode()">Run Code</button>
+
+      <pre id="output" class="output">Output will appear here...</pre>
+    </section>
+
+    <div class="lesson-navigation">
+      <a href="lessons-data-types.html" class="lesson-nav-btn">← Previous: Data Types</a>
+      <a href="lessons-conditionals.html" class="lesson-nav-btn">Next: Conditionals →</a>
     </div>
   </article>
-</div>
 
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
-<script>
-  let pyodideReady = null;
-  async function initPyodide() {
-    if (!pyodideReady) pyodideReady = await loadPyodide();
-    return pyodideReady;
-  }
-  async function runCode() {
-    const btn = document.getElementById('run-btn');
-    const out = document.getElementById('output');
-    const code = document.getElementById('code').value;
-    btn.disabled = true; btn.textContent = '⏳ Loading...';
-    out.textContent = 'Python load ho raha hai...';
-    try {
-      const pyodide = await initPyodide();
-      btn.textContent = '▶ Run';
-      pyodide.runPython(`import sys, io\nsys.stdout = io.StringIO()`);
-      pyodide.runPython(code);
-      const result = pyodide.runPython("sys.stdout.getvalue()");
-      out.textContent = result || '(koi output nahi — print() use karo)';
-    } catch (err) {
-      out.textContent = 'Error:\n' + err.message;
-    }
-    btn.disabled = false; btn.textContent = '▶ Run';
-  }
-</script>
+</main>
 
 </body>
 </html>
