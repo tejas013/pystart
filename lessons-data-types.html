@@ -10,13 +10,25 @@
 </head>
 <body class="lesson-page">
 
+<div id="canvas-wrap"></div>
+<canvas id="trail-canvas"></canvas>
+<svg class="grain" xmlns="http://www.w3.org/2000/svg">
+  <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter>
+  <rect width="100%" height="100%" filter="url(#n)"/>
+</svg>
+
 <header>
-  <div class="logo">Py<span>Start</span></div>
+  <a href="index.html" class="logo">Py<span>Start</span></a>
   <nav>
+    <a href="index.html">Home</a>
     <a href="lessons-variables.html" class="active">Lessons</a>
     <a href="errors.html">Errors</a>
     <a href="projects.html">Projects</a>
   </nav>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme">
+  <span class="theme-icon" aria-hidden="true">☾</span>
+  <span class="theme-label">Dark</span>
+</button>
 </header>
 
 <div class="layout">
@@ -26,7 +38,7 @@
       <li><a href="lessons-variables.html">1. Variables</a></li>
       <li><a href="#" class="active">2. Data Types</a></li>
       <li><a href="lessons-loops.html">3. Loops</a></li>
-      <li><a href="#">4. Conditionals</a></li>
+      <li><a href="lessons-conditionals.html">4. Conditionals</a></li>
       <li><a href="#">5. Functions</a></li>
     </ul>
 
@@ -38,7 +50,7 @@
 
     <div class="section-label">ADVANCED</div>
     <ul>
-      <li><a href="lessons-apis.html">APIs & Requests</a></li>
+      <li><a href="lessons-apis.html">APIs &amp; Requests</a></li>
     </ul>
   </aside>
 
@@ -104,6 +116,8 @@ print(type(skills))</textarea>
     </div>
   </article>
 </div>
+
+<div class="toast-stack" id="toast-stack"></div>
 
 <script src="js/global.js" defer></script>
 </body>
