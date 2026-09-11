@@ -1,55 +1,7 @@
-(function initTheme() {
-  const root = document.documentElement;
-  const saved = localStorage.getItem("pystart-theme");
-  // Temporarily ignore system dark-mode preference — dark theme colors
-  // are still being audited for contrast bugs. Falls back to light
-  // unless the person explicitly toggled dark via the button before.
-  const theme = saved || "light";
-
-  root.setAttribute("data-theme", theme);
-
-  function updateThemeButton() {
-    const btn = document.getElementById("theme-toggle");
-    if (!btn) return;
-
-    const isDark = root.getAttribute("data-theme") === "dark";
-    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-    btn.title = isDark ? "Switch to light mode" : "Switch to dark mode";
-
-    const icon = btn.querySelector(".theme-icon");
-    const label = btn.querySelector(".theme-label");
-
-    if (icon) icon.textContent = isDark ? "☀" : "☾";
-    if (label) label.textContent = isDark ? "Light" : "Dark";
-  }
-
-  function applyTheme(theme) {
-    root.setAttribute("data-theme", theme);
-    localStorage.setItem("pystart-theme", theme);
-    updateThemeButton();
-
-    // Let the shared 3D hero adjust its lighting immediately.
-    window.dispatchEvent(new CustomEvent("pystart-theme-change", {
-      detail: { theme }
-    }));
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    updateThemeButton();
-
-    const btn = document.getElementById("theme-toggle");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-        applyTheme(next);
-      });
-    }
-  });
-})();
-
 /* PyStart — shared JavaScript
-   Common interactions + optional page features.
-   This file is safe to include on every PyStart page.
+   Common interactions used across every PyStart page.
+   Single light theme — no dark-mode toggle (removed to avoid
+   the color-conflict bugs from the earlier dual-theme system).
 */
 
 (() => {
@@ -58,55 +10,6 @@
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-
-  /* ---------------------------------------------------------
-     Theme system
-     --------------------------------------------------------- */
-  function getPreferredTheme() {
-    const saved = localStorage.getItem("pystart-theme");
-    if (saved === "light" || saved === "dark") return saved;
-    // Temporarily ignore system dark-mode preference — see note above.
-    return "light";
-  }
-
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-
-    const toggle = document.getElementById("theme-toggle");
-    if (toggle) {
-      const dark = theme === "dark";
-      toggle.setAttribute("aria-pressed", String(dark));
-      toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
-      const icon = toggle.querySelector(".theme-icon");
-      const label = toggle.querySelector(".theme-label");
-      if (icon) icon.textContent = dark ? "☀" : "☾";
-      if (label) label.textContent = dark ? "Light" : "Dark";
-    }
-
-    window.dispatchEvent(new CustomEvent("pystart-theme-change", { detail: { theme } }));
-  }
-
-  function initTheme() {
-    const initial = getPreferredTheme();
-    applyTheme(initial);
-
-    const nav = document.querySelector("header nav, .top-nav");
-    if (!nav || document.getElementById("theme-toggle")) return;
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.id = "theme-toggle";
-    button.className = "theme-toggle";
-    button.innerHTML = '<span class="theme-icon" aria-hidden="true"></span><span class="theme-label"></span>';
-    button.addEventListener("click", () => {
-      const current = document.documentElement.getAttribute("data-theme") || "light";
-      const next = current === "dark" ? "light" : "dark";
-      localStorage.setItem("pystart-theme", next);
-      applyTheme(next);
-    });
-    nav.appendChild(button);
-    applyTheme(initial);
-  }
 
   /* ---------------------------------------------------------
      Shared toast system
@@ -314,7 +217,7 @@
   };
 
   /* ---------------------------------------------------------
-     Shared 3D hero
+     Shared 3D hero (single light look — no theme branching)
      Only initializes on pages containing #canvas-wrap.
      --------------------------------------------------------- */
   async function initThreeHero() {
@@ -523,43 +426,6 @@
 
     let t = 0;
 
-    function updateThreeTheme(theme) {
-      const dark = theme === "dark";
-
-      knotMat.color.setHex(dark ? 0x9da3b3 : 0x24252b);
-      knotMat.emissive.setHex(dark ? 0x3a4050 : 0x111217);
-      knotMat.emissiveIntensity = dark ? 0.24 : 0.16;
-
-      innerMat.color.setHex(dark ? 0xf0f2f7 : 0x101116);
-      innerMat.emissive.setHex(dark ? 0x7c5cff : 0x05060a);
-      innerMat.emissiveIntensity = dark ? 0.32 : 0.10;
-
-      ringMat1.color.setHex(dark ? 0x8b91a0 : 0x3a3b42);
-      ringMat1.emissive.setHex(dark ? 0x343847 : 0x17181d);
-
-      ringMat2.color.setHex(dark ? 0xa3a8b5 : 0x5b5c65);
-      ringMat2.emissive.setHex(dark ? 0x3d304e : 0x17141f);
-
-      diamondMat.color.setHex(dark ? 0x6f7585 : 0x16171c);
-      diamond2Mat.color.setHex(dark ? 0x8b91a0 : 0x30313a);
-    }
-
-    updateThreeTheme(document.documentElement.getAttribute("data-theme") || "light");
-    window.addEventListener("pystart-theme-change", (event) => {
-      updateThreeTheme(event.detail.theme);
-    });
-
-    function updateHeroTheme() {
-      const dark = document.documentElement.getAttribute("data-theme") === "dark";
-      if (renderer) {
-        renderer.setClearColor(dark ? 0x030405 : 0xf6f7fb, dark ? 1 : 0);
-      }
-    }
-
-    window.addEventListener("pystart-theme-change", updateHeroTheme);
-    updateHeroTheme();
-
-
     function animate() {
       requestAnimationFrame(animate);
       t += 0.005;
@@ -662,7 +528,6 @@
     animate();
   }
 
-
   /* ---------------------------------------------------------
      Error Dictionary search
      Works on any page containing #search + .error-card.
@@ -712,7 +577,6 @@
      Boot shared features
      --------------------------------------------------------- */
   document.addEventListener("DOMContentLoaded", () => {
-    initTheme();
     initMagneticButtons();
     initCursorTrail();
     initThreeHero();
