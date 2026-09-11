@@ -1,8 +1,10 @@
 (function initTheme() {
   const root = document.documentElement;
   const saved = localStorage.getItem("pystart-theme");
-  const preferred = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const theme = saved || (preferred ? "dark" : "light");
+  // Temporarily ignore system dark-mode preference — dark theme colors
+  // are still being audited for contrast bugs. Falls back to light
+  // unless the person explicitly toggled dark via the button before.
+  const theme = saved || "light";
 
   root.setAttribute("data-theme", theme);
 
@@ -63,9 +65,8 @@
   function getPreferredTheme() {
     const saved = localStorage.getItem("pystart-theme");
     if (saved === "light" || saved === "dark") return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    // Temporarily ignore system dark-mode preference — see note above.
+    return "light";
   }
 
   function applyTheme(theme) {
