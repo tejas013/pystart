@@ -254,17 +254,17 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     wrap.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.45));
+    scene.add(new THREE.AmbientLight(0x6a5d75, 0.85));
 
-    const rim1 = new THREE.PointLight(0x7c5cff, 48, 24);
+    const rim1 = new THREE.PointLight(0xa78bfa, 55, 24);
     rim1.position.set(4, 3, 4);
     scene.add(rim1);
 
-    const rim2 = new THREE.PointLight(0xe08a1e, 38, 24);
+    const rim2 = new THREE.PointLight(0xe8a0c4, 42, 24);
     rim2.position.set(-3, -2, 3);
     scene.add(rim2);
 
-    const key = new THREE.DirectionalLight(0xffffff, 1.1);
+    const key = new THREE.DirectionalLight(0xd8c8e0, 0.6);
     key.position.set(2, 5, 6);
     scene.add(key);
 
@@ -272,11 +272,11 @@
     scene.add(mainGroup);
 
     const knotMat = new THREE.MeshStandardMaterial({
-      color: 0x24252b,
-      metalness: 0.72,
-      roughness: 0.24,
-      emissive: 0x111217,
-      emissiveIntensity: 0.16
+      color: 0x6b5a63,
+      metalness: 0.6,
+      roughness: 0.26,
+      emissive: 0xd88bb0,
+      emissiveIntensity: 0.32
     });
 
     const knot = new THREE.Mesh(
@@ -286,11 +286,11 @@
     mainGroup.add(knot);
 
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x101116,
-      metalness: 0.82,
-      roughness: 0.22,
-      emissive: 0x05060a,
-      emissiveIntensity: 0.10
+      color: 0x4a4050,
+      metalness: 0.75,
+      roughness: 0.24,
+      emissive: 0x6a4a5c,
+      emissiveIntensity: 0.22
     });
 
     const core = new THREE.Mesh(
@@ -303,11 +303,11 @@
     mainGroup.add(orbitGroup);
 
     const ringMat1 = new THREE.MeshStandardMaterial({
-      color: 0x3a3b42,
-      metalness: 0.9,
-      roughness: 0.16,
-      emissive: 0x17181d,
-      emissiveIntensity: 0.22
+      color: 0x5c505f,
+      metalness: 0.85,
+      roughness: 0.18,
+      emissive: 0x8b6d90,
+      emissiveIntensity: 0.28
     });
 
     const ring1 = new THREE.Mesh(
@@ -320,11 +320,11 @@
     orbitGroup.add(ring1);
 
     const ringMat2 = new THREE.MeshStandardMaterial({
-      color: 0x5b5c65,
-      metalness: 0.88,
-      roughness: 0.18,
-      emissive: 0x17141f,
-      emissiveIntensity: 0.2
+      color: 0x6e6270,
+      metalness: 0.85,
+      roughness: 0.2,
+      emissive: 0xd8a0c0,
+      emissiveIntensity: 0.24
     });
 
     const ring2 = new THREE.Mesh(
@@ -338,11 +338,11 @@
     orbitGroup.add(ring2);
 
     const diamondMat = new THREE.MeshStandardMaterial({
-      color: 0x16171c,
-      metalness: 0.9,
-      roughness: 0.12,
-      emissive: 0x25232b,
-      emissiveIntensity: 0.55
+      color: 0x4a3d45,
+      metalness: 0.88,
+      roughness: 0.14,
+      emissive: 0xe08bb8,
+      emissiveIntensity: 0.6
     });
 
     const diamond = new THREE.Mesh(
@@ -352,11 +352,11 @@
     orbitGroup.add(diamond);
 
     const diamond2Mat = new THREE.MeshStandardMaterial({
-      color: 0x30313a,
-      metalness: 0.92,
-      roughness: 0.1,
-      emissive: 0x18151f,
-      emissiveIntensity: 0.45
+      color: 0x5a4d55,
+      metalness: 0.9,
+      roughness: 0.12,
+      emissive: 0xffb84d,
+      emissiveIntensity: 0.5
     });
 
     const diamond2 = new THREE.Mesh(
@@ -367,7 +367,7 @@
 
     const lightDot = new THREE.Mesh(
       new THREE.SphereGeometry(0.035, 12, 12),
-      new THREE.MeshBasicMaterial({ color: 0xffffff })
+      new THREE.MeshBasicMaterial({ color: 0xf0c2dc })
     );
     orbitGroup.add(lightDot);
 
