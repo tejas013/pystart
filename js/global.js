@@ -749,45 +749,302 @@
   }
 
 
-  /* ---------- NUMBER GUESSING GAME ---------- */
-  function initNumberGuessingGame() {
-    const form=document.getElementById("guess-form"), input=document.getElementById("guess-input");
-    const submit=document.getElementById("guess-submit"), feedback=document.getElementById("guess-feedback-message");
-    const attemptsEl=document.getElementById("guess-attempts"), bestEl=document.getElementById("guess-best");
-    const historyEl=document.getElementById("guess-history-list"), reset=document.getElementById("guess-reset");
-    const newGame=document.getElementById("guess-new");
-    if(!form||!input||!submit) return;
-    const KEY="pystart-number-guess-best";
-    let secret=0, attempts=0, history=[], over=false;
-    const getBest=()=>{const n=Number(localStorage.getItem(KEY));return Number.isFinite(n)&&n>0?n:null};
-    function render(){
-      historyEl.innerHTML="";
-      if(!history.length){const e=document.createElement("span");e.className="muted";e.textContent="Your guesses will appear here.";e.style.fontSize=".75rem";historyEl.appendChild(e)}
-      else history.forEach(n=>{const e=document.createElement("span");e.className="guess-number";e.textContent=n;historyEl.appendChild(e)});
+  /* ---------- TO-DO PROJECT ---------- */
+
+  function initTodoProject() {
+    const form = document.getElementById("todo-form");
+    const input = document.getElementById("todo-input");
+    const list = document.getElementById("todo-list");
+    const empty = document.getElementById("todo-empty");
+    const count = document.getElementById("todo-count");
+    const clearCompleted = document.getElementById("clear-completed");
+
+    if (!form || !input || !list) return;
+
+    const STORAGE_KEY = "pystart-todo-tasks";
+    let activeFilter = "all";
+    let tasks = [];
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      tasks = Array.isArray(saved) ? saved : [];
+    } catch (error) {
+      tasks = [];
     }
-    function start(){
-      secret=Math.floor(Math.random()*100)+1;attempts=0;history=[];over=false;
-      input.disabled=false;submit.disabled=false;input.value="";
-      attemptsEl.textContent="0";bestEl.textContent=getBest()||"—";
-      feedback.textContent="I'm thinking of a number between 1 and 100.";feedback.className="guess-feedback-message";
-      render();input.focus();
+
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     }
-    function finish(){
-      over=true;input.disabled=true;submit.disabled=true;
-      const old=getBest();
-      if(!old||attempts<old){localStorage.setItem(KEY,String(attempts));bestEl.textContent=String(attempts);if(window.showToast)window.showToast("New best score!")}
+
+    function updateCount() {
+      const active = tasks.filter(task => !task.completed).length;
+      count.textContent =
+        `${active} active task${active === 1 ? "" : "s"} · ${tasks.length} total`;
     }
-    form.addEventListener("submit",e=>{
-      e.preventDefault();if(over)return;
-      const guess=Number(input.value);
-      if(!Number.isInteger(guess)||guess<1||guess>100){feedback.textContent="Enter a whole number from 1 to 100.";feedback.className="guess-feedback-message error";input.focus();return}
-      attempts++;attemptsEl.textContent=String(attempts);history.push(guess);render();
-      if(guess===secret){feedback.textContent=`Correct! You found it in ${attempts} attempt${attempts===1?"":"s"}.`;feedback.className="guess-feedback-message correct";finish();return}
-      if(guess<secret){feedback.textContent="Too low — try a higher number.";feedback.className="guess-feedback-message low"}
-      else{feedback.textContent="Too high — try a lower number.";feedback.className="guess-feedback-message high"}
-      input.value="";input.focus();
+
+    function visibleTasks() {
+      if (activeFilter === "active") {
+        return tasks.filter(task => !task.completed);
+      }
+
+      if (activeFilter === "completed") {
+        return tasks.filter(task => task.completed);
+      }
+
+      return tasks;
+    }
+
+    function render() {
+      list.innerHTML = "";
+
+      const visible = visibleTasks();
+
+      visible.forEach(task => {
+        const item = document.createElement("div");
+        item.className = "todo-item" + (task.completed ? " completed" : "");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "todo-check";
+        checkbox.checked = task.completed;
+        checkbox.setAttribute("aria-label", `Complete ${task.text}`);
+
+        checkbox.addEventListener("change", () => {
+          task.completed = checkbox.checked;
+          save();
+          render();
+        });
+
+        const text = document.createElement("div");
+        text.className = "todo-text";
+        text.textContent = task.text;
+
+        const actions = document.createElement("div");
+        actions.className = "todo-actions";
+
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "todo-action";
+        edit.textContent = "Edit";
+
+        edit.addEventListener("click", () => {
+          const updated = window.prompt("Edit task:", task.text);
+          if (updated === null) return;
+
+          const clean = updated.trim();
+
+          if (!clean) {
+            if (window.showToast) window.showToast("Task cannot be empty.");
+            return;
+          }
+
+          task.text = clean;
+          save();
+          render();
+        });
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "todo-action delete";
+        remove.textContent = "Delete";
+
+        remove.addEventListener("click", () => {
+          tasks = tasks.filter(item => item.id !== task.id);
+          save();
+          render();
+          if (window.showToast) window.showToast("Task deleted.");
+        });
+
+        actions.append(edit, remove);
+        item.append(checkbox, text, actions);
+        list.appendChild(item);
+      });
+
+      empty.style.display = visible.length ? "none" : "block";
+      updateCount();
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const text = input.value.trim();
+
+      if (!text) {
+        if (window.showToast) window.showToast("Write a task first.");
+        input.focus();
+        return;
+      }
+
+      tasks.unshift({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+        text,
+        completed: false
+      });
+
+      save();
+      input.value = "";
+      render();
+      input.focus();
     });
-    reset.addEventListener("click",start);newGame.addEventListener("click",start);start();
+
+    document.querySelectorAll(".todo-filter").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".todo-filter")
+          .forEach(item => item.classList.remove("active"));
+
+        button.classList.add("active");
+        activeFilter = button.dataset.filter || "all";
+        render();
+      });
+    });
+
+    if (clearCompleted) {
+      clearCompleted.addEventListener("click", () => {
+        const before = tasks.length;
+        tasks = tasks.filter(task => !task.completed);
+
+        if (tasks.length !== before && window.showToast) {
+          window.showToast("Completed tasks cleared.");
+        }
+
+        save();
+        render();
+      });
+    }
+
+    render();
+  }
+
+
+  /* ---------- NUMBER GUESSING GAME ---------- */
+
+  function initNumberGuessingGame() {
+    const form = document.getElementById("guess-form");
+    const input = document.getElementById("guess-input");
+    const submit = document.getElementById("guess-submit");
+    const feedback = document.getElementById("guess-feedback-message");
+    const attemptsEl = document.getElementById("guess-attempts");
+    const bestEl = document.getElementById("guess-best");
+    const historyEl = document.getElementById("guess-history-list");
+    const resetButton = document.getElementById("guess-reset");
+    const newGameButton = document.getElementById("guess-new");
+
+    if (!form || !input || !submit || !feedback) return;
+
+    const BEST_KEY = "pystart-number-guess-best";
+    let secretNumber = 0;
+    let attempts = 0;
+    let history = [];
+    let gameOver = false;
+
+    function getBest() {
+      const value = Number(localStorage.getItem(BEST_KEY));
+      return Number.isFinite(value) && value > 0 ? value : null;
+    }
+
+    function renderHistory() {
+      historyEl.innerHTML = "";
+
+      if (!history.length) {
+        const empty = document.createElement("span");
+        empty.className = "muted";
+        empty.textContent = "Your guesses will appear here.";
+        empty.style.fontSize = ".75rem";
+        historyEl.appendChild(empty);
+        return;
+      }
+
+      history.forEach(number => {
+        const item = document.createElement("span");
+        item.className = "guess-number";
+        item.textContent = number;
+        historyEl.appendChild(item);
+      });
+    }
+
+    function startGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      history = [];
+      gameOver = false;
+
+      input.disabled = false;
+      submit.disabled = false;
+      input.value = "";
+
+      attemptsEl.textContent = "0";
+      bestEl.textContent = getBest() || "—";
+
+      feedback.textContent =
+        "I'm thinking of a number between 1 and 100.";
+      feedback.className = "guess-feedback-message";
+
+      renderHistory();
+      input.focus();
+    }
+
+    function finishGame() {
+      gameOver = true;
+      input.disabled = true;
+      submit.disabled = true;
+
+      const oldBest = getBest();
+
+      if (!oldBest || attempts < oldBest) {
+        localStorage.setItem(BEST_KEY, String(attempts));
+        bestEl.textContent = String(attempts);
+
+        if (typeof window.showToast === "function") {
+          window.showToast("New best score!");
+        }
+      }
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      if (gameOver) return;
+
+      const guess = Number(input.value);
+
+      if (!Number.isInteger(guess) || guess < 1 || guess > 100) {
+        feedback.textContent =
+          "Enter a whole number from 1 to 100.";
+        feedback.className = "guess-feedback-message error";
+        input.focus();
+        return;
+      }
+
+      attempts += 1;
+      attemptsEl.textContent = String(attempts);
+
+      history.push(guess);
+      renderHistory();
+
+      if (guess === secretNumber) {
+        feedback.textContent =
+          `Correct! You found it in ${attempts} attempt${attempts === 1 ? "" : "s"}.`;
+        feedback.className = "guess-feedback-message correct";
+        finishGame();
+        return;
+      }
+
+      if (guess < secretNumber) {
+        feedback.textContent = "Too low — try a higher number.";
+        feedback.className = "guess-feedback-message low";
+      } else {
+        feedback.textContent = "Too high — try a lower number.";
+        feedback.className = "guess-feedback-message high";
+      }
+
+      input.value = "";
+      input.focus();
+    });
+
+    resetButton.addEventListener("click", startGame);
+    newGameButton.addEventListener("click", startGame);
+
+    startGame();
   }
 
   /* ---------- START ---------- */
@@ -797,6 +1054,8 @@
     initMagneticButtons();
     initErrorDictionary();
     initEditorShortcut();
+    initTodoProject();
+    initNumberGuessingGame();
     initThreeHero();
   }
 
