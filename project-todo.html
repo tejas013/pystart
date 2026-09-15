@@ -1,181 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>To-Do List — PyStart</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet"
-  />
-
-  <link rel="stylesheet" href="css/global.css" />
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>To-Do List — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
 </head>
-
 <body>
-
-  <div id="canvas-wrap" aria-hidden="true"></div>
-
-  <div class="wrap">
-
-    <header class="site-header">
-      <a href="index.html" class="logo" aria-label="PyStart Home">
-        Py<span>Start</span>
-      </a>
-
-      <nav class="top-nav" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="lessons-variables.html">Lessons</a>
-        <a href="errors.html">Errors</a>
-        <a href="projects.html" class="active">Projects</a>
-      </nav>
-
-      <button
-        type="button"
-        class="theme-toggle"
-        id="theme-toggle"
-        aria-label="Switch theme"
-        title="Switch theme"
-      >
-        <span class="theme-icon" aria-hidden="true">☾</span>
-        <span class="theme-label">Dark</span>
-      </button>
-    </header>
-
-    <main class="todo-page">
-
-      <div class="project-topbar">
-        <a href="projects.html" class="project-back">← All Projects</a>
-        <span class="project-badge">INTERMEDIATE PROJECT</span>
-      </div>
-
-      <section class="project-hero">
-        <span class="eyebrow">Project 02 · Intermediate</span>
-
-        <h1>To-Do List</h1>
-
-        <p>
-          Ek real-world task manager banao using lists, functions,
-          DOM events aur browser storage.
-        </p>
-      </section>
-
-      <section class="todo-app" aria-label="To-Do List application">
-
-        <div class="todo-header">
-          <div>
-            <h2>My Tasks</h2>
-            <p id="todo-count">0 tasks</p>
-          </div>
-
-          <button
-            type="button"
-            class="todo-clear"
-            id="clear-completed"
-          >
-            Clear completed
-          </button>
-        </div>
-
-        <form class="todo-form" id="todo-form">
-          <input
-            id="todo-input"
-            type="text"
-            maxlength="120"
-            autocomplete="off"
-            placeholder="What needs to be done?"
-            aria-label="New task"
-          />
-
-          <button type="submit" class="todo-add">
-            Add Task
-          </button>
-        </form>
-
-        <div class="todo-filters" role="group" aria-label="Filter tasks">
-          <button type="button" class="todo-filter active" data-filter="all">
-            All
-          </button>
-
-          <button type="button" class="todo-filter" data-filter="active">
-            Active
-          </button>
-
-          <button type="button" class="todo-filter" data-filter="completed">
-            Completed
-          </button>
-        </div>
-
-        <div id="todo-list" class="todo-list"></div>
-
-        <div id="todo-empty" class="todo-empty">
-          <div class="todo-empty-icon">✓</div>
-          <h3>No tasks yet</h3>
-          <p>Add your first task above and start building your list.</p>
-        </div>
-
-      </section>
-
-      <section class="project-learning">
-
-        <div class="learning-card">
-          <span class="learning-label">WHAT YOU PRACTICE</span>
-
-          <div class="learning-grid">
-            <div>
-              <strong>Lists</strong>
-              <span>Store multiple tasks in one structure.</span>
-            </div>
-
-            <div>
-              <strong>Functions</strong>
-              <span>Separate your app into reusable actions.</span>
-            </div>
-
-            <div>
-              <strong>DOM</strong>
-              <span>Create and update elements with JavaScript.</span>
-            </div>
-
-            <div>
-              <strong>Events</strong>
-              <span>React to clicks, typing and form submission.</span>
-            </div>
-
-            <div>
-              <strong>localStorage</strong>
-              <span>Keep tasks after the browser is refreshed.</span>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <div class="project-navigation">
-        <a href="project-calculator.html" class="btn-prev">
-          ← Calculator
-        </a>
-
-        <a href="projects.html" class="btn-next">
-          All Projects →
-        </a>
-      </div>
-
-    </main>
-
-    <footer>
-      Built by a student, for students. PyStart.
-    </footer>
-
-  </div>
-
-  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
-
-  <script src="js/global.js" defer></script>
-
+<div id="canvas-wrap" aria-hidden="true"></div>
+<div class="wrap">
+<header class="site-header">
+<a href="index.html" class="logo" aria-label="PyStart Home">Py<span>Start</span></a>
+<nav class="top-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="lessons-variables.html">Lessons</a><a href="errors.html">Errors</a><a href="projects.html" class="active">Projects</a></nav>
+<button type="button" class="theme-toggle" id="theme-toggle"><span class="theme-icon">☾</span><span class="theme-label">Dark</span></button>
+</header>
+<main class="todo-page">
+<div class="project-topbar"><a href="projects.html" class="project-back">← All Projects</a><span class="project-badge">INTERMEDIATE PROJECT</span></div>
+<section class="project-hero"><span class="eyebrow">Project 02 · Intermediate</span><h1>To-Do List</h1><p>Ek real-world task manager banao using lists, functions, DOM events aur browser storage.</p></section>
+<section class="todo-app">
+<div class="todo-header"><div><h2>My Tasks</h2><p id="todo-count">0 active tasks · 0 total</p></div><button type="button" class="todo-clear" id="clear-completed">Clear completed</button></div>
+<form class="todo-form" id="todo-form"><input id="todo-input" type="text" maxlength="120" autocomplete="off" placeholder="What needs to be done?" aria-label="New task"><button type="submit" class="todo-add">Add Task</button></form>
+<div class="todo-filters" role="group" aria-label="Filter tasks"><button type="button" class="todo-filter active" data-filter="all">All</button><button type="button" class="todo-filter" data-filter="active">Active</button><button type="button" class="todo-filter" data-filter="completed">Completed</button></div>
+<div id="todo-list" class="todo-list"></div>
+<div id="todo-empty" class="todo-empty"><div class="todo-empty-icon">✓</div><h3>No tasks yet</h3><p>Add your first task above and start building your list.</p></div>
+</section>
+<section class="project-learning"><div class="learning-card"><span class="learning-label">WHAT YOU PRACTICE</span><div class="learning-grid">
+<div><strong>Lists</strong><span>Store multiple tasks in one structure.</span></div>
+<div><strong>Functions</strong><span>Separate your app into reusable actions.</span></div>
+<div><strong>DOM</strong><span>Create and update elements with JavaScript.</span></div>
+<div><strong>Events</strong><span>React to clicks, typing and form submission.</span></div>
+<div><strong>localStorage</strong><span>Keep tasks after refresh.</span></div>
+</div></div></section>
+<div class="project-navigation"><a href="project-calculator.html" class="btn-prev">← Calculator</a><a href="projects.html" class="btn-next">All Projects →</a></div>
+</main>
+<footer>Built by a student, for students. PyStart.</footer>
+</div>
+<div class="toast-stack" id="toast-stack"></div><script src="js/global.js" defer></script>
 </body>
 </html>
