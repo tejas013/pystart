@@ -1573,3 +1573,43 @@ article .editor,
     transition-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   HOMEPAGE COMPATIBILITY + THEME TOGGLE
+   ========================================================= */
+
+/* Homepage editor text uses an inline style in the current HTML;
+   these rules keep the component consistent with both themes. */
+.run-row span {
+  color: var(--muted) !important;
+}
+
+/* Header theme switch */
+.site-header .theme-toggle,
+header .theme-toggle {
+  flex: 0 0 auto;
+}
+
+/* Keep the 3D canvas behind readable content. */
+.wrap,
+.site-header {
+  position: relative;
+  z-index: 10;
+}
+
+/* Homepage content remains above the fixed 3D scene. */
+.hero,
+.features,
+footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Better mobile header when the full navigation is hidden. */
+@media (max-width: 600px) {
+  header,
+  .site-header {
+    display: flex;
+  }
+}
