@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Number Guessing Game — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css"></head><body><div id="canvas-wrap" aria-hidden="true"></div><div class="wrap">
+<header class="site-header"><a href="index.html" class="logo">Py<span>Start</span></a><nav class="top-nav"><a href="index.html">Home</a><a href="lessons-variables.html">Lessons</a><a href="errors.html">Errors</a><a href="projects.html" class="active">Projects</a></nav><button type="button" class="theme-toggle" id="theme-toggle"><span class="theme-icon">☾</span><span class="theme-label">Dark</span></button></header>
+<main class="guess-page"><div class="project-topbar"><a href="projects.html" class="project-back">← All Projects</a><span class="project-badge">MEDIUM · PROJECT 03</span></div>
+<section class="guess-hero"><span class="eyebrow">Guess. Learn. Improve.</span><h1>Number Guessing Game</h1><p>Computer ne 1 se 100 ke beech ek secret number choose kiya hai. Guess karo, hints follow karo, aur dekho kitne attempts mein number find kar sakte ho.</p></section>
+<section class="guess-game"><div class="guess-status"><span class="status-label">Secret Number</span><h2>I'm thinking of a number...</h2><p>Use the hints to narrow it down.</p></div>
+<form class="guess-form" id="guess-form"><input id="guess-input" type="number" min="1" max="100" step="1" inputmode="numeric" placeholder="1–100" aria-label="Your guess"><button type="submit" class="guess-submit" id="guess-submit">Make Guess</button></form>
+<div class="guess-feedback"><span id="guess-feedback-message" class="guess-feedback-message" role="status" aria-live="polite">I'm thinking of a number between 1 and 100.</span></div>
+<div class="guess-stats"><div class="guess-stat"><strong id="guess-attempts">0</strong><span>Attempts</span></div><div class="guess-stat"><strong id="guess-best">—</strong><span>Best Score</span></div><div class="guess-stat"><strong id="guess-range">1–100</strong><span>Range</span></div></div>
+<div class="guess-actions"><button type="button" class="guess-reset" id="guess-reset">Reset Game</button><button type="button" class="guess-new" id="guess-new">New Number</button></div></section>
+<section class="guess-history"><h3>Your Guesses</h3><div id="guess-history-list" class="guess-history-list"></div></section>
+<section class="guess-learning"><span class="guess-learning-label">WHAT YOU PRACTICE</span><div class="guess-learning-grid">
+<div><strong>random</strong><span>Generate a different secret number for every game.</span></div><div><strong>Conditionals</strong><span>Compare the guess with the secret number.</span></div><div><strong>Loops / Repetition</strong><span>Keep accepting guesses until the answer is found.</span></div><div><strong>Functions</strong><span>Break game actions into smaller reusable pieces.</span></div><div><strong>State</strong><span>Track attempts, guesses and the current game.</span></div><div><strong>localStorage</strong><span>Remember the player's best score after refresh.</span></div>
+</div></section><div class="guess-navigation"><a href="project-todo.html" class="btn-prev">← To-Do List</a><a href="projects.html" class="btn-next">All Projects →</a></div></main>
+<footer>Built by a student, for students. PyStart.</footer></div><div class="toast-stack" id="toast-stack"></div><script src="js/global.js" defer></script></body></html>
