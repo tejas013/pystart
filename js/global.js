@@ -748,6 +748,188 @@
     }
   }
 
+
+  /* ---------- TO-DO PROJECT ---------- */
+
+  function initTodoProject() {
+    const form = document.getElementById("todo-form");
+    const input = document.getElementById("todo-input");
+    const list = document.getElementById("todo-list");
+    const empty = document.getElementById("todo-empty");
+    const count = document.getElementById("todo-count");
+    const clearCompleted = document.getElementById("clear-completed");
+
+    if (!form || !input || !list) return;
+
+    const STORAGE_KEY = "pystart-todo-tasks";
+    let activeFilter = "all";
+    let tasks = [];
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      tasks = Array.isArray(saved) ? saved : [];
+    } catch {
+      tasks = [];
+    }
+
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    function updateCount() {
+      const active = tasks.filter((task) => !task.completed).length;
+      count.textContent =
+        `${active} active task${active === 1 ? "" : "s"} · ${tasks.length} total`;
+    }
+
+    function getVisibleTasks() {
+      if (activeFilter === "active") {
+        return tasks.filter((task) => !task.completed);
+      }
+
+      if (activeFilter === "completed") {
+        return tasks.filter((task) => task.completed);
+      }
+
+      return tasks;
+    }
+
+    function render() {
+      list.innerHTML = "";
+
+      const visible = getVisibleTasks();
+
+      visible.forEach((task) => {
+        const item = document.createElement("div");
+        item.className =
+          "todo-item" + (task.completed ? " completed" : "");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "todo-check";
+        checkbox.checked = task.completed;
+        checkbox.setAttribute(
+          "aria-label",
+          `Mark ${task.text} as complete`
+        );
+
+        checkbox.addEventListener("change", () => {
+          task.completed = checkbox.checked;
+          save();
+          render();
+        });
+
+        const text = document.createElement("div");
+        text.className = "todo-text";
+        text.textContent = task.text;
+
+        const actions = document.createElement("div");
+        actions.className = "todo-actions";
+
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "todo-action";
+        edit.textContent = "Edit";
+        edit.addEventListener("click", () => {
+          const updated = window.prompt(
+            "Edit task:",
+            task.text
+          );
+
+          if (updated === null) return;
+
+          const clean = updated.trim();
+
+          if (!clean) {
+            window.showToast("Task cannot be empty.");
+            return;
+          }
+
+          task.text = clean;
+          save();
+          render();
+        });
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "todo-action delete";
+        remove.textContent = "Delete";
+        remove.addEventListener("click", () => {
+          tasks = tasks.filter((item) => item.id !== task.id);
+          save();
+          render();
+          window.showToast("Task deleted.");
+        });
+
+        actions.appendChild(edit);
+        actions.appendChild(remove);
+
+        item.appendChild(checkbox);
+        item.appendChild(text);
+        item.appendChild(actions);
+
+        list.appendChild(item);
+      });
+
+      empty.style.display = visible.length ? "none" : "block";
+      updateCount();
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const text = input.value.trim();
+
+      if (!text) {
+        input.focus();
+        window.showToast("Write a task first.");
+        return;
+      }
+
+      tasks.unshift({
+        id:
+          Date.now().toString(36) +
+          Math.random().toString(36).slice(2),
+        text,
+        completed: false
+      });
+
+      save();
+      input.value = "";
+      render();
+      input.focus();
+    });
+
+    document.querySelectorAll(".todo-filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        document
+          .querySelectorAll(".todo-filter")
+          .forEach((item) => item.classList.remove("active"));
+
+        button.classList.add("active");
+        activeFilter = button.dataset.filter || "all";
+        render();
+      });
+    });
+
+    if (clearCompleted) {
+      clearCompleted.addEventListener("click", () => {
+        const before = tasks.length;
+
+        tasks = tasks.filter((task) => !task.completed);
+
+        if (tasks.length !== before) {
+          save();
+          window.showToast("Completed tasks cleared.");
+        }
+
+        render();
+      });
+    }
+
+    render();
+  }
+
   /* ---------- START ---------- */
 
   function init() {
@@ -755,6 +937,7 @@
     initMagneticButtons();
     initErrorDictionary();
     initEditorShortcut();
+    initTodoProject();
     initThreeHero();
   }
 
