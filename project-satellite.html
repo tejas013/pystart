@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Orbital Command — PyStart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/global.css">
+<link rel="stylesheet" href="css/space.css">
+</head>
+<body class="space-page">
+<div class="space-noise" aria-hidden="true"></div>
+<div class="space-shell">
+<header class="space-header">
+  <a href="index.html" class="logo" aria-label="PyStart Home">Py<span>Start</span></a>
+  <div class="space-brand">
+    <span class="status-dot"></span>
+    <div><strong>ORBITAL COMMAND</strong><small>TRACK · PROPAGATE · OBSERVE</small></div>
+  </div>
+  <nav class="space-nav" aria-label="Project navigation">
+    <a href="projects.html">Projects</a>
+    <a href="index.html">Home</a>
+    <button type="button" class="theme-toggle" id="theme-toggle"><span class="theme-icon">☾</span><span class="theme-label">Dark</span></button>
+  </nav>
+</header>
+
+<main class="space-main">
+  <section class="space-topline">
+    <div>
+      <span class="space-kicker">ADVANCED+ · PROJECT 06</span>
+      <h1>Orbital Command</h1>
+      <p>Real orbital-element data, live position propagation and a movable 3D Earth.</p>
+    </div>
+    <div class="data-status" id="data-status"><span class="pulse"></span><span>CONNECTING TO CATALOG</span></div>
+  </section>
+
+  <section class="space-kpis">
+    <article class="space-kpi"><span>CATALOG OBJECTS</span><strong id="catalog-count">—</strong><small>selected source group</small></article>
+    <article class="space-kpi"><span>TRACKED NOW</span><strong id="tracked-count">—</strong><small>propagated positions</small></article>
+    <article class="space-kpi"><span>SELECTED ALTITUDE</span><strong id="altitude-kpi">—</strong><small>above mean Earth radius</small></article>
+    <article class="space-kpi"><span>DATA AGE</span><strong id="data-age">—</strong><small>CelesTrak element set</small></article>
+  </section>
+
+  <section class="space-grid">
+    <div class="space-panel globe-panel">
+      <div class="panel-head">
+        <div><span class="panel-kicker">LIVE ORBITAL VIEW</span><h2>3D SATELLITE GLOBE</h2></div>
+        <div class="panel-actions"><button type="button" id="auto-rotate" class="mini-btn active">AUTO ROTATE</button><button type="button" id="reset-view" class="mini-btn">RESET VIEW</button></div>
+      </div>
+      <div id="globe" class="globe-stage" aria-label="Interactive 3D Earth with satellite positions"></div>
+      <div class="globe-legend"><span><i class="dot cyan"></i>Tracked</span><span><i class="dot orange"></i>Selected</span><span><i class="dot red"></i>High-interest</span><span class="legend-note">Drag to rotate · scroll to zoom · click a satellite</span></div>
+    </div>
+
+    <aside class="space-panel control-panel">
+      <div class="panel-head"><div><span class="panel-kicker">MISSION CONTROL</span><h2>TRACKING</h2></div></div>
+      <label class="field-label" for="sat-search">SEARCH SATELLITE</label>
+      <div class="search-row"><input id="sat-search" type="search" placeholder="ISS, Starlink, GPS..." autocomplete="off"><button id="search-clear" type="button">×</button></div>
+      <label class="field-label" for="group-select">DATA GROUP</label>
+      <select id="group-select">
+        <option value="STATIONS">Space Stations</option>
+        <option value="STARLINK">Starlink</option>
+        <option value="GNSS">GNSS / Navigation</option>
+        <option value="WEATHER">Weather / Earth Resources</option>
+        <option value="ACTIVE">Active Satellites</option>
+      </select>
+      <div class="button-row"><button type="button" class="control-btn primary" id="load-group">LOAD GROUP</button><button type="button" class="control-btn" id="refresh-data">REFRESH</button></div>
+      <div class="control-note"><span>LIVE MOTION</span><strong>SGP4 / SDP4</strong><small>Positions are calculated continuously from current orbital elements in the browser.</small></div>
+      <div class="sat-list-head"><span>OBJECTS</span><span id="visible-count">0</span></div>
+      <div id="sat-list" class="sat-list" role="listbox" aria-label="Satellite list"></div>
+    </aside>
+  </section>
+
+  <section class="space-lower-grid">
+    <article class="space-panel telemetry-panel">
+      <div class="panel-head"><div><span class="panel-kicker">SELECTED OBJECT</span><h2 id="selected-name">NO SATELLITE SELECTED</h2></div><span class="object-badge" id="selected-badge">WAITING</span></div>
+      <div class="telemetry-grid">
+        <div><span>NORAD ID</span><strong id="selected-norad">—</strong></div>
+        <div><span>LATITUDE</span><strong id="selected-lat">—</strong></div>
+        <div><span>LONGITUDE</span><strong id="selected-lng">—</strong></div>
+        <div><span>ALTITUDE</span><strong id="selected-alt">—</strong></div>
+        <div><span>VELOCITY</span><strong id="selected-velocity">—</strong></div>
+        <div><span>ORBIT PERIOD</span><strong id="selected-period">—</strong></div>
+      </div>
+      <div class="orbit-readout"><div><span>GROUND TRACK</span><strong id="ground-track">LIVE</strong></div><div class="track-bar"><i id="track-progress"></i></div></div>
+    </article>
+
+    <article class="space-panel observation-panel">
+      <div class="panel-head"><div><span class="panel-kicker">EARTH OBSERVATION</span><h2>NEAR-REAL-TIME VIEW</h2></div><span class="object-badge nasa">NASA GIBS</span></div>
+      <div class="observation-image-wrap"><img id="earth-image" alt="Near-real-time NASA Earth observation imagery" loading="lazy"><div class="image-overlay"><span>EARTH OBSERVATION FEED</span><strong id="image-date">LOADING</strong></div></div>
+      <p class="observation-note">This is near-real-time public Earth-observation imagery, not a live camera feed from the selected satellite. NASA GIBS makes many imagery products available within hours of observation.</p>
+      <a class="external-link" href="https://worldview.earthdata.nasa.gov/" target="_blank" rel="noopener">OPEN NASA WORLDVIEW ↗</a>
+    </article>
+  </section>
+
+  <section class="space-panel orbit-panel">
+    <div class="panel-head"><div><span class="panel-kicker">ORBITAL ANALYSIS</span><h2>SELECTED SATELLITE ORBIT</h2></div><span id="orbit-status">PATH READY</span></div>
+    <div class="orbit-visual" id="orbit-visual"><div class="orbit-earth"></div><div class="orbit-ring r1"></div><div class="orbit-ring r2"></div><div class="orbit-ring r3"></div><span class="orbit-sat" id="orbit-sat"></span></div>
+    <div class="orbit-meta"><span>Propagation model: <b>SGP4/SDP4</b></span><span>Update loop: <b>1 second</b></span><span>Source: <b>CelesTrak GP data</b></span></div>
+  </section>
+
+  <section class="space-panel practice-panel">
+    <div class="panel-head"><div><span class="panel-kicker">WHAT YOU PRACTICE</span><h2>SPACE DATA ENGINEERING</h2></div></div>
+    <div class="practice-grid">
+      <div><b>Satellite.js</b><span>SGP4 / SDP4 propagation</span></div><div><b>Three.js / Globe.gl</b><span>3D WebGL visualization</span></div><div><b>REST / JSON</b><span>Live orbital catalog data</span></div><div><b>Coordinate transforms</b><span>ECI → geodetic position</span></div><div><b>Real-time state</b><span>Continuous position updates</span></div><div><b>Earth observation</b><span>NASA GIBS imagery</span></div>
+    </div>
+  </section>
+
+  <div class="space-footer-nav"><a href="project-soc.html">← SOC Dashboard</a><a href="projects.html">All Projects →</a></div>
+</main>
+<footer class="space-footer">PyStart · Orbital Command · Real data visualization for learning</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/satellite.js@7.1.0/dist/satellite.min.js"></script>
+<script src="js/global.js" defer></script>
+<script src="js/space.js" defer></script>
+</body>
+</html>
