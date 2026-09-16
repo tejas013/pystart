@@ -3,3 +3,8 @@
 @media(max-width:1050px){.space-header{grid-template-columns:150px 1fr auto}.space-brand{justify-self:center}.space-grid{grid-template-columns:1fr}.control-panel{display:grid;grid-template-columns:repeat(2,1fr);align-content:start}.control-panel .panel-head,.control-panel .sat-list-head,.control-panel .sat-list{grid-column:1/-1}.control-panel .field-label{padding-top:12px}.sat-list{max-height:250px}.space-lower-grid{grid-template-columns:1fr}.globe-stage{height:560px}}
 @media(max-width:700px){.space-shell{padding:0 12px}.space-header{height:auto;min-height:62px;grid-template-columns:1fr auto;padding:8px 0;gap:8px}.space-brand{display:none}.space-nav{gap:8px}.space-nav a{display:none}.space-topline{display:block}.data-status{display:inline-block;margin-top:12px}.space-kpis{grid-template-columns:1fr 1fr}.space-kpi{padding:12px}.space-kpi strong{font-size:18px}.control-panel{display:block}.globe-stage{height:430px}.globe-legend{gap:8px}.legend-note{width:100%;margin-left:0}.telemetry-grid{grid-template-columns:1fr 1fr}.observation-image-wrap{height:220px}.practice-grid{grid-template-columns:1fr 1fr}.orbit-visual{height:250px}.orbit-ring.r3{width:440px}.space-main{padding-top:18px}}
 @media(prefers-reduced-motion:reduce){.orbit-ring,.orbit-sat{animation:none}.space-noise{display:none}}
+
+/* Reliable native Three.js globe canvas */
+.globe-stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
+.globe-stage canvas:active{cursor:grabbing}
+@media(max-width:700px){.globe-stage{height:440px;min-height:440px}.globe-stage canvas{min-height:440px}}
