@@ -51,14 +51,15 @@
       }
     }
     try {
-      const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
-      const controlsMod = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/controls/OrbitControls.js');
+      const THREE = await import('three');
+      const controlsMod = await import('three/addons/controls/OrbitControls.js');
       state.THREE = THREE;
       state.OrbitControls = controlsMod.OrbitControls;
       state.threeReady = true;
     } catch (err) {
       console.error('Three.js load failed', err);
       state.threeReady = false;
+      setStatus('3D ENGINE LOAD FAILED · CDN / MODULE', false);
     }
     return !!window.satellite && state.threeReady;
   }
