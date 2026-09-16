@@ -1047,6 +1047,22 @@
     startGame();
   }
 
+
+  /* ---------- WEATHER DASHBOARD ---------- */
+  function initWeatherDashboard(){
+    const form=document.getElementById("weather-search-form"),input=document.getElementById("weather-search-input"),btn=document.getElementById("weather-search-button"),status=document.getElementById("weather-status"),loading=document.getElementById("weather-loading"),dash=document.getElementById("weather-dashboard");
+    if(!form||!input||!dash)return;
+    const KEY="pystart-weather-recent"; let data=null,unit="celsius"; const $=id=>document.getElementById(id);
+    const temp=v=>{if(v==null)return"—";v=unit==="fahrenheit"?v*9/5+32:v;return Math.round(v)+"°"};
+    const info=c=>({0:["☀️","Clear sky"],1:["🌤️","Mainly clear"],2:["⛅","Partly cloudy"],3:["☁️","Overcast"],45:["🌫️","Fog"],48:["🌫️","Rime fog"],51:["🌦️","Light drizzle"],53:["🌦️","Drizzle"],55:["🌧️","Heavy drizzle"],61:["🌦️","Light rain"],63:["🌧️","Rain"],65:["🌧️","Heavy rain"],71:["🌨️","Light snow"],73:["❄️","Snow"],75:["❄️","Heavy snow"],80:["🌦️","Rain showers"],81:["🌧️","Rain showers"],82:["⛈️","Heavy showers"],95:["⛈️","Thunderstorm"],96:["⛈️","Thunderstorm + hail"],99:["⛈️","Thunderstorm + hail"]}[c]||["🌡️","Unknown"]);
+    const dir=d=>d==null?"—":["N","NE","E","SE","S","SW","W","NW"][Math.round(d/45)%8];
+    function recent(){let a=[];try{a=JSON.parse(localStorage.getItem(KEY)||"[]")}catch{}const box=$("weather-recent-list");box.innerHTML="";if(!a.length){box.textContent="Your searched cities will appear here.";return}a.forEach(city=>{const b=document.createElement("button");b.className="weather-recent-button";b.type="button";b.textContent=city;b.onclick=()=>{input.value=city;load(city)};box.appendChild(b)})}
+    function save(city){let a=[];try{a=JSON.parse(localStorage.getItem(KEY)||"[]")}catch{}a=[city,...a.filter(x=>x.toLowerCase()!=city.toLowerCase())].slice(0,6);localStorage.setItem(KEY,JSON.stringify(a));recent()}
+    function render(x){data=x;const c=x.current,d=x.daily,[ic,desc]=info(c.weather_code);$("weather-city").textContent=x.location.name;$("weather-country").textContent=(x.location.admin1?x.location.admin1+", ":"")+x.location.country;$("weather-icon").textContent=ic;$("weather-description").textContent=desc;$("weather-temperature").textContent=temp(c.temperature_2m);$("weather-feels").textContent=temp(c.apparent_temperature);$("weather-humidity").textContent=Math.round(c.relative_humidity_2m)+"%";$("weather-wind").textContent=Math.round(c.wind_speed_10m)+" km/h";$("weather-wind-direction").textContent=dir(c.wind_direction_10m);$("weather-time").textContent=new Date(c.time).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});const box=$("weather-days");box.innerHTML="";d.time.forEach((date,i)=>{const [icon]=info(d.weather_code[i]),name=i===0?"Today":i===1?"Tomorrow":new Date(date+"T12:00:00").toLocaleDateString([], {weekday:"short"}),rain=d.precipitation_probability_max?.[i];const e=document.createElement("div");e.className="weather-day";e.innerHTML=`<span class="weather-day-name">${name}</span><span class="weather-day-icon">${icon}</span><span class="weather-day-temp">${temp(d.temperature_2m_max[i])} / ${temp(d.temperature_2m_min[i])}</span><span class="weather-day-rain">${rain==null?"":Math.round(rain)+"% rain"}</span>`;box.appendChild(e)});dash.classList.add("visible");document.querySelectorAll(".weather-unit-button").forEach(b=>b.classList.toggle("active",b.dataset.unit===unit))}
+    async function load(city){city=city.trim();if(!city){status.textContent="Enter a city name first.";status.className="weather-status error";return}btn.disabled=true;input.disabled=true;loading.classList.add("visible");status.textContent="Finding that location…";status.className="weather-status";try{const gr=await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(city)+"&count=1&language=en&format=json");if(!gr.ok)throw Error("Location search failed.");const g=await gr.json();if(!g.results?.length)throw Error("City not found. Try a more specific name.");const loc=g.results[0];status.textContent="Loading weather…";const p=new URLSearchParams({latitude:loc.latitude,longitude:loc.longitude,current:"temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m",daily:"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",forecast_days:"7",timezone:"auto"});const wr=await fetch("https://api.open-meteo.com/v1/forecast?"+p);if(!wr.ok)throw Error("Weather service returned an error.");const w=await wr.json();render({location:loc,current:w.current,daily:w.daily});save(loc.name);status.textContent="Updated for "+loc.name+".";status.className="weather-status success"}catch(e){dash.classList.remove("visible");status.textContent=e.message||"Something went wrong.";status.className="weather-status error"}finally{btn.disabled=false;input.disabled=false;loading.classList.remove("visible")}}
+    form.addEventListener("submit",e=>{e.preventDefault();load(input.value)});document.querySelectorAll(".weather-unit-button").forEach(b=>b.onclick=()=>{unit=b.dataset.unit;if(data)render(data)});recent();input.value="Mumbai";load("Mumbai");
+  }
+
   /* ---------- START ---------- */
 
   function init() {
@@ -1056,6 +1072,7 @@
     initEditorShortcut();
     initTodoProject();
     initNumberGuessingGame();
+    initWeatherDashboard();
     initThreeHero();
   }
 
